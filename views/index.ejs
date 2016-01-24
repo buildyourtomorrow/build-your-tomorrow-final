@@ -9,10 +9,21 @@
 			<script src="/javascripts/angularApp.js"></script>
 		</head>
 		<body ng-app="Dashboard" ng-controller="MainCtrl">
-			<h1>{{income}}</h1>
-			<form ng-submit="incomeForm()">
-				<input type="number" placeholder="Income" ng-model="income">
-				<input type="submit" value="Submit">
-			</form>
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<ui-view></ui-view>
+				</div>
+			</div>	
+			<script type="text/ng-template" id="/home.html">
+				<div ng-repeat='item in allIncome.data'>
+					{{ item.amount }}
+				</div>				
+				<form ng-submit="incomeForm()">
+					<input type="number" placeholder="Income" ng-model="income">
+					<input type="submit" value="Submit">
+				</form>
+			</script>			
 		</body>
 	</html>
+
+

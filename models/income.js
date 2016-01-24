@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var IncomeSchema = new mongoose.Schema({
-	income: Number
+	amount: Number
 });
 
 mongoose.model('income', IncomeSchema);
