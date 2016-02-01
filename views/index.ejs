@@ -8,7 +8,7 @@
 
 			<script src="/javascripts/angularApp.js"></script>
 		</head>
-		<body ng-app="Dashboard" ng-controller="MainCtrl">
+		<body ng-app="Dashboard">
 			<div class="row">
 				<div class="col-md-6 col-md-offset-3">
 					<ui-view></ui-view>
@@ -16,10 +16,16 @@
 			</div>	
 			<script type="text/ng-template" id="/home.html">
 				<div ng-repeat='item in allIncome.data'>
-					{{ item.amount }}
+					{{ item.description }} - {{ item.amount }}					
 				</div>				
+				<div>
+					Total Income - {{ totalIncome }}
+				</div>
 				<form ng-submit="incomeForm()">
-					<input type="number" placeholder="Income" ng-model="income">
+					<span>Description</span>
+					<input type="text" placeholder="Job" ng-model="description">
+					<span>Amount</span>
+					<input type="number" placeholder="Amount" ng-model="income">					
 					<input type="submit" value="Submit">
 				</form>
 			</script>			

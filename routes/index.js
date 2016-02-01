@@ -10,17 +10,23 @@ router.get('/', function(req, res){
 
 router.post('/add-income', function(req, res){	
 	var x = new Income;	
+	x.description = req.body.description;
 	x.amount = req.body.income;
 	x.save(function(error){
 		console.log(error);
-	});	
+	});
+
+	Income.find({}, 'amount', function(error, allIncome){
+		console.log(error);
+		x.calcTotalIncome(allIncome);
+	});
 	return res.send(x);
 });
 
 router.get('/all-income', function(req, res){
-	Income.find(function(error, data){
+	Income.find(function(error, allIncome){
 		console.log(error);
-		return res.json(data);
+		return res.json(allIncome);
 	});
 });
 
