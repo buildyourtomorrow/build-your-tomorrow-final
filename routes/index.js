@@ -25,6 +25,7 @@ router.post('/add-income', function(req, res){
 
 router.get('/all-income', function(req, res){
 	Income.find(function(error, allIncome){
+		console.log(allIncome)		
 		console.log(error);
 		return res.json(allIncome);
 	});

@@ -5,8 +5,8 @@ app.config([
 	'$urlRouterProvider', 
 	function ($stateProvider, $urlRouterProvider) {
 		$stateProvider
-			.state('home', {
-				url: '/home', 
+			.state('dashboard', {
+				url: '/dashboard', 
 				templateUrl: '/home.html',
 				controller: 'MainCtrl',
 				resolve: {
@@ -27,25 +27,17 @@ app.factory('incomeFactory', ['$http', function($http){
 
 	o.calculateTotal = function(){
 		var total = 0;	
-		for (i = 0; i < o.income.data.length; i++) {
-			total += o.income.data[i].amount;
+		for (i = 0; i < o.income.length; i++) {
+			total += o.income[i].amount;
 		};
 		return o.incomeTotal = total;
 	};
-	o.postIncome = function(income, description){
-		var data = { 
-				'description': description,
-				'income': income
-		};
-		return $http.post('/add-income', data).then(function(data){	// push data into income array above				
-					o.income.data.push(data.data); // getting to the income array uptop is a little tricky. Target the array and not the object.											
-				}, function(){
-					console.log("error");
-				});
+	o.postIncome = function(income, description){ // function that sends income to api
+		return $http.post('/add-income', { 'description': description,  'income': income });
 	};	
-	o.getIncome = function(){
-		return $http.get('/all-income').then(function(data){
-			angular.copy(data, o.income)
+	o.getIncome = function(){ // function that gets all income from api
+		return $http.get('/all-income').then(function(response){
+			angular.copy(response.data, o.income) // ang copy deletes everything the income array above and adds every inside of res.data
 			o.calculateTotal();
 		}, function(){
 			console.log('error');
@@ -58,13 +50,10 @@ app.controller('MainCtrl', ['$scope', 'incomeFactory', function($scope, incomeFa
 	$scope.allIncome = incomeFactory.income;
 	$scope.totalIncome = incomeFactory.incomeTotal;
 	
+	// function that processes income form. 
 	$scope.incomeForm = function(){	
-		incomeFactory.postIncome($scope.income, $scope.description);
-		incomeFactory.income.push($scope.income);
-		var total = 0;	
-		for (i = 0; i < incomeFactory.income.length; i++) {
-			total += incomeFactory.income[i];
-		};
-		$scope.totalIncome = total;
+		incomeFactory.postIncome($scope.income, $scope.description); // send form to api
+		incomeFactory.income.push({ 'amount': $scope.income, 'description': $scope.description });
+		$scope.totalIncome = incomeFactory.calculateTotal();
 	};
 }]);
