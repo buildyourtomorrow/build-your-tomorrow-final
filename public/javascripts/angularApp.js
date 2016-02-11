@@ -26,8 +26,8 @@ app.config([
 				}
 			})
 			.state('monthlyExpenses', {
-				url: '/monthly-expenses', 
-				templateUrl: '/monthly-expenses.html',
+				url: '/expenses', 
+				templateUrl: '/expenses.html',
 				controller: 'MonthlyExpensesCtrl',
 				resolve: {
 					postPromise: ['monthlyExpensesFactory', function(monthlyExpensesFactory){						

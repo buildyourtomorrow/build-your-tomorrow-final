@@ -2,6 +2,7 @@
 	<html>
 		<head>
 			<title>Dashboard - BYT</title>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 			<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
 			<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
@@ -9,90 +10,193 @@
 			<script src="/javascripts/angularApp.js"></script>
 		</head>
 		<body ng-app="Dashboard">
-			<div class="row">
-				<div class="col-md-6 col-md-offset-3">
-					<ui-view></ui-view>
+			<div class="container">
+				<div class="row">
+					<ul class="nav nav-pills">
+						<li role="presentation" class="pull-right"><a href="/#/login">Login</a></li>
+						<li role="presentation" class="pull-right"><a href="/#/logout">Logout</a></li>
+						<li role="presentation" class="pull-right"><a href="/#/register">Register</a></li>
+					</ul>
 				</div>
-			</div>		
+				<div class="row">
+					<ul class="nav nav-pills">
+						<li role="presentation"><a href="/#/overview">Overview</a></li>
+						<li role="presentation"><a href="/#/income">Income</a></li>
+						<li role="presentation"><a href="/#/bills">Bills</a></li>
+						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
+					</ul>	
+				</div>
+				
+				<div class="row">
+					<br>
+					<br>
+					<div class="col-md-6 col-md-offset-3">
+						<ui-view></ui-view>
+					</div>
+				</div>
+			</div>
+					
+			<!--Income stuff -->
 			<script type="text/ng-template" id="/income.html">
-				<div ng-repeat='item in allIncome'>
-					{{ item.description }} - {{ item.amount }}					
-				</div>			
-				<div>{{description}} ----- {{income}}</div>	
-				<div> Total Income - {{ totalIncome }} </div>
+				<div class="table-responsive">
+					<table class="table">						
+						<thead ng-repeat='item in allIncome'>
+							<tr>
+								<td>{{item.description}}</td>
+								<td>{{item.amount}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Total income</td>
+								<td>{{totalIncome}}</td>
+							</tr>							
+						</tbody>
+					</table>					
+				</div>
+				<div class="table-responsive">
+					<table class="table">						
+						<tbody>
+							<tr>
+								<td>{{description}}</td>
+								<td>{{income}}</td>
+							</tr>							
+						</tbody>
+					</table>					
+				</div>
 				<form name='form' ng-submit="incomeForm()">
 					<span>Description</span>
-					<input type="text" placeholder="Job" ng-model="description">
+					<input class='form-control' type="text" placeholder="Job" ng-model="description">
 					<span>Amount</span>
-					<input type="number" placeholder="Amount" ng-model="income">					
-					<input type="submit" value="Submit">
+					<input class='form-control' type="number" placeholder="Amount" ng-model="income">					
+					<button type="submit" class="btn btn-default">Submit</button>
 				</form>
 			</script>	
+
+			<!--Bills stuff -->
 			<script type="text/ng-template" id="/bills.html">
-				<div ng-repeat='bill in bills'>
-					{{ bill.description }} - {{ bill.amount }}					
-				</div>				
-				<div>{{description}} ----- {{amount}}</div>
-				<div>
-					Total Bills - {{ totalBills }}
+				<div class="table-responsive">
+					<table class="table">						
+						<thead ng-repeat='bill in bills'>
+							<tr>
+								<td>{{bill.description}}</td>
+								<td>{{bill.amount}}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Total bills</td>
+								<td>{{totalBills}}</td>
+							</tr>							
+						</tbody>
+					</table>
 				</div>
+				<br>
+				<br>					
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>{{description}}</td>
+								<td>{{amount}}</td>
+							</tr>
+						</tbody>
+					</table>	
+				</div>			
 				<form name='form' ng-submit="billForm()">
 					<span>Description</span>
-					<input type="text" placeholder="Rent" ng-model="description">
+					<input class='form-control' type="text" placeholder="Rent" ng-model="description">
 					<span>Amount</span>
-					<input type="number" placeholder="Amount" ng-model="amount">					
-					<input type="submit" value="Submit">
+					<input class='form-control' type="number" placeholder="Amount" ng-model="amount">					
+					<button type="submit" class="btn btn-default">Submit</button>
 				</form>
 			</script>	
-			<script type="text/ng-template" id="/monthly-expenses.html">
-				<div ng-repeat='limit in spendingLimit'>
-					Spending Limit: {{ limit }}
+
+			<!--Monthly expenses -->
+			<script type="text/ng-template" id="/expenses.html">
+				<div class="table-responsive">
+					<table class="table">						
+						<tbody>
+							<tr ng-repeat='limit in spendingLimit'>
+								<td>Spending limit</td>
+								<td> {{ limit }} </td>
+							</tr>
+							<tr>
+								<td>Total spent</td>
+								<td>{{ totalSpent }}</td>
+							</tr>
+							<tr>
+								<td>Leftover</td>
+								<td>{{ leftOver }}</td>
+							</tr>
+							<tr>
+								<td>Up by</td>
+								<td>{{ upBy | number:0 }}</td>
+							</tr>
+							<tr>
+								<td>Daily budget</td>
+								<td>{{ dailyBudget | number:0 }}</td>
+							</tr>
+							<tr>
+								<td>Days left</td>
+								<td>{{ daysLeft | number:0 }}</td>
+							</tr>
+							<tr>
+								<td>Period</td>
+								<td>{{ periodStart | date:'MM/dd/yyyy' }}</td>
+								<td>{{ periodEnd | date:'MM/dd/yyyy' }}</td>
+							</tr>
+							<tr>
+								<td>Today</td>
+								<td>{{ today | date:'MM/dd/yyyy' }}</td>
+							</tr>
+							<tr></tr>
+						</tbody>
+					</table>
 				</div>
-				<div>
-					Total spent: {{ totalSpent }}
-				</div>
-				<div>
-					Left over: {{ leftOver }}
-				</div>
-				<div>
-					Up by: {{ upBy | number:0 }}
-				</div>
-				<div>
-					Daily budget: {{ dailyBudget | number:0 }}
-				</div>
-				<div>
-					Days left: {{ daysLeft | number:0 }}
-				</div>
-				<div>
-					Period: {{ periodStart | date:'MM/dd/yyyy' }} - {{ periodEnd | date:'MM/dd/yyyy' }}
-				</div>
-				<div>
-					Today: {{ today | date:'MM/dd/yyyy' }}
-				</div>
-				<div ng-hide='true'>
-					{{amount1}}
-				</div>				
-				<div>
+
+				<!--Spending limit form -->
+				<div ng-hide='true'>{{amount1}}</div>				
+				<div class="form-group">
 					<form name='form' ng-submit='spendingLimitForm()'>
 						<span>Set spending limit</span>
-						<input type='number' placeholder='1350' ng-model='amount1'>
-						<input type='submit' value='Submit'>
+						<input class="form-control" type='number' placeholder='1350' ng-model='amount1'>
+						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
 				</div>
 				<br>
 				<br>
 				<br>
-				<div ng-repeat='expense in monthlyExpenses'>
-					{{ expense.description }} - {{ expense.amount }}
+
+				<!--Monthly expenses stuff-->
+				<div class="table-responsive">
+					<table class="table">
+						<tbody ng-repeat='expense in monthlyExpenses'>
+							<tr>
+								<td>{{expense.description}}</td>
+								<td>{{expense.amount}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div> {{description}} ---- {{amount}} </div>				
+				<div class="table-responsive">
+					<table class='table'>
+						<tbody>
+							<tr>
+								<td>{{description}}</td>
+								<td>{{amount}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			
 				<div>
 					<form name='form' ng-submit='monthlyExpenseForm()'>
 						<span>Description</span>
-						<input type='text' placeholder='Starbucks' ng-model='description'>
+						<input class='form-control' type='text' placeholder='Starbucks' ng-model='description'>
 						<span>Amount</span>
-						<input type='number' placeholder='5.49' ng-model='amount'>
-						<input type='submit' value='Submit'>
+						<input class='form-control' type='number' placeholder='5.49' ng-model='amount'>
+						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
 				</div>
 			</script>		
