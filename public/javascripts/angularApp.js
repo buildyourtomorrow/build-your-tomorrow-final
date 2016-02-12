@@ -148,9 +148,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http,
 		};
 		o.totalSpent = x;
 	};
-	o.calcLeftOver = function(){
 
-	};
 	o.calcPeriodStart = function(){
 		var today = new Date();
 		var year = today.getFullYear();
