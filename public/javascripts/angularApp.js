@@ -5,6 +5,16 @@ app.config([
 	'$urlRouterProvider', 
 	function ($stateProvider, $urlRouterProvider) {
 		$stateProvider
+			.state('dashboard', {
+				url: '/dashboard', 
+				templateUrl: '/dashboard.html',
+				controller: 'DashboardCtrl',
+				resolve: {
+					postPromise: ['monthlyExpensesFactory', function(monthlyExpensesFactory){						
+						return monthlyExpensesFactory.getUser();
+					}]
+				}
+			})
 			.state('income', {
 				url: '/income', 
 				templateUrl: '/income.html',
@@ -94,7 +104,7 @@ app.factory('billsFactory', ['$http', function($http){
 	return o
 }]);
 
-app.factory('monthlyExpensesFactory', ['$http', function($http){
+app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http, incomeFactory){
 	var o = {
 		monthlyExpenses: [],
 		spendingLimit: [],
@@ -105,7 +115,9 @@ app.factory('monthlyExpensesFactory', ['$http', function($http){
 		daysLeft: 0,
 		periodStart: [],
 		periodEnd: [],
-		today: []
+		today: [],
+		totalIncome: 0,
+		totalBills: 0
 	};
 	o.getUser = function(){
 		return $http.get('/get-user').then(function(response){
@@ -119,6 +131,8 @@ app.factory('monthlyExpensesFactory', ['$http', function($http){
 			o.periodStart.push(response.data.periodStart);
 			o.periodEnd.push(response.data.periodEnd);
 			o.today.push(response.data.today);
+			o.totalIncome = response.data.totalIncome;
+			o.totalBills = response.data.billsTotal;
 		});
 	};
 	o.postMonthlyExpense = function(description, amount){ // function that sends monthly expense to api
@@ -176,38 +190,10 @@ app.factory('monthlyExpensesFactory', ['$http', function($http){
 	return o
 }]);
 
-app.controller('IncomeCtrl', ['$scope', 'incomeFactory', function($scope, incomeFactory){
-	$scope.allIncome = incomeFactory.income;
-	$scope.totalIncome = incomeFactory.incomeTotal;
-	
-	// function that processes income form. 
-	$scope.incomeForm = function(){	
-		incomeFactory.postIncome($scope.income, $scope.description); // send form to api
-		incomeFactory.income.push({ 'amount': $scope.income, 'description': $scope.description });
-		$scope.totalIncome = incomeFactory.calculateTotal();
-		$scope.form.$setPristine();
-		$scope.income='';
-		$scope.description='';
-	};
-}]);
+app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', function($scope, monthlyExpensesFactory){
+	$scope.totalIncome = monthlyExpensesFactory.totalIncome;
+	$scope.totalBills = monthlyExpensesFactory.totalBills;	
 
-app.controller('BillsCtrl', ['$scope', 'billsFactory', function($scope, billsFactory){
-	$scope.bills = billsFactory.bills;
-	$scope.totalBills = billsFactory.totalBills;
-	
-	// function that processes bills form. 
-	$scope.billForm = function(){	
-		billsFactory.postBill($scope.amount, $scope.description); // send form to api
-		billsFactory.bills.push({ 'amount': $scope.amount, 'description': $scope.description });
-		$scope.totalBills = billsFactory.calculateTotal();
-		$scope.form.$setPristine();
-		$scope.amount='';
-		$scope.description='';
-	};
-}]);
-
-app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', function($scope, monthlyExpensesFactory){
-	$scope.monthlyExpenses = monthlyExpensesFactory.monthlyExpenses;
 	$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 	$scope.leftOver = monthlyExpensesFactory.leftOver;
@@ -244,6 +230,42 @@ app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', funct
 		$scope.form.$setPristine();
 		$scope.amount1='';
 	};
+}]);
+
+app.controller('IncomeCtrl', ['$scope', 'incomeFactory', function($scope, incomeFactory){
+	$scope.allIncome = incomeFactory.income;
+	$scope.totalIncome = incomeFactory.incomeTotal;
+	
+	// function that processes income form. 
+	$scope.incomeForm = function(){	
+		incomeFactory.postIncome($scope.income, $scope.description); // send form to api
+		incomeFactory.income.push({ 'amount': $scope.income, 'description': $scope.description });
+		$scope.totalIncome = incomeFactory.calculateTotal();
+		$scope.form.$setPristine();
+		$scope.income='';
+		$scope.description='';
+	};
+}]);
+
+app.controller('BillsCtrl', ['$scope', 'billsFactory', function($scope, billsFactory){
+	$scope.bills = billsFactory.bills;
+	$scope.totalBills = billsFactory.totalBills;
+	
+	// function that processes bills form. 
+	$scope.billForm = function(){	
+		billsFactory.postBill($scope.amount, $scope.description); // send form to api
+		billsFactory.bills.push({ 'amount': $scope.amount, 'description': $scope.description });
+		$scope.totalBills = billsFactory.calculateTotal();
+		$scope.form.$setPristine();
+		$scope.amount='';
+		$scope.description='';
+	};
+}]);
+
+app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', function($scope, monthlyExpensesFactory){
+	$scope.monthlyExpenses = monthlyExpensesFactory.monthlyExpenses;
+	$scope.totalSpent = monthlyExpensesFactory.totalSpent
+
 	$scope.monthlyExpenseForm = function(){
 		monthlyExpensesFactory.postMonthlyExpense($scope.description, $scope.amount);
 
