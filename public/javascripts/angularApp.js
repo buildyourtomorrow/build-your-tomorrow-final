@@ -5,6 +5,26 @@ app.config([
 	'$urlRouterProvider', 
 	function ($stateProvider, $urlRouterProvider) {
 		$stateProvider
+			.state('login', {
+  				url: '/login',
+  				templateUrl: '/login.html',
+  				controller: 'AuthCtrl',
+  				onEnter: ['$state', 'auth', function($state, auth){
+    				if(auth.isLoggedIn()){
+      					$state.go('dashboard');
+    				}
+  				}]
+			})
+			.state('register', {
+				url: '/register',
+				templateUrl: '/register.html',
+				controller: 'AuthCtrl',
+				onEnter: ['$state', 'auth', function($state, auth){
+					if(auth.isLoggedIn()){
+			  			$state.go('dashboard');
+					}
+				}]
+			})
 			.state('dashboard', {
 				url: '/dashboard', 
 				templateUrl: '/dashboard.html',
@@ -48,7 +68,56 @@ app.config([
 		}
 	])
 
-app.factory('incomeFactory', ['$http', function($http){
+app.factory('auth', ['$http', '$window', function($http, $window){
+	var auth = {};
+
+	auth.saveToken = function (token){
+ 		$window.localStorage['dashboard-token'] = token;
+	};
+
+	auth.getToken = function (){
+  		return $window.localStorage['dashboard-token'];
+	};
+
+	auth.isLoggedIn = function(){
+		var token = auth.getToken();
+
+		if(token){
+			var payload = JSON.parse($window.atob(token.split('.')[1]));
+			return payload.exp > Date.now() / 1000;
+		} else {
+			return false;
+		}
+	};
+
+	auth.currentUser = function(){
+  		if(auth.isLoggedIn()){
+    		var token = auth.getToken();
+	    	var payload = JSON.parse($window.atob(token.split('.')[1]));
+    		return payload.username;
+  		}
+	};
+
+	auth.register = function(user){
+  		return $http.post('/register', user).success(function(data){
+    		auth.saveToken(data.token);
+  		});
+	};
+
+	auth.logIn = function(user){
+  		return $http.post('/login', user).success(function(data){
+    		auth.saveToken(data.token);
+  		});
+	};
+
+	auth.logOut = function(){
+  		$window.localStorage.removeItem('dashboard-token');
+	};
+
+	return auth;
+}]);
+
+app.factory('incomeFactory', ['$http', 'auth', function($http, auth){
 	var o = {
 		income: []
 	};
@@ -63,10 +132,10 @@ app.factory('incomeFactory', ['$http', function($http){
 		return o.incomeTotal = total;
 	};
 	o.postIncome = function(income, description){ // function that sends income to api
-		return $http.post('/add-income', { 'description': description,  'income': income });
+		return $http.post('/add-income', { 'description': description,  'income': income }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
 	};	
 	o.getUser = function(){ // function that gets the user from api
-		return $http.get('/get-user').then(function(response){
+		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
 			angular.copy(response.data.income, o.income) // ang-copy deletes everything the income array above and adds every inside of res.data[0].income
 			o.calculateTotal();
 		}, function(){
@@ -76,7 +145,7 @@ app.factory('incomeFactory', ['$http', function($http){
 	return o
 }]);
 
-app.factory('billsFactory', ['$http', function($http){
+app.factory('billsFactory', ['$http', 'auth', function($http, auth){
 	var o = {
 		bills: []
 	};
@@ -91,10 +160,10 @@ app.factory('billsFactory', ['$http', function($http){
 		return o.totalBills = total;
 	};
 	o.postBill = function(amount, description){ // function that sends income to api
-		return $http.post('/add-bill', { 'description': description,  'amount': amount });
+		return $http.post('/add-bill', { 'description': description,  'amount': amount }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
 	};	
 	o.getUser = function(){ // function that gets the user from api
-		return $http.get('/get-user').then(function(response){
+		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
 			angular.copy(response.data.monthlyBills, o.bills) // ang-copy deletes everything the income array above and adds every inside of res.data
 			o.calculateTotal();
 		}, function(){
@@ -104,10 +173,10 @@ app.factory('billsFactory', ['$http', function($http){
 	return o
 }]);
 
-app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http, incomeFactory){
+app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', function($http, incomeFactory, auth){
 	var o = {
 		monthlyExpenses: [],
-		spendingLimit: [],
+		spendingLimit: 0,
 		totalSpent: 0,
 		leftOver: 0,
 		upBy: 0,
@@ -120,9 +189,10 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http,
 		totalBills: 0
 	};
 	o.getUser = function(){
-		return $http.get('/get-user').then(function(response){
+		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
+
 			angular.copy(response.data.monthlyExpenses, o.monthlyExpenses);
-			o.spendingLimit.push(response.data.spendingLimit);
+			o.spendingLimit = response.data.spendingLimit;
 			o.totalSpent = response.data.totalSpent;
 			o.leftOver = response.data.leftOver;
 			o.upBy = response.data.upBy;
@@ -136,10 +206,10 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http,
 		});
 	};
 	o.postMonthlyExpense = function(description, amount){ // function that sends monthly expense to api
-		return $http.post('/add-monthly-expense', {'description': description, 'amount': amount})
+		return $http.post('/add-monthly-expense', {'description': description, 'amount': amount}, {headers: {Authorization: 'Bearer ' + auth.getToken()}}) // config is the 3rd arg. header is config.
 	};	
 	o.postSpendingLimit = function(spendingLimit){
-		return $http.post('/add-spending-limit', {'spendingLimit': spendingLimit})
+		return $http.post('/add-spending-limit', {'spendingLimit': spendingLimit}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
 	};
 	o.calcTotalSpent = function(expenses){
 		var x = 0;
@@ -179,7 +249,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http,
 		o.upBy = x1;
 	};
 	o.calcDailyBudget = function(){
-		var x1 = o.spendingLimit[0] / ((o.periodEnd[1] - o.periodStart[1]) + 1);
+		var x1 = o.spendingLimit / ((o.periodEnd[1] - o.periodStart[1]) + 1);
 		o.dailyBudget = x1;
 	};
 	o.calcDaysLeft = function(){
@@ -188,7 +258,8 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', function($http,
 	return o
 }]);
 
-app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', function($scope, monthlyExpensesFactory){
+app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', function($scope, monthlyExpensesFactory, auth){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.totalIncome = monthlyExpensesFactory.totalIncome;
 	$scope.totalBills = monthlyExpensesFactory.totalBills;	
 
@@ -205,8 +276,7 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', function($s
 	$scope.spendingLimitForm = function(){
 		monthlyExpensesFactory.postSpendingLimit($scope.amount1);
 
-		monthlyExpensesFactory.spendingLimit = [];
-		monthlyExpensesFactory.spendingLimit.push($scope.amount1);
+		monthlyExpensesFactory.spendingLimit = $scope.amount1;
 		monthlyExpensesFactory.calcPeriodStart();
 		monthlyExpensesFactory.calcPeriodEnd();
 		monthlyExpensesFactory.calcToday();
@@ -216,7 +286,7 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', function($s
 
 		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
 		$scope.totalSpent = monthlyExpensesFactory.totalSpent;
-		$scope.leftOver = monthlyExpensesFactory.spendingLimit[0] - monthlyExpensesFactory.totalSpent;
+		$scope.leftOver = monthlyExpensesFactory.spendingLimit - monthlyExpensesFactory.totalSpent;
 		$scope.upBy = monthlyExpensesFactory.upBy;
 		$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 		$scope.daysLeft = monthlyExpensesFactory.daysLeft;
@@ -230,7 +300,8 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', function($s
 	};
 }]);
 
-app.controller('IncomeCtrl', ['$scope', 'incomeFactory', function($scope, incomeFactory){
+app.controller('IncomeCtrl', ['$scope', 'incomeFactory', 'auth', function($scope, incomeFactory, auth){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.allIncome = incomeFactory.income;
 	$scope.totalIncome = incomeFactory.incomeTotal;
 	
@@ -245,7 +316,8 @@ app.controller('IncomeCtrl', ['$scope', 'incomeFactory', function($scope, income
 	};
 }]);
 
-app.controller('BillsCtrl', ['$scope', 'billsFactory', function($scope, billsFactory){
+app.controller('BillsCtrl', ['$scope', 'billsFactory', 'auth', function($scope, billsFactory, auth){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.bills = billsFactory.bills;
 	$scope.totalBills = billsFactory.totalBills;
 	
@@ -260,7 +332,8 @@ app.controller('BillsCtrl', ['$scope', 'billsFactory', function($scope, billsFac
 	};
 }]);
 
-app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', function($scope, monthlyExpensesFactory){
+app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', function($scope, monthlyExpensesFactory, auth){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.monthlyExpenses = monthlyExpensesFactory.monthlyExpenses;
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent
 
@@ -290,4 +363,33 @@ app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', funct
 		$scope.amount='';
 		$scope.description='';
 	};
+}]);
+
+app.controller('AuthCtrl', ['$scope', '$state', 'auth', function($scope, $state, auth){
+	$scope.user = {};
+
+	$scope.register = function(){
+		auth.register($scope.user).error(function(error){ //investigate error message.
+      	$scope.error = error;
+    }).then(function(){
+      	$state.go('dashboard');
+    	});
+  	};
+
+  	$scope.logIn = function(){
+   		auth.logIn($scope.user).error(function(error){
+      	$scope.error = error;
+    }).then(function(){
+      	$state.go('dashboard');
+    });
+  };
+}])
+
+app.controller('NavCtrl', ['$scope', '$state', 'auth', function($scope, $state, auth){
+	$scope.isLoggedIn = auth.isLoggedIn;
+  	$scope.currentUser = auth.currentUser;
+  	$scope.logOut = function(){
+  		auth.logOut();
+  		$state.go('login');
+  	};
 }]);

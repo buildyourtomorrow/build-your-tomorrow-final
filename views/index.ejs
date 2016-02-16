@@ -8,24 +8,20 @@
 			<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
 			<script src="/javascripts/angularApp.js"></script>
+			<link rel="stylesheet" type="text/css" href="/css/styles.css">
 		</head>
 		<body ng-app="Dashboard">
 			<div class="container">
-				<div class="row">
-					<ul class="nav nav-pills">
-						<li role="presentation" class="pull-right"><a href="/#/login">Login</a></li>
-						<li role="presentation" class="pull-right"><a href="/#/logout">Logout</a></li>
-						<li role="presentation" class="pull-right"><a href="/#/register">Register</a></li>
-					</ul>
-				</div>
-				<div class="row">
-					<ul class="nav nav-pills">
-						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
-						<li role="presentation"><a href="/#/income">Income</a></li>
-						<li role="presentation"><a href="/#/bills">Bills</a></li>
-						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
-					</ul>	
-				</div>
+				<div class="row" ng-controller="NavCtrl">
+					<nav class="navbar navbar-default pull-right">
+						<ul class="nav navbar-nav">
+							<li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+							<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+							<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+							<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+						</ul>
+					</nav>				
+				</div>				
 				<div class="row">
 					<br>
 					<br>
@@ -34,67 +30,118 @@
 					</div>
 				</div>
 			</div>
+
+			<!--Register-->
+			<script type="text/ng-template" id="/register.html">
+				<div class="page-header">
+					<h1>Let's budget</h1>
+				</div>
+				<div ng-show="error" class="alert alert-danger row">
+					<span>{{ error.message }}</span>
+				</div>
+				<form ng-submit="register()" style="margin-top:30px;">
+					<h3>Register</h3>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+					</div>
+					<button type="submit" class="btn btn-primary">Register</button>
+				</form>
+			</script>
+
+			<!--Login-->
+			<script type="text/ng-template" id="/login.html">
+				<div class="page-header">
+					<h1>Let's budget</h1>
+				</div>
+				<div ng-show="error" class="alert alert-danger row">
+					<span>{{ error.message }}</span>
+				</div>
+				<form ng-submit="logIn()" style="margin-top:30px;">
+					<h3>Log In</h3>
+					<div class="form-group">
+					  <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+					</div>
+					<div class="form-group">
+					  <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+					</div>
+					<button type="submit" class="btn btn-primary">Log In</button>
+				</form>
+			</script>
 					
 			<!--Dashboard stuff -->
 			<script type="text/ng-template" id="/dashboard.html">
+				<div>					
+					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
+						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
+						<li role="presentation"><a href="/#/income">Income</a></li>
+						<li role="presentation"><a href="/#/bills">Bills</a></li>
+						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
+					</ul>	
+				</div>	
 				<div class="table-responsive">
 					<table class="table">		
-						<thead>
+						<tbody>
 							<tr>
 								<td>Total income</td>
-								<td>{{totalIncome}}</td>																
+								<td class='table-data'>{{totalIncome}}</td>																
 							</tr>
 							<tr>
 								<td>Total bills</td>
-								<td>{{totalBills}}</td>
+								<td class='table-data'>{{totalBills}}</td>
 							</tr>
 							<tr>
 								<td>Total expenses</td>
-								<td>{{totalSpent}}</td>
+								<td class='table-data'>{{totalSpent}}</td>
 							</tr>	
 							<tr>
 								<td>Savings</td>
-								<td>{{totalIncome - totalBills - totalSpent}}</td>
+								<td class='table-data'>{{totalIncome - totalBills - totalSpent}}</td>
 							</tr>	
-						</thead>								
+						</tbody>
+					</table>
+					<br>
+					<table class="table">	
 						<tbody>
-							<tr ng-repeat='limit in spendingLimit'>
+							<tr>
 								<td>Spending limit</td>
-								<td> {{limit}} </td>
+								<td class='table-data'>{{spendingLimit}}</td>
 							</tr>
 							<tr>
 								<td>Total spent</td>
-								<td>{{totalSpent}}</td>
+								<td class='table-data'>{{totalSpent}}</td>
 							</tr>
 							<tr>
 								<td>Leftover</td>
-								<td>{{leftOver}}</td>
+								<td class='table-data'>{{leftOver}}</td>
 							</tr>
 							<tr>
 								<td>Up by</td>
-								<td>{{upBy|number:0}}</td>
+								<td class='table-data'>{{upBy|number:0}}</td>
 							</tr>
 							<tr>
 								<td>Daily budget</td>
-								<td>{{dailyBudget|number:0}}</td>
+								<td class='table-data'>{{dailyBudget|number:0}}</td>
 							</tr>
 							<tr>
 								<td>Days left</td>
-								<td>{{daysLeft|number:0}}</td>
+								<td class='table-data'>{{daysLeft|number:0}}</td>
 							</tr>
 							<tr>
 								<td>Period</td>
-								<td>{{periodStart|date:'MM/dd/yyyy'}}</td>
-								<td>{{periodEnd|date:'MM/dd/yyyy'}}</td>
+								<td class='table-data'>{{periodStart|date:'MM/dd/yyyy'}}</td>
+								<td class='table-data'>{{periodEnd|date:'MM/dd/yyyy'}}</td>
 							</tr>
 							<tr>
 								<td>Today</td>
-								<td>{{today|date:'MM/dd/yyyy'}}</td>
+								<td class='table-data'>{{today|date:'MM/dd/yyyy'}}</td>
 							</tr>
-							<tr></tr>
 						</tbody>
-					</table>
+					</table>								
 				</div>
+				<br>
 
 				<!--Spending limit form -->
 				<div ng-hide='true'>{{amount1}}</div>				
@@ -109,18 +156,26 @@
 
 			<!--Income stuff -->
 			<script type="text/ng-template" id="/income.html">
+				<div>					
+					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
+						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
+						<li role="presentation"><a href="/#/income">Income</a></li>
+						<li role="presentation"><a href="/#/bills">Bills</a></li>
+						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
+					</ul>	
+				</div>
 				<div class="table-responsive">
 					<table class="table">						
 						<thead ng-repeat='item in allIncome'>
 							<tr>
 								<td>{{item.description}}</td>
-								<td>{{item.amount}}</td>
+								<td class='table-data'>{{item.amount}}</td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>Total income</td>
-								<td>{{totalIncome}}</td>
+								<td class='table-data'>{{totalIncome}}</td>
 							</tr>							
 						</tbody>
 					</table>					
@@ -130,7 +185,7 @@
 						<tbody>
 							<tr>
 								<td>{{description}}</td>
-								<td>{{income}}</td>
+								<td class='table-data'>{{income}}</td>
 							</tr>							
 						</tbody>
 					</table>					
@@ -146,18 +201,26 @@
 
 			<!--Bills stuff -->
 			<script type="text/ng-template" id="/bills.html">
+				<div>					
+					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
+						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
+						<li role="presentation"><a href="/#/income">Income</a></li>
+						<li role="presentation"><a href="/#/bills">Bills</a></li>
+						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
+					</ul>	
+				</div>
 				<div class="table-responsive">
 					<table class="table">						
 						<thead ng-repeat='bill in bills'>
 							<tr>
 								<td>{{bill.description}}</td>
-								<td>{{bill.amount}}</td>
+								<td class='table-data'>{{bill.amount}}</td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>Total bills</td>
-								<td>{{totalBills}}</td>
+								<td class='table-data'>{{totalBills}}</td>
 							</tr>							
 						</tbody>
 					</table>
@@ -169,7 +232,7 @@
 						<tbody>
 							<tr>
 								<td>{{description}}</td>
-								<td>{{amount}}</td>
+								<td class='table-data'>{{amount}}</td>
 							</tr>
 						</tbody>
 					</table>	
@@ -183,20 +246,28 @@
 				</form>
 			</script>	
 
-			<!--Monthly expenses -->
+			<!--Monthly expenses --> 
 			<script type="text/ng-template" id="/expenses.html">
+				<div>					
+					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
+						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
+						<li role="presentation"><a href="/#/income">Income</a></li>
+						<li role="presentation"><a href="/#/bills">Bills</a></li>
+						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
+					</ul>	
+				</div>
 				<div class="table-responsive">
 					<table class="table">
 						<thead ng-repeat='expense in monthlyExpenses'>
 							<tr>
 								<td>{{expense.description}}</td>
-								<td>{{expense.amount}}</td>
+								<td class='table-data'>{{expense.amount}}</td>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>Total expenses</td>
-								<td>{{totalSpent}}</td>
+								<td class='table-data'>{{totalSpent}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -206,7 +277,7 @@
 						<tbody>
 							<tr>
 								<td>{{description}}</td>
-								<td>{{amount}}</td>
+								<td class='table-data'>{{amount}}</td>
 							</tr>
 						</tbody>
 					</table>

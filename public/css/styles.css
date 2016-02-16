@@ -1,0 +1,6 @@
+.table th, .table td { 
+     border-top: none !important; 
+ }
+.table-data {
+    text-align: center;
+}
