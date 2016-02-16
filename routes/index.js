@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-require('/Users/eliezernunez/Desktop/byt/models/User.js');
+// for development
+//require('/Users/eliezernunez/Desktop/byt/models/User.js');
+// for production
+require('/app/models/User')
 var User = mongoose.model('user');
 var passport = require('passport');
 var jwt = require('express-jwt');
