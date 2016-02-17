@@ -73,7 +73,7 @@ UserSchema.methods.generateJWT = function() {
     _id: this._id,
     username: this.username,
     exp: parseInt(exp.getTime() / 1000),
-  }, process.env.BYT_SECRET);
+  }, 'SECRET');
 };
 
 UserSchema.methods.calcTotalIncome = function(allIncome){		
