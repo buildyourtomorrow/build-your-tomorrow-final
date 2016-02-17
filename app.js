@@ -4,8 +4,14 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
+//for local development
+//mongoose.connect('mongodb://localhost/incomedb'); // connection to database
+//for production
+mongoose.connect(process.env.MONGOLAB_URI, function (error) {
+    if (error) console.error(error);
+    else console.log('mongo connected');
+});
 
-mongoose.connect('mongodb://localhost/incomedb'); // connection to database
 require('./models/User');
 require('./config/passport');
 
