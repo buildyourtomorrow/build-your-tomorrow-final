@@ -29,4 +29,4 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/', routes); // use routes from the folder above.
 
-app.listen(3000);
+app.listen(process.env.PORT || 5000);
