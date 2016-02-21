@@ -15,7 +15,9 @@ if (process.env.NODE_ENV === "production") {
 var User = mongoose.model('user');
 var passport = require('passport');
 var jwt = require('express-jwt');
+console.log('1')
 console.log(process.env.BYT_SECRET);
+console.log('2')
 var auth = jwt({secret: process.env.BYT_SECRET, userProperty: 'payload'});
 
 router.get('/', function(req, res){
