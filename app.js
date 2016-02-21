@@ -4,13 +4,19 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var passport = require('passport');
-//for local development
-//mongoose.connect('mongodb://localhost/incomedb'); // connection to database
+
+//for development
+if (process.env.USER === "eliezernunez") {
+	mongoose.connect('mongodb://localhost/incomedb');
+}; 
+
 //for production
-mongoose.connect(process.env.MONGOLAB_URI, function (error) {
-    if (error) console.error(error);
-    else console.log('mongo connected');
-});
+if (process.env.NODE_ENV === "production") {
+	mongoose.connect(process.env.MONGOLAB_URI, function (error) {
+    	if (error) console.error(error);
+    	else console.log('mongo connected');
+	});
+}; 
 
 require('./models/User');
 require('./config/passport');

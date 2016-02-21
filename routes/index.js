@@ -1,13 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-// for development
-//require('/Users/eliezernunez/Desktop/byt/models/User.js');
-// for production
-require('/app/models/User')
+
+//for development
+if (process.env.USER === "eliezernunez") {
+	require('/Users/eliezernunez/Desktop/byt/models/User.js');
+}; 
+
+//for production
+if (process.env.NODE_ENV === "production") {
+	require('/app/models/User')
+}; 
+
 var User = mongoose.model('user');
 var passport = require('passport');
 var jwt = require('express-jwt');
+console.log(process.env.BYT_SECRET);
 var auth = jwt({secret: process.env.BYT_SECRET, userProperty: 'payload'});
 
 router.get('/', function(req, res){
