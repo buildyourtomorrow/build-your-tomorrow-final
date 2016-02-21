@@ -17,6 +17,8 @@ var passport = require('passport');
 var jwt = require('express-jwt');
 console.log('1')
 console.log(process.env.BYT_SECRET);
+console.log(process.env.NODE_ENV)
+console.log(process.env);
 console.log('2')
 var auth = jwt({secret: process.env.BYT_SECRET, userProperty: 'payload'});
 
