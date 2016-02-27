@@ -138,8 +138,8 @@ app.factory('incomeFactory', ['$http', 'auth', function($http, auth){
 		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
 			angular.copy(response.data.income, o.income) // ang-copy deletes everything the income array above and adds every inside of res.data[0].income
 			o.calculateTotal();
-		}, function(){
-			console.log('error');
+		}, function(){			
+			$state.go('register');
 		});
 	};
 	return o
@@ -167,7 +167,7 @@ app.factory('billsFactory', ['$http', 'auth', function($http, auth){
 			angular.copy(response.data.monthlyBills, o.bills) // ang-copy deletes everything the income array above and adds every inside of res.data
 			o.calculateTotal();
 		}, function(){
-			console.log('error');
+			$state.go('register');
 		});
 	};
 	return o
@@ -203,6 +203,8 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', functio
 			o.today.push(response.data.today);
 			o.totalIncome = response.data.totalIncome;
 			o.totalBills = response.data.billsTotal;
+		}, function(){
+			$state.go('register');
 		});
 	};
 	o.postMonthlyExpense = function(description, amount){ // function that sends monthly expense to api
