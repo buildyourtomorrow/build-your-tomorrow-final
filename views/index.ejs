@@ -2,13 +2,28 @@
 	<html>
 		<head>
 			<title>Dashboard - BYT</title>
+			<!--boostrap-->
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+			<!--angular -->
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 
+			<!--my javascript -->
 			<script src="/javascripts/angularApp.js"></script>
-			<link rel="stylesheet" href="/css/styles.css">
+			<script src="/javascripts/controllers/AuthCtrl.js"></script>
+			<script src="/javascripts/controllers/BillsCtrl.js"></script>
+			<script src="/javascripts/controllers/DashboardCtrl.js"></script>
+			<script src="/javascripts/controllers/IncomeCtrl.js"></script>
+			<script src="/javascripts/controllers/MonthlyExpensesCtrl.js"></script>
+			<script src="/javascripts/controllers/NavCtrl.js"></script>
+			<script src="/javascripts/factories/authFactory.js"></script>
+			<script src="/javascripts/factories/billsFactory.js"></script>
+			<script src="/javascripts/factories/incomeFactory.js"></script>
+			<script src="/javascripts/factories/monthlyExpensesFactory.js"></script>
+
+			<!--my css -->
+			<link rel="stylesheet" href="/css/styles.css">				
 		</head>
 		<body ng-app="Dashboard">
 			<div class="container">
@@ -22,12 +37,8 @@
 						</ul>
 					</nav>				
 				</div>				
-				<div class="row">
-					<br>
-					<br>
-					<div class="col-md-6 col-md-offset-3">
-						<ui-view></ui-view>
-					</div>
+				<div class="row col-md-10 col-md-offset-1 main_content">					
+					<ui-view></ui-view>
 				</div>
 			</div>
 
@@ -70,85 +81,94 @@
 					<button type="submit" class="btn btn-primary">Log In</button>
 				</form>
 			</script>
-					
+
 			<!--Dashboard stuff -->
 			<script type="text/ng-template" id="/dashboard.html">
-				<div>					
-					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
-						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
-						<li role="presentation"><a href="/#/income">Income</a></li>
-						<li role="presentation"><a href="/#/bills">Bills</a></li>
-						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
-					</ul>	
-				</div>	
-				<div class="table-responsive">
-					<table class="table">		
-						<tbody>
-							<tr>
-								<td>Total income</td>
-								<td class='table-data'>{{totalIncome}}</td>																
-							</tr>
-							<tr>
-								<td>Total bills</td>
-								<td class='table-data'>{{totalBills}}</td>
-							</tr>
-							<tr>
-								<td>Total expenses</td>
-								<td class='table-data'>{{totalSpent}}</td>
-							</tr>	
-							<tr>
-								<td>Savings</td>
-								<td class='table-data'>{{totalIncome - totalBills - totalSpent}}</td>
-							</tr>	
-						</tbody>
-					</table>
-					<br>
-					<table class="table">	
-						<tbody>
-							<tr>
-								<td>Spending limit</td>
-								<td class='table-data'>{{spendingLimit}}</td>
-							</tr>
-							<tr>
-								<td>Total spent</td>
-								<td class='table-data'>{{totalSpent}}</td>
-							</tr>
-							<tr>
-								<td>Leftover</td>
-								<td class='table-data'>{{leftOver}}</td>
-							</tr>
-							<tr>
-								<td>Up by</td>
-								<td class='table-data'>{{upBy|number:0}}</td>
-							</tr>
-							<tr>
-								<td>Daily budget</td>
-								<td class='table-data'>{{dailyBudget|number:0}}</td>
-							</tr>
-							<tr>
-								<td>Days left</td>
-								<td class='table-data'>{{daysLeft|number:0}}</td>
-							</tr>
-							<tr>
-								<td>Period</td>
-								<td class='table-data'>{{periodStart|date:'MM/dd/yyyy'}}</td>
-								<td class='table-data'>{{periodEnd|date:'MM/dd/yyyy'}}</td>
-							</tr>
-							<tr>
-								<td>Today</td>
-								<td class='table-data'>{{today|date:'MM/dd/yyyy'}}</td>
-							</tr>
-						</tbody>
-					</table>								
-				</div>
-				<br>
+				<section class="row">	
+					<section class="dashboard_nav">
+						<ul ng-show='{{ isLoggedIn() }}'>
+							<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
+							<li role="presentation" class="dashboard_nav_second"><a href="/#/income">Income</a></li>
+							<li role="presentation" class="dashboard_nav_third"><a href="/#/bills">Bills</a></li>
+							<li role="presentation" class="dashboard_nav_fourth"><a href="/#/expenses">Expenses</a></li>
+						</ul>	
+					</section>
+				</section>
+				<section class="row">
+					<section class="table-responsive">
+						<section class="dashboard_overview">
+							<table class="table">		
+								<tbody>
+									<tr>
+										<td class="dashboard_overview_1">Total income</td>
+										<td class="dashboard_overview_2">{{totalIncome | number:0}}</td>		
+									</tr>
+									<tr>
+										<td class="dashboard_overview_1">Total bills</td>
+										<td class="dashboard_overview_2">{{totalBills | number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_overview_1">Total expenses</td>
+										<td class="dashboard_overview_2">{{totalSpent | number:0}}</td>
+									</tr>	
+									<tr>
+										<td class="dashboard_overview_1">Savings</td>
+										<td class="dashboard_overview_2">{{totalIncome - totalBills - totalSpent|number:0}}</td>
+									</tr>	
+								</tbody>
+							</table>
+						</section>
+					</section>
+				</section>					
+				<section class="row">
+					<section class="table-responsive">
+						<section class="dashboard_analysis">
+							<table class="table">	
+								<tbody>
+									<tr>
+										<td class="dashboard_analysis_1">Spending limit</td>
+										<td class="dashboard_analysis_2">{{spendingLimit|number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Total spent</td>
+										<td class="dashboard_analysis_2">{{totalSpent|number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Leftover</td>
+										<td class="dashboard_analysis_2">{{leftOver|number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Up by</td>
+										<td class="dashboard_analysis_2">{{upBy|number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Daily budget</td>
+										<td class="dashboard_analysis_2">{{dailyBudget|number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Days left</td>
+										<td class="dashboard_analysis_2">{{daysLeft|number:0}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Today</td>
+										<td class="dashboard_analysis_2">{{today|date:'MM/dd/yyyy'}}</td>
+									</tr>
+									<tr>
+										<td class="dashboard_analysis_1">Period</td>
+										<td class="dashboard_analysis_2">{{periodStart|date:'MM/dd/yyyy'}} - {{periodEnd|date:'MM/dd/yyyy'}}</td>
+									</tr>									
+								</tbody>
+							</table>
+						</section>
+					</section>								
+				</section>
 
 				<!--Spending limit form -->
 				<div ng-hide='true'>{{amount1}}</div>				
 				<div class="form-group">
 					<form name='form' ng-submit='spendingLimitForm()'>
 						<span>Set spending limit</span>
-						<input class="form-control" type='number' placeholder='1350' step="any" ng-model='amount1' required>
+						<input class="form-control" type='number' placeholder='1350' step="any" ng-model='amount1'required>
 						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
 				</div>
@@ -156,30 +176,36 @@
 
 			<!--Income stuff -->
 			<script type="text/ng-template" id="/income.html">
-				<div>					
-					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
-						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
-						<li role="presentation"><a href="/#/income">Income</a></li>
-						<li role="presentation"><a href="/#/bills">Bills</a></li>
-						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
-					</ul>	
-				</div>
-				<div class="table-responsive">
-					<table class="table">						
-						<thead ng-repeat='item in allIncome'>
-							<tr>
-								<td>{{item.description}}</td>
-								<td class='table-data'>{{item.amount}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Total income</td>
-								<td class='table-data'>{{totalIncome | number:0}}</td>
-							</tr>							
-						</tbody>
-					</table>					
-				</div>
+				<section class="row">	
+					<section class="dashboard_nav">
+						<ul ng-show='{{ isLoggedIn() }}'>
+							<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
+							<li role="presentation" class="dashboard_nav_second"><a href="/#/income">Income</a></li>
+							<li role="presentation" class="dashboard_nav_third"><a href="/#/bills">Bills</a></li>
+							<li role="presentation" class="dashboard_nav_fourth"><a href="/#/expenses">Expenses</a></li>
+						</ul>	
+					</section>
+				</section>
+				<section class="row">
+					<section class="table-responsive">
+						<section class="income">
+							<table class="table">	
+								<thead ng-repeat='item in allIncome'>
+									<tr>
+										<td class="income_1">{{item.description}}</td>
+										<td class="income_2">{{item.amount | number:0}}</td>
+									</tr>
+								</thead>	
+								<tbody>
+									<tr>
+										<td class="income_1">Total income</td>
+										<td class="income_2">{{totalIncome | number:0}}</td>
+									</tr>							
+								</tbody>
+							</table>
+						</section>
+					</section>
+				</section>	
 				<form name='form' ng-submit="incomeForm()">
 					<span>Description</span>
 					<input class='form-control' type="text" placeholder="Job" ng-model="description" list="income_list" required>
@@ -204,30 +230,36 @@
 
 			<!--Bills stuff -->
 			<script type="text/ng-template" id="/bills.html">
-				<div>					
-					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
-						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
-						<li role="presentation"><a href="/#/income">Income</a></li>
-						<li role="presentation"><a href="/#/bills">Bills</a></li>
-						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
-					</ul>	
-				</div>
-				<div class="table-responsive">
-					<table class="table">						
-						<thead ng-repeat='bill in bills'>
-							<tr>
-								<td>{{bill.description}}</td>
-								<td class='table-data'>{{bill.amount}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Total bills</td>
-								<td class='table-data'>{{totalBills | number:0}}</td>
-							</tr>							
-						</tbody>
-					</table>
-				</div>		
+				<section class="row">	
+					<section class="dashboard_nav">
+						<ul ng-show='{{ isLoggedIn() }}'>
+							<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
+							<li role="presentation" class="dashboard_nav_second"><a href="/#/income">Income</a></li>
+							<li role="presentation" class="dashboard_nav_third"><a href="/#/bills">Bills</a></li>
+							<li role="presentation" class="dashboard_nav_fourth"><a href="/#/expenses">Expenses</a></li>
+						</ul>	
+					</section>
+				</section>
+				<section class="row">
+					<section class="table-responsive">
+						<section class="bills">
+							<table class="table">						
+								<thead ng-repeat='bill in bills'>
+									<tr>
+										<td class="bills_1">{{bill.description}}</td>
+										<td class="bills_2">{{bill.amount | number:0}}</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="bills_1">Total bills</td>
+										<td class="bills_2">{{totalBills | number:0}}</td>
+									</tr>							
+								</tbody>
+							</table>
+						</section>
+					</section>
+				</section>
 				<form name='form' ng-submit="billForm()">
 					<span>Description</span>
 					<input class='form-control' type="text" placeholder="Rent" ng-model="description" list="bills_list" required>
@@ -263,31 +295,36 @@
 
 			<!--Monthly expenses --> 
 			<script type="text/ng-template" id="/expenses.html">
-				<div>					
-					<ul class="nav nav-pills" ng-show='{{ isLoggedIn() }}'>
-						<li role="presentation"><a href="/#/dashboard">Dashboard</a></li>
-						<li role="presentation"><a href="/#/income">Income</a></li>
-						<li role="presentation"><a href="/#/bills">Bills</a></li>
-						<li role="presentation"><a href="/#/expenses">Expenses</a></li>
-					</ul>	
-				</div>
-				<div class="table-responsive">
-					<table class="table">
-						<thead ng-repeat='expense in monthlyExpenses'>
-							<tr>
-								<td>{{expense.description}}</td>
-								<td class='table-data'>{{expense.amount}}</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Total expenses</td>
-								<td class='table-data'>{{totalSpent | number:0}}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div>
+				<section class="row">	
+					<section class="dashboard_nav">
+						<ul ng-show='{{ isLoggedIn() }}'>
+							<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
+							<li role="presentation" class="dashboard_nav_second"><a href="/#/income">Income</a></li>
+							<li role="presentation" class="dashboard_nav_third"><a href="/#/bills">Bills</a></li>
+							<li role="presentation" class="dashboard_nav_fourth"><a href="/#/expenses">Expenses</a></li>
+						</ul>	
+					</section>
+				</section>
+				<section class="row">
+					<section class="table-responsive">
+						<section class="expenses">
+							<table class="table">
+								<thead ng-repeat='expense in monthlyExpenses'>
+									<tr>
+										<td class="expenses_1">{{expense.description}}</td>
+										<td class="expenses_2">{{expense.amount | number:0}}</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="expenses_1">Total expenses</td>
+										<td class="expenses_2">{{totalSpent | number:0}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</section>
+					</section>
+				</section>
 					<form name='form' ng-submit='monthlyExpenseForm()'>
 						<span>Description</span>
 						<input class='form-control' type='text' placeholder='Starbucks' ng-model='description' list="expenses_list" required>

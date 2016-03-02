@@ -1,6 +1,258 @@
+html, body, h1, h2, h3, h4, ul, ol, li, p, a {
+    padding: 0;
+    border: 0;
+	margin: 0;
+}
+.main_content {
+	background-color: #f8f8f8;
+	border-radius: 5px;
+	font-family: sans-serif; 
+	color: #666666;
+}
+.dashboard_nav {
+	background-color: #FFFFFF;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	padding-top: 20px;
+	padding-right: 1px;
+	padding-bottom: 20px;	
+	padding-left: 1px;
+	border-radius: 5px;
+	line-height: 25px;	
+}
+.dashboard_nav ul {
+	text-align: center;
+}
+.dashboard_nav ul li{
+	margin-top: 10px;
+	margin-right: 25px;
+	margin-bottom: 10px;
+	margin-left: 25px;
+	display: inline;	
+	font-size: 16px;	
+}
+.dashboard_nav a {
+	color: #666666;
+	font-family: sans-serif; 
+}
+.dashboard_nav a:hover {
+    text-decoration: none;
+}
+.dashboard_overview {
+	background-color: #FFFFFF;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+.dashboard_overview table tbody tr td {
+	font-size: 16px;
+	padding-top: 20px;
+	padding-right: 10px;
+	padding-bottom: 10px;	
+	padding-left: 60px;
+}
+.dashboard_overview_1 {
+
+} 
+.dashboard_overview_2 {
+	text-align: center;
+} 
+.dashboard_analysis {
+	background-color: #FFFFFF;
+	margin-top: 3px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+.dashboard_analysis table tbody tr td {
+	font-size: 16px;
+	padding-top: 20px;
+	padding-right: 10px;
+	padding-bottom: 10px;	
+	padding-left: 60px;
+}
+.dashboard_analysis_1 {
+	width: 470px;
+}
+.dashboard_analysis_2 {
+	text-align: center;
+} 
 .table th, .table td { 
      border-top: none !important; 
  }
-.table-data {
-    text-align: center;
+ .income {
+	background-color: #FFFFFF;
+	margin-top: 8px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+.income table tr td {
+	font-size: 16px;
+	padding-top: 20px;
+	padding-right: 10px;
+	padding-bottom: 10px;	
+	padding-left: 60px;
+}
+.income_2 {
+	text-align: center;
+}
+.income_1 {
+	width: 470px;
+}
+.bills table tr td {
+	font-size: 16px;
+	padding-top: 20px;
+	padding-right: 10px;
+	padding-bottom: 10px;	
+	padding-left: 60px;
+}
+.bills {
+	background-color: #FFFFFF;
+	margin-top: 8px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+.bills_1 {
+	width: 470px;
+}
+.bills_2 {
+	text-align: center;
+}
+.expenses table tr td {
+	font-size: 16px;
+	padding-top: 20px;
+	padding-right: 10px;
+	padding-bottom: 10px;	
+	padding-left: 60px;
+}
+.expenses {
+	background-color: #FFFFFF;
+	margin-top: 8px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+.expenses_1 {
+	width: 470px;
+}
+.expenses_2 {
+	text-align: center;	
+}
+@media screen and (max-width: 590px) {
+	.dashboard_nav_first {
+		margin-left: 3px !important;
+		margin-right: 3px !important;
+		font-size: 15px !important;
+	}
+	.dashboard_nav_second {
+		margin-left: 15px !important;
+		margin-right: 15px !important;
+		font-size: 15px !important;
+	}
+	.dashboard_nav_third {
+		margin-left: 15px !important;
+		margin-right: 15px !important;
+		font-size: 15px !important;
+	}
+	.dashboard_nav_fourth {
+		margin-left: 3px !important;
+		margin-right: 3px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 590px) {
+	.expenses_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.expenses_1 {
+		padding-left: 30px !important;
+	}
+}
+@media screen and (max-width: 630px) {
+	.expenses_2 {
+		padding-right: 30px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 590px) {
+	.bills_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.bills_1 {
+		padding-left: 30px !important;
+	}
+}
+@media screen and (max-width: 630px) {
+	.bills_2 {
+		padding-right: 30px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 590px) {
+	.income_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.income_1 {
+		padding-left: 30px !important;
+	}
+}
+@media screen and (max-width: 630px) {
+	.income_2 {
+		padding-right: 30px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 590px) {
+	.dashboard_overview_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.dashboard_overview_1 {
+		padding-left: 30px !important;
+	}
+}
+@media screen and (max-width: 630px) {
+	.dashboard_overview_2 {
+		padding-right: 30px !important;
+		font-size: 15px !important;
+	}
+}
+
+@media screen and (max-width: 590px) {
+	.dashboard_analysis_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.dashboard_analysis_1 {
+		padding-left: 30px !important;
+	}
+}
+@media screen and (max-width: 630px) {
+	.dashboard_analysis_2 {
+		padding-right: 30px !important;
+		font-size: 15px !important;
+	}
 }
