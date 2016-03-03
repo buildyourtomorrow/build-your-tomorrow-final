@@ -23,6 +23,9 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.upBy = response.data.upBy;
 			o.dailyBudget = response.data.dailyBudget;
 			o.daysLeft = response.data.daysLeft;
+			console.log(response.data.periodStart)
+			console.log(response.data.periodStart)
+			console.log('asdf');
 			o.periodStart.push(response.data.periodStart);
 			o.periodEnd.push(response.data.periodEnd);
 			o.today.push(response.data.today);
@@ -50,10 +53,9 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		var today = new Date();
 		var year = today.getFullYear();
 		var month = today.getMonth();
-		var x1 = new Date(year, month, 1);
+		var x1 = new Date(year, month, 1);z
 		o.periodStart = [];
 		o.periodStart.push(x1);
-		o.periodStart.push(x1.getDate());
 	};
 	o.calcPeriodEnd = function(){
 		var today = new Date();
