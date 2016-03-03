@@ -238,7 +238,6 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 		font-size: 15px !important;
 	}
 }
-
 @media screen and (max-width: 590px) {
 	.dashboard_analysis_1 {
 		padding-left: 20px !important;

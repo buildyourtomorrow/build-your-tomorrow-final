@@ -10,6 +10,7 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 	$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 	$scope.daysLeft = monthlyExpensesFactory.daysLeft;
 	$scope.periodStart = monthlyExpensesFactory.periodStart[0];
+	console.log(monthlyExpensesFactory.periodStart)
 	$scope.periodEnd = monthlyExpensesFactory.periodEnd[0];
 	$scope.today = monthlyExpensesFactory.today[0];
 

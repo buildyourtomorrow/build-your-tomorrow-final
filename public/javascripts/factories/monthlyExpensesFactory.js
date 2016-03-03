@@ -53,7 +53,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		var x1 = new Date(year, month, 1);
 		o.periodStart = [];
 		o.periodStart.push(x1);
-		o.periodStart.push(1);
+		o.periodStart.push(x1.getDate());
 	};
 	o.calcPeriodEnd = function(){
 		var today = new Date();
