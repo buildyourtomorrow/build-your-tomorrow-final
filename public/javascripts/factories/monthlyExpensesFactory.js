@@ -50,7 +50,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		var today = new Date();
 		var year = today.getFullYear();
 		var month = today.getMonth();
-		var x1 = new Date(year, month, 1);z
+		var x1 = new Date(year, month, 1);
 		o.periodStart = [];
 		o.periodStart.push(x1);
 	};
