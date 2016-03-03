@@ -22,11 +22,23 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.leftOver = response.data.leftOver;
 			o.upBy = response.data.upBy;
 			o.dailyBudget = response.data.dailyBudget;
-			o.daysLeft = response.data.daysLeft;
-			o.periodStart.push(response.data.periodStart);
-			console.log(response.data.periodStart);
-			console.log(o.periodStart);
-			o.periodEnd.push(response.data.periodEnd);
+			o.daysLeft = response.data.daysLeft;			
+
+			var today = new Date();
+			var year = today.getFullYear();
+			var month = today.getMonth();
+			var x1 = new Date(year, month, 1);
+			o.periodStart = [];
+			o.periodStart.push(x1);
+						
+			var today = new Date();
+			var year = today.getFullYear();
+			var month = today.getMonth() + 1;
+			var x1 = new Date(year, month, 0);
+			o.periodEnd = [];
+			o.periodEnd.push(x1);
+			o.periodEnd.push(x1.getDate());			
+			
 			o.today.push(response.data.today);
 			o.totalIncome = response.data.totalIncome;
 			o.totalBills = response.data.billsTotal;
