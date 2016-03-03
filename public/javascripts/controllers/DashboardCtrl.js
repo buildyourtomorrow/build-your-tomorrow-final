@@ -17,6 +17,7 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 
 		monthlyExpensesFactory.spendingLimit = $scope.amount1;
 		monthlyExpensesFactory.calcPeriodStart();
+		console.log(monthlyExpensesFactory.periodStart)
 		monthlyExpensesFactory.calcPeriodEnd();
 		monthlyExpensesFactory.calcToday();
 		monthlyExpensesFactory.calcDailyBudget();
