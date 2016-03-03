@@ -24,6 +24,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.dailyBudget = response.data.dailyBudget;
 			o.daysLeft = response.data.daysLeft;
 			o.periodStart.push(response.data.periodStart);
+			console.log(response.data.periodStart)
 			o.periodEnd.push(response.data.periodEnd);
 			o.today.push(response.data.today);
 			o.totalIncome = response.data.totalIncome;
