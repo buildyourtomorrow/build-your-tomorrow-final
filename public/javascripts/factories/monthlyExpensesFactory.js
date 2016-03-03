@@ -23,9 +23,6 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.upBy = response.data.upBy;
 			o.dailyBudget = response.data.dailyBudget;
 			o.daysLeft = response.data.daysLeft;
-			console.log(response.data.periodStart)
-			console.log(response.data.periodStart)
-			console.log('asdf');
 			o.periodStart.push(response.data.periodStart);
 			o.periodEnd.push(response.data.periodEnd);
 			o.today.push(response.data.today);
