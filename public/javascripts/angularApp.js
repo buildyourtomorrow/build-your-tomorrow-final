@@ -5,6 +5,16 @@ app.config([
 	'$urlRouterProvider', 
 	function ($stateProvider, $urlRouterProvider) {
 		$stateProvider
+			.state('home', {
+  				url: '',
+  				templateUrl: '/home.html',
+  				controller: 'AuthCtrl',
+  				onEnter: ['$state', 'auth', function($state, auth){
+    				if(auth.isLoggedIn()){
+      					$state.go('dashboard');
+    				}
+  				}]
+			})
 			.state('login', {
   				url: '/login',
   				templateUrl: '/login.html',
