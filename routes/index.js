@@ -118,7 +118,6 @@ router.post('/add-monthly-expense', auth, function(req, res){
 router.post('/add-spending-limit', auth, function(req, res){
 	User.findOne({'username': req.payload.username}, function(error, user){
 		user.spendingLimit = req.body.spendingLimit;
-		console.log(user);
 		user.save(function(){
 			user.calcPeriodStart();
 			user.calcPeriodEnd();

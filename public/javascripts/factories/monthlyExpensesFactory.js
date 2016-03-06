@@ -43,19 +43,8 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			console.log('1');
 			console.log('1');
 			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
-			console.log('1');
 			o.today.push(response.data.today);
+			console.log(o.today);
 			o.totalIncome = response.data.totalIncome;
 			o.totalBills = response.data.billsTotal;
 		}, function(){
