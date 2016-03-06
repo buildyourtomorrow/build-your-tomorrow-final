@@ -81,7 +81,6 @@ router.post('/add-bill', auth, function(req, res){
 
 router.get('/get-user', auth, function(req, res){	
 	User.findOne({'username': req.payload.username}, function(error, user){
-		console.log(user);
 		user.calcPeriodStart();
 		user.calcPeriodEnd();
 		user.calcToday();

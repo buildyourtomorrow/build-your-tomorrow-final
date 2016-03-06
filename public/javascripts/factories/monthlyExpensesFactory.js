@@ -39,6 +39,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.periodEnd.push(x1);
 			o.periodEnd.push(x1.getDate());			
 			
+			console.log(response.data)
 			o.today.push(response.data.today);
 			o.totalIncome = response.data.totalIncome;
 			o.totalBills = response.data.billsTotal;

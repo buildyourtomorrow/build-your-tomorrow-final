@@ -109,9 +109,6 @@ UserSchema.methods.calcLeftOver = function(){
 };
 
 UserSchema.methods.calcUpBy = function(){
-	console.log(this.today.getDate())
-	console.log(this.periodStart.getDate())
-	console.log(this.totalSpent)
 	this.upBy = ( this.dailyBudget * ( (this.today.getDate() - this.periodStart.getDate()) + 1) ) -  this.totalSpent;
 	this.save();
 };
