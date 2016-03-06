@@ -33,7 +33,7 @@
 				<div class="row" ng-controller="NavCtrl">
 					<nav class="navbar navbar-default">
 						<ul class="nav navbar-nav">
-							<li ng-show="isLoggedIn()">Wassup {{ currentUser() }}</li>
+							<li ng-show="isLoggedIn()"><a>Wassup {{ currentUser() }}</a></li>
 							<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
 							<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
 							<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
