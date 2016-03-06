@@ -35,6 +35,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			var year = today.getFullYear();
 			var month = today.getMonth() + 1;
 			var x1 = new Date(year, month, 0);
+			x1 = x1.getDate();
 			var periodEnd1 = month+'/'+x1+'/'+year;
 			o.periodEnd = [];
 			o.periodEnd.push(periodEnd1);	
