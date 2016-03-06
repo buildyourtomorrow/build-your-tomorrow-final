@@ -32,14 +32,9 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 		monthlyExpensesFactory.calcDaysLeft();
 
 		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
-		$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 		$scope.leftOver = monthlyExpensesFactory.spendingLimit - monthlyExpensesFactory.totalSpent;
 		$scope.upBy = monthlyExpensesFactory.upBy;
 		$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
-		$scope.daysLeft = monthlyExpensesFactory.daysLeft;
-		$scope.periodStart = monthlyExpensesFactory.periodStart[0];
-		$scope.periodEnd = monthlyExpensesFactory.periodEnd[0];
-		$scope.today = monthlyExpensesFactory.today[0];
 
 		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
 		$scope.form.$setPristine();

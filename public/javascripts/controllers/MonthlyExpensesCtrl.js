@@ -20,11 +20,6 @@ app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', 'auth
 		$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 		$scope.leftOver = monthlyExpensesFactory.spendingLimit[0] - monthlyExpensesFactory.totalSpent;
 		$scope.upBy = monthlyExpensesFactory.upBy;
-		$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
-		$scope.daysLeft = monthlyExpensesFactory.daysLeft;
-		$scope.periodStart = monthlyExpensesFactory.periodStart[0];
-		$scope.periodEnd = monthlyExpensesFactory.periodEnd[0];
-		$scope.today = monthlyExpensesFactory.today[0];
 
 		$scope.form.$setPristine();
 		$scope.amount='';
