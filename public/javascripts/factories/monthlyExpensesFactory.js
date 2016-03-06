@@ -26,9 +26,8 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 
 			var today = new Date();
 			var year = today.getFullYear();
-			var month = today.getMonth();
+			var month = today.getMonth() + 1;
 			var x1 = new Date(year, month, 1);
-			month = x1.getMonth();
 			x1 = x1.getDate();
 			var periodStart1 = month+'/'+x1+'/'+year;
 			o.periodStart = [];
