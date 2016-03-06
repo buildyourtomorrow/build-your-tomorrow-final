@@ -5,7 +5,15 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 	$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 	$scope.leftOver = monthlyExpensesFactory.leftOver;
-	$scope.upBy = monthlyExpensesFactory.upBy;
+	if (monthlyExpensesFactory.upBy >= 0) {
+		$scope.specialVarUpBy = true;
+		$scope.upBy = monthlyExpensesFactory.upBy;
+	} 
+
+	if (monthlyExpensesFactory.upBy < 0) {
+		$scope.specialVarDownBy = true;	
+		$scope.upBy = monthlyExpensesFactory.upBy; // User is in the negative
+	}
 	$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 	$scope.daysLeft = monthlyExpensesFactory.daysLeft;
 	$scope.periodStart = monthlyExpensesFactory.periodStart[0];

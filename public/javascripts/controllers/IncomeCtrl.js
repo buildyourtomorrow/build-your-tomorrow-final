@@ -1,5 +1,4 @@
 app.controller('IncomeCtrl', ['$scope', 'incomeFactory', 'auth', function($scope, incomeFactory, auth){
-	console.log('12');
 	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.allIncome = incomeFactory.income;
 	$scope.totalIncome = incomeFactory.incomeTotal;
