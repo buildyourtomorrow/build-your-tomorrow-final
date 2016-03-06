@@ -51,7 +51,9 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			if(mm<10) {
 			    mm='0'+mm
 			} 
+			console.log(mm+'/'+dd+'/'+yyyy);
 			today = mm+'/'+dd+'/'+yyyy;
+			console.log(today);
 			o.today.push(today);
 			
 			o.totalIncome = response.data.totalIncome;
