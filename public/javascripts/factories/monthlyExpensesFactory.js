@@ -38,9 +38,22 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.periodEnd = [];
 			o.periodEnd.push(x1);
 			o.periodEnd.push(x1.getDate());			
-	
+
 			var today = new Date();
-			o.today.push(today.getDate());
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+
+			if(dd<10) {
+			    dd='0'+dd
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm
+			} 
+			today = mm+'/'+dd+'/'+yyyy;
+			o.today.push(today);
+			
 			o.totalIncome = response.data.totalIncome;
 			o.totalBills = response.data.billsTotal;
 		}, function(){
