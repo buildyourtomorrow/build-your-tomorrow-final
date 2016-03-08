@@ -147,13 +147,8 @@
 										<td class="dashboard_analysis_1">Leftover</td>
 										<td class="dashboard_analysis_2">{{leftOver|number:0}}</td>
 									</tr>
-									<tr style='background-color: #00FF00' ng-show='{{ specialVarUpBy }}'>
-										<td class="dashboard_analysis_1">Up by</td>
-										<td class="dashboard_analysis_2">{{upBy|number:0}}</td>
-									</tr>
-
-									<tr style='background-color: #FE7878' ng-show='{{ specialVarDownBy }}'>
-										<td class="dashboard_analysis_1">Down by</td>
+									<tr style='background-color:{{ specialVarUpBy }}'>
+										<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
 										<td class="dashboard_analysis_2">{{upBy|number:0}}</td>
 									</tr>
 									<tr>
@@ -163,10 +158,6 @@
 									<tr>
 										<td class="dashboard_analysis_1">Days left</td>
 										<td class="dashboard_analysis_2">{{daysLeft|number:0}}</td>
-									</tr>
-									<tr>
-										<td class="dashboard_analysis_1">Today</td>
-										<td class="dashboard_analysis_2">{{today}}</td>
 									</tr>
 									<tr>
 										<td class="dashboard_analysis_1">Period</td>
@@ -179,7 +170,6 @@
 				</section>
 
 				<!--Spending limit form -->
-				<div ng-hide='true'>{{amount1}}</div>				
 				<div class="form-group">
 					<form name='form' ng-submit='spendingLimitForm()'>
 						<span>Set spending limit</span>

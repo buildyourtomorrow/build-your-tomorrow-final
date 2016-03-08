@@ -80,6 +80,7 @@ router.post('/add-bill', auth, function(req, res){
 });
 
 router.get('/get-user', auth, function(req, res){	
+	console.log(new Date);
 	User.findOne({'username': req.payload.username}, function(error, user){
 		user.calcPeriodStart();
 		user.calcPeriodEnd();

@@ -72,22 +72,20 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 	o.calcPeriodStart = function(){
 		var today = new Date();
 		var year = today.getFullYear();
-		var month = today.getMonth() + 1;
+		var month = today.getMonth();
 		var x1 = new Date(year, month, 1);
-		x1 = x1.getDate();
-		var periodStart1 = month+'/'+x1+'/'+year;
 		o.periodStart = [];
-		o.periodStart.push(periodStart1);
+		o.periodStart.push(x1);
+		o.periodStart.push(x1.getDate())
 	};
 	o.calcPeriodEnd = function(){
 		var today = new Date();
 		var year = today.getFullYear();
-		var month = today.getMonth() + 1;
+		var month = today.getMonth();
 		var x1 = new Date(year, month, 0);
-		x1 = x1.getDate();
-		var periodEnd1 = month+'/'+x1+'/'+year;
 		o.periodEnd = [];
-		o.periodEnd.push(periodEnd1);
+		o.periodEnd.push(x1);
+		o.periodEnd.push(x1.getDate());
 	};
 	o.calcToday = function(){
 		var today = new Date();
@@ -97,9 +95,10 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		today = mm+'/'+dd+'/'+yyyy;
 		o.today = []; 
 		o.today.push(today);
+		o.today.push(dd);
 	};
 	o.calcUpBy = function(){
-		var x1 = (o.dailyBudget * ((o.today[1] - o.periodStart[1]) + 1)) - o.totalSpent;
+		var x1 = (o.dailyBudget * o.today[1]) - o.totalSpent;
 		o.upBy = x1;
 	};
 	o.calcDailyBudget = function(){

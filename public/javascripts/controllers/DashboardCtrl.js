@@ -6,19 +6,22 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 	$scope.leftOver = monthlyExpensesFactory.leftOver;
 	if (monthlyExpensesFactory.upBy >= 0) {
-		$scope.specialVarUpBy = true;
+		$scope.specialVarUpBy = '#00FF00';
+		$scope.specialVarUpByWord = 'Up By';
 		$scope.upBy = monthlyExpensesFactory.upBy;
 	} 
 
 	if (monthlyExpensesFactory.upBy < 0) {
-		$scope.specialVarDownBy = true;	
-		$scope.upBy = monthlyExpensesFactory.upBy; // User is in the negative
+		$scope.specialVarUpBy = '#FE7878';
+		$scope.specialVarUpByWord = 'Down By';
+		$scope.upBy = monthlyExpensesFactory.upBy;
 	}
 	$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 	$scope.daysLeft = monthlyExpensesFactory.daysLeft;
 	$scope.periodStart = monthlyExpensesFactory.periodStart[0];
 	$scope.periodEnd = monthlyExpensesFactory.periodEnd[0];
 	$scope.today = monthlyExpensesFactory.today[0];
+	console.log(new Date);
 
 	$scope.spendingLimitForm = function(){
 		monthlyExpensesFactory.postSpendingLimit($scope.amount1);
@@ -33,7 +36,17 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 
 		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
 		$scope.leftOver = monthlyExpensesFactory.spendingLimit - monthlyExpensesFactory.totalSpent;
-		$scope.upBy = monthlyExpensesFactory.upBy;
+		if (monthlyExpensesFactory.upBy >= 0) {
+			$scope.specialVarUpBy = '#00FF00';
+			$scope.specialVarUpByWord = 'Up By';
+			$scope.upBy = monthlyExpensesFactory.upBy;
+		} 
+
+		if (monthlyExpensesFactory.upBy < 0) {
+			$scope.specialVarUpBy = '#FE7878';
+			$scope.specialVarUpByWord = 'Down By';
+			$scope.upBy = monthlyExpensesFactory.upBy;
+		}
 		$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 
 		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
