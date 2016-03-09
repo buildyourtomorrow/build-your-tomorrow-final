@@ -109,12 +109,12 @@ UserSchema.methods.calcLeftOver = function(){
 };
 
 UserSchema.methods.calcUpBy = function(){
-	this.upBy = ( this.dailyBudget * ( (this.today.getDate() - this.periodStart.getDate()) + 1) ) -  this.totalSpent;
+	this.upBy = ( this.dailyBudget * this.today.getDate() ) -  this.totalSpent;
 	this.save();
 };
 
 UserSchema.methods.calcDailyBudget = function(){
-	this.dailyBudget = this.spendingLimit / ( (this.periodEnd.getDate() - this.periodStart.getDate()) + 1 )
+	this.dailyBudget = this.spendingLimit / this.periodEnd.getDate()  
 	this.save();
 };
 
@@ -124,18 +124,28 @@ UserSchema.methods.calcDaysLeft = function(){
 };
 
 UserSchema.methods.calcPeriodStart = function(){
-	var today = new Date();
-	var mm = today.getMonth() + 1;
+	// from StackOverFlow
+	var offset = -5.0
+	var clientDate = new Date();
+	var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+	var serverDate = new Date(utc + (3600000*offset));
+
+	var mm = serverDate.getMonth() + 1;
 	var dd = 1;
-	var year = today.getFullYear();
+	var year = serverDate.getFullYear();
 	this.periodStart = mm + '/' + dd + '/' + year;	
 	this.save();
 };
 
 UserSchema.methods.calcPeriodEnd = function(){
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = today.getMonth() + 1;
+	// from StackOverFlow
+	var offset = -5.0
+	var clientDate = new Date();
+	var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+	var serverDate = new Date(utc + (3600000*offset));
+
+	var year = serverDate.getFullYear();
+	var month = serverDate.getMonth() + 1;
 	var o = new Date(year, month, 0);
 	var mm = o.getMonth() + 1;
 	var dd = o.getDate();
@@ -145,10 +155,15 @@ UserSchema.methods.calcPeriodEnd = function(){
 };
 
 UserSchema.methods.calcToday = function(){
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth() + 1;
-	var yyyy = today.getFullYear();
+	// from StackOverFlow
+	var offset = -5.0
+	var clientDate = new Date();
+	var utc = clientDate.getTime() + (clientDate.getTimezoneOffset() * 60000);
+	var serverDate = new Date(utc + (3600000*offset));
+
+	var dd = serverDate.getDate();
+	var mm = serverDate.getMonth() + 1;
+	var yyyy = serverDate.getFullYear();
 	this.today = mm + '/' + dd + '/' + yyyy; 
 	this.save();
 };
