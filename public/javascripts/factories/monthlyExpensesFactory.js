@@ -81,7 +81,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 	o.calcPeriodEnd = function(){
 		var today = new Date();
 		var year = today.getFullYear();
-		var month = today.getMonth();
+		var month = today.getMonth() + 1;
 		var x1 = new Date(year, month, 0);
 		o.periodEnd = [];
 		o.periodEnd.push(x1);
@@ -102,7 +102,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		o.upBy = x1;
 	};
 	o.calcDailyBudget = function(){
-		var x1 = o.spendingLimit / ((o.periodEnd[1] - o.periodStart[1]) + 1);
+		var x1 = o.spendingLimit / o.periodEnd[1];
 		o.dailyBudget = x1;
 	};
 	o.calcDaysLeft = function(){

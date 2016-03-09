@@ -21,7 +21,6 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 	$scope.periodStart = monthlyExpensesFactory.periodStart[0];
 	$scope.periodEnd = monthlyExpensesFactory.periodEnd[0];
 	$scope.today = monthlyExpensesFactory.today[0];
-	console.log(new Date);
 
 	$scope.spendingLimitForm = function(){
 		monthlyExpensesFactory.postSpendingLimit($scope.amount1);
