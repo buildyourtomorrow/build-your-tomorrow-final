@@ -49,7 +49,7 @@ app.controller('DashboardCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', fun
 		$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 
 		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
-		$scope.form.$setPristine();
+		$scope.spendingLimitForm1.$setPristine();
 		$scope.amount1='';
 	};
 }]);

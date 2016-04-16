@@ -2,18 +2,16 @@ app.factory('incomeFactory', ['$http', 'auth', '$state', function($http, auth, $
 	var o = {
 		income: []
 	};
-
 	o.incomeTotal = 0;
-
 	o.calculateTotal = function(){
 		var total = 0;	
 		for (i = 0; i < o.income.length; i++) {
-			total += o.income[i].amount;
+			total += Math.floor(o.income[i].amount);
 		};
 		return o.incomeTotal = total;
 	};
-	o.postIncome = function(income, description){ // function that sends income to api
-		return $http.post('/add-income', { 'description': description,  'income': income }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
+	o.postIncome = function(description, amount){ // function that sends income to api
+		return $http.post('/add-income', { 'description': description,  'amount': amount }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
 	};	
 	o.getUser = function(){ // function that gets the user from api
 		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
@@ -22,6 +20,12 @@ app.factory('incomeFactory', ['$http', 'auth', '$state', function($http, auth, $
 		}, function(){			
 			$state.go('register');
 		});
+	};
+	o.updateIncomeDescription = function(income){
+		return $http.put('/edit-monthly-income-description', { 'description': income.description, 'id': income.id }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
+	};
+	o.updateIncomeAmount = function(income){
+		return $http.put('/edit-monthly-income-amount', { 'amount': income.amount, 'id': income.id }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
 	};
 	return o
 }]);

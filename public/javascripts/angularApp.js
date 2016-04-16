@@ -1,4 +1,4 @@
-var app = angular.module('Dashboard', ['ui.router']);
+var app = angular.module('Dashboard', ['ui.router', 'ngMessages']);
 
 app.config([
 	'$stateProvider',

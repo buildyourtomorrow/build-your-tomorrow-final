@@ -61,14 +61,19 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 	o.postSpendingLimit = function(spendingLimit){
 		return $http.post('/add-spending-limit', {'spendingLimit': spendingLimit}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
 	};
+	o.editMonthlyExpAmount = function(expense){
+		return $http.put('/edit-monthly-expense-amount', {'expense': expense}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
+	};
+	o.editMonthlyExpDescription = function(expense){
+		return $http.put('/edit-monthly-expense-description', {'expense': expense}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
+	};
 	o.calcTotalSpent = function(expenses){
 		var x = 0;
-		for (i=0; i<expenses.length; i++){			
-			x = x + expenses[i].amount;
-		};
+		for (i=0; i<expenses.length; i++){		
+			x = x + Math.floor(expenses[i].amount);
+		};		
 		o.totalSpent = x;
 	};
-
 	o.calcPeriodStart = function(){
 		var today = new Date();
 		var year = today.getFullYear();

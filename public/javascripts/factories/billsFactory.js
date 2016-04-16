@@ -8,7 +8,7 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 	o.calculateTotal = function(){
 		var total = 0;	
 		for (i = 0; i < o.bills.length; i++) {
-			total += o.bills[i].amount;
+			total += Math.floor(o.bills[i].amount);
 		};
 		return o.totalBills = total;
 	};
@@ -22,6 +22,12 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 		}, function(){
 			$state.go('register');
 		});
+	};
+	o.updateBillDescription = function(bill){
+		return $http.put('/edit-monthly-bill-description', { 'bill': bill }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
+	};
+	o.updateBillAmount = function(bill){
+		return $http.put('/edit-monthly-bill-amount', { 'bill': bill }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
 	};
 	return o
 }]);

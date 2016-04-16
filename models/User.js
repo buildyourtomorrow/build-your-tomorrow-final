@@ -9,37 +9,55 @@ var UserSchema = new mongoose.Schema({
 	},
 	hash: String, // this is where the password goes. It will be saved as a hash.
 	salt: String,
-	monthlyBills: [],
+	monthlyBills: [{
+		id: Number,
+		description: String,
+		amount: Number,
+		date: Date
+	}],
 	billsTotal: {
+		id: Number,
 		type: Number,
 		default: 0
 	},	
-	income: [],
+	income: [{
+		id: Number,
+		description: String,
+		amount: Number,
+		date: Date
+	}],
 	totalIncome: {
+		id: Number,
 		type: Number,
 		default: 0
 	},
 	spendingLimit: {
+		id: Number,
 		type: Number,
 		default: 0
 	},
 	totalSpent: {
+		id: Number,
 		type: Number,
 		default: 0
 	},
 	leftOver: {
+		id: Number,
 		type: Number,
 		default: 0
 	},	
 	upBy: {
+		id: Number,
 		type: Number,
 		default: 0
 	},
 	dailyBudget: {
+		id: Number,
 		type: Number,
 		default: 0
 	},
 	daysLeft: {
+		id: Number,
 		type: Number,
 		default: 0
 	},
@@ -47,6 +65,7 @@ var UserSchema = new mongoose.Schema({
 	periodEnd: Date,
 	today: Date,
 	monthlyExpenses: [{ 
+		id: Number,
 		description: String,
 		amount: Number,
 		date: Date

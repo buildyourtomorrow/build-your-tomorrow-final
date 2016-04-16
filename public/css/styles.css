@@ -1,4 +1,4 @@
-html, body, h1, h2, h3, h4, ul, ol, li, p, a {
+	html, body, h1, h2, h3, h4, ul, ol, li, p, a {
     padding: 0;
     border: 0;
 	margin: 0;
@@ -100,11 +100,19 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	padding-bottom: 10px;	
 	padding-left: 60px;
 }
-.income_2 {
-	text-align: center;
-}
 .income_1 {
 	width: 470px;
+	cursor: pointer;
+}
+.income_2 {
+	text-align: center;
+	cursor: pointer;
+}
+.income_3 {
+	width: 470px;
+}
+.income_4 {
+	text-align: center;
 }
 .bills table tr td {
 	font-size: 16px;
@@ -123,8 +131,16 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 }
 .bills_1 {
 	width: 470px;
+	cursor: pointer;
 }
 .bills_2 {
+	text-align: center;
+	cursor: pointer;
+}
+.bills_3 {
+	width: 470px;
+}
+.bills_4 {
 	text-align: center;
 }
 .expenses table tr td {
@@ -144,8 +160,16 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 }
 .expenses_1 {
 	width: 470px;
+	cursor: pointer;
 }
 .expenses_2 {
+	text-align: center;	
+	cursor: pointer;
+}
+.expenses_3 {
+	width: 470px;
+}
+.expenses_4 {
 	text-align: center;	
 }
 @media screen and (max-width: 590px) {
@@ -254,4 +278,13 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 		padding-right: 30px !important;
 		font-size: 15px !important;
 	}
+}
+.validation_class {
+  background-color: #D0D0D0;
+  border: 1px solid red;
+  padding: .2em;
+}
+.validation_1 {
+	color:red; 
+	margin-bottom: 9px;
 }
