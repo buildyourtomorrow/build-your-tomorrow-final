@@ -173,6 +173,10 @@
 	text-align: center;	
 }
 @media screen and (max-width: 590px) {
+	.dashboard_overview_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
 	.dashboard_nav_first {
 		margin-left: 3px !important;
 		margin-right: 3px !important;
@@ -193,67 +197,9 @@
 		margin-right: 3px !important;
 		font-size: 15px !important;
 	}
-}
-@media screen and (max-width: 590px) {
-	.expenses_1 {
+	.dashboard_analysis_1 {
 		padding-left: 20px !important;
 		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.expenses_1 {
-		padding-left: 30px !important;
-	}
-}
-@media screen and (max-width: 630px) {
-	.expenses_2 {
-		padding-right: 30px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 590px) {
-	.bills_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.bills_1 {
-		padding-left: 30px !important;
-	}
-}
-@media screen and (max-width: 630px) {
-	.bills_2 {
-		padding-right: 30px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 590px) {
-	.income_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.income_1 {
-		padding-left: 30px !important;
-	}
-}
-@media screen and (max-width: 630px) {
-	.income_2 {
-		padding-right: 30px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 590px) {
-	.dashboard_overview_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.dashboard_overview_1 {
-		padding-left: 30px !important;
 	}
 }
 @media screen and (max-width: 630px) {
@@ -261,22 +207,113 @@
 		padding-right: 30px !important;
 		font-size: 15px !important;
 	}
-}
-@media screen and (max-width: 590px) {
-	.dashboard_analysis_1 {
-		padding-left: 20px !important;
+	.dashboard_analysis_2 {
+		padding-right: 30px !important;
 		font-size: 15px !important;
 	}
 }
 @media screen and (max-width: 700px) {
+	.dashboard_overview_1 {
+		padding-left: 30px !important;
+	}
 	.dashboard_analysis_1 {
 		padding-left: 30px !important;
 	}
 }
-@media screen and (max-width: 630px) {
-	.dashboard_analysis_2 {
-		padding-right: 30px !important;
+@media screen and (max-width: 590px) {
+	.income_1 {
+		padding-left: 20px !important;
 		font-size: 15px !important;
+	}
+	.income_2 {
+		font-size: 15px !important;
+	}
+	.income_3 {
+		width: 470px;
+		padding-left: 30px !important;
+		font-size: 15px !important;
+	}
+	.income_4 {
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.income_1 {
+		padding-left: 30px !important;
+	}
+	.income_2 {
+		text-align: center;
+	}
+	.income_3 {
+		width: 470px;
+		padding-left: 30px !important;
+	}
+	.income_4 {
+		text-align: center;
+	}
+}
+@media screen and (max-width: 590px) {
+	.bills_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+	.bills_2 {
+		font-size: 15px !important;
+	}
+	.bills_3 {
+		width: 470px;
+		padding-left: 30px !important;
+		font-size: 15px !important;
+	}
+	.bills_4 {
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.bills_1 {
+		padding-left: 30px !important;
+	}
+	.bills_2 {
+		text-align: center;
+	}
+	.bills_3 {
+		width: 470px;
+		padding-left: 30px !important;
+	}
+	.bills_4 {
+		text-align: center;
+	}
+}
+@media screen and (max-width: 590px) {
+	.expenses_1 {
+		padding-left: 20px !important;
+		font-size: 15px !important;
+	}
+	.expenses_2 {
+		font-size: 15px !important;
+	}
+	.expenses_3 {
+		width: 470px;
+		padding-left: 30px !important;
+		font-size: 15px !important;
+	}
+	.expenses_4 {
+		font-size: 15px !important;
+	}
+}
+@media screen and (max-width: 700px) {
+	.expenses_1 {
+		padding-left: 30px !important;
+	}
+	.expenses_2 {
+		text-align: center;
+	}
+	.expenses_3 {
+		width: 470px;
+		padding-left: 30px !important;
+	}
+	.expenses_4 {
+		text-align: center;
 	}
 }
 .validation_class {
