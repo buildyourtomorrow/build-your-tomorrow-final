@@ -38,7 +38,7 @@
 						</ul>
 					</nav>				
 				</div>				
-				<div class="row col-md-10 col-md-offset-1 main_content">					
+				<div class="row col-md-6 col-md-offset-3 main_content">					
 					<ui-view></ui-view>
 				</div>
 			</div>
@@ -100,30 +100,58 @@
 				</section>
 				<section class="row">
 					<section class="table-responsive">
+						<section class="dashboard_analysis">
+							<table class="table">
+								<tbody>
+									<tr>										
+										<td class="dashboard_text_analysis_1">"Financial freedom is available to those who learn about it and work for it"</td>
+									</tr>
+								</tbody>
+							</table>
+						</section>						
+					</section>
+				</section>	
+				<section class="row">
+					<section class="table-responsive">
 						<section class="dashboard_overview">
-							<table class="table">		
+							<table class="table">
 								<tbody>
 									<tr>
-										<td class="dashboard_overview_1">Total income</td>
-										<td class="dashboard_overview_2">{{totalIncome | number:0}}</td>		
+										<td class="dashboard_overview_1">Income</td>
+										<td class="dashboard_overview_2" style="color: {{totalIncomeColor}}">{{totalIncome | number:0}}</td>
 									</tr>
 									<tr>
-										<td class="dashboard_overview_1">Total bills</td>
-										<td class="dashboard_overview_2">{{totalBills | number:0}}</td>
+										<td class="dashboard_overview_3">Bills 
+											<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+										</td>										
+										<td class="dashboard_overview_4" style="color: {{totalBillsColor}}">{{totalBills | number:0}}</td>
 									</tr>
 									<tr>
-										<td class="dashboard_overview_1">Total expenses</td>
-										<td class="dashboard_overview_2">{{totalSpent | number:0}}</td>
-									</tr>	
+										<td class="dashboard_overview_3">Expenses</td>
+										<td class="dashboard_overview_4" style="color: {{totalSpentColor}}">{{totalSpent | number:0}}</td>
+									</tr>
 									<tr>
-										<td class="dashboard_overview_1">Savings</td>
-										<td class="dashboard_overview_2">{{totalIncome - totalBills - totalSpent|number:0}}</td>
-									</tr>	
+										<td class="dashboard_overview_5">Savings</td>
+										<td class="dashboard_overview_6" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}}</td>
+									</tr>
 								</tbody>
 							</table>
 						</section>
 					</section>
-				</section>					
+				</section>	
+				<section class="row">
+					<section class="table-responsive">
+						<section class="dashboard_analysis">
+							<table class="table">
+								<tbody>
+									<tr>										
+										<td class="dashboard_text_analysis_1">{{savingMoneyBaby}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</section>						
+					</section>
+				</section>				
 				<section class="row">
 					<section class="table-responsive">
 						<section class="dashboard_analysis">
@@ -132,7 +160,7 @@
 									<tr>
 										<td class="dashboard_analysis_1">Spending limit</td>
 										<td class="dashboard_analysis_2">{{spendingLimit|number:0}}</td>
-									</tr>
+									</tr>	
 									<tr>
 										<td class="dashboard_analysis_1">Total spent</td>
 										<td class="dashboard_analysis_2">{{totalSpent|number:0}}</td>
@@ -141,14 +169,37 @@
 										<td class="dashboard_analysis_1">Leftover</td>
 										<td class="dashboard_analysis_2">{{leftOver|number:0}}</td>
 									</tr>
-									<tr style='background-color:{{ specialVarUpBy }}'>
+									<tr>
 										<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
-										<td class="dashboard_analysis_2">{{upBy|number:0}}</td>
+										<td class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}}</td>
+									</tr>			
+								</tbody>
+							</table>
+						</section>
+					</section>								
+				</section>	
+				<section class="row">
+					<section class="table-responsive">
+						<section class="dashboard_analysis">
+							<table class="table">
+								<tbody>
+									<tr>										
+										<td class="dashboard_text_analysis_1">{{upByComment}}</td>
 									</tr>
+								</tbody>
+							</table>
+						</section>						
+					</section>
+				</section>
+				<section class="row">
+					<section class="table-responsive">
+						<section class="dashboard_analysis">
+							<table class="table">	
+								<tbody>
 									<tr>
 										<td class="dashboard_analysis_1">Daily budget</td>
 										<td class="dashboard_analysis_2">{{dailyBudget|number:0}}</td>
-									</tr>
+									</tr>	
 									<tr>
 										<td class="dashboard_analysis_1">Days left</td>
 										<td class="dashboard_analysis_2">{{daysLeft|number:0}}</td>
@@ -156,11 +207,24 @@
 									<tr>
 										<td class="dashboard_analysis_1">Period</td>
 										<td class="dashboard_analysis_2">{{periodStart| date:'MM/dd/yyyy'}} - {{periodEnd}}</td>
-									</tr>									
+									</tr>	
 								</tbody>
 							</table>
 						</section>
 					</section>								
+				</section>
+				<section class="row">
+					<section class="table-responsive">
+						<section class="dashboard_analysis">
+							<table class="table">
+								<tbody>
+									<tr>										
+										<td class="dashboard_text_analysis_1">Try your best to spend less than your daily budget. Gain your freedom one dollar at a time</td>
+									</tr>
+								</tbody>
+							</table>
+						</section>						
+					</section>
 				</section>
 				<!--Spending limit form -->
 				<section> <!-- novalidate disables brower validation -->
@@ -196,11 +260,11 @@
 							<table class="table">	
 								<thead ng-repeat='item in allIncome'>
 									<tr>
-										<td class="income_1">
-											<div contenteditable="true" ng-model="item.description" a-reg-function="updateIncomeDesc(item)"></div>
+										<td>
+											<div class="income_1" contenteditable="true" ng-model="item.description" a-reg-function="updateIncomeDesc(item)"></div>
 										</td>
-										<td class="income_2">
-											<div contenteditable="true" ng-model="item.amount" calc-total-func="updateIncomeAmount(item)"></div>
+										<td>
+											<div class="income_2" contenteditable="true" ng-model="item.amount" calc-total-func="updateIncomeAmount(item)"></div>
 										</td>
 									</tr>
 								</thead>	
@@ -255,11 +319,11 @@
 							<table class="table">					
 								<thead ng-repeat='bill in bills'>
 									<tr>
-										<td class="bills_1">
-											<div contenteditable="true" ng-model="bill.description" a-reg-function="updateBillDesc(bill)"></div>
+										<td>
+											<div class="bills_1" contenteditable="true" ng-model="bill.description" a-reg-function="updateBillDesc(bill)"></div>
 										</td>
-										<td class="bills_2">
-											<div contenteditable="true" ng-model="bill.amount" calc-total-func="updateBillAmount(bill)"></div>
+										<td>
+											<div class="bills_2" contenteditable="true" ng-model="bill.amount" calc-total-func="updateBillAmount(bill)"></div>
 										</td>																				
 									</tr>
 								</thead>

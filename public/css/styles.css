@@ -1,7 +1,16 @@
-	html, body, h1, h2, h3, h4, ul, ol, li, p, a {
+html, body, h1, h2, h3, h4, ul, ol, li, p, a {
     padding: 0;
     border: 0;
 	margin: 0;
+}
+.validation_class {
+  background-color: #D0D0D0;
+  border: 1px solid red;
+  padding: .2em;
+}
+.validation_1 {
+	color:red; 
+	margin-bottom: 9px;
 }
 .main_content {
 	background-color: #f8f8f8;
@@ -20,18 +29,30 @@
 	padding-bottom: 20px;	
 	padding-left: 1px;
 	border-radius: 5px;
-	line-height: 25px;	
+	line-height: 50px;	
 }
 .dashboard_nav ul {
-	text-align: center;
+	text-align: center; 
 }
 .dashboard_nav ul li{
-	margin-top: 10px;
-	margin-right: 25px;
-	margin-bottom: 10px;
-	margin-left: 25px;
 	display: inline;	
-	font-size: 16px;	
+	font-size: 15px;	
+}
+.dashboard_nav_first {
+	margin-left: 25px;
+	margin-right: 25px;
+}
+.dashboard_nav_second {
+	margin-left: 25px;
+	margin-right: 25px;
+}
+.dashboard_nav_third {
+	margin-left: 25px;
+	margin-right: 25px;
+}
+.dashboard_nav_fourth {
+	margin-left: 25px;
+	margin-right: 25px;
 }
 .dashboard_nav a {
 	color: #666666;
@@ -40,6 +61,8 @@
 .dashboard_nav a:hover {
     text-decoration: none;
 }
+/* I gave every table data its own class so if I ever want to target that peice of data, I can */
+/* there is lots of repetition but I'm trying to be explicit */
 .dashboard_overview {
 	background-color: #FFFFFF;
 	margin-top: 10px;
@@ -49,18 +72,33 @@
 	border-radius: 5px;
 }
 .dashboard_overview table tbody tr td {
-	font-size: 16px;
-	padding-top: 20px;
-	padding-right: 10px;
-	padding-bottom: 10px;	
-	padding-left: 60px;
-}
-.dashboard_overview_1 {
-
-} 
-.dashboard_overview_2 {
+	font-size: 15px;
+	width: 50%;
 	text-align: center;
-} 
+	vertical-align: middle;
+	height: 55px;
+}
+/* This area targets the income, bills, expenses totals */
+.dashboard_overview_1 {
+}
+.dashboard_overview_2 {;
+}
+.dashboard_overview_3 {	
+}
+.dashboard_overview_4 {
+}
+.dashboard_overview_5 {
+}
+.dashboard_overview_6 {
+}
+.dashboard_text_analysis_1 {
+	text-align: center; 
+	margin-top: 10px;
+	background-color: #B0E2FF;
+	height: 55px !important;
+	vertical-align: middle;
+	border-radius: 5px;
+}
 .dashboard_analysis {
 	background-color: #FFFFFF;
 	margin-top: 3px;
@@ -70,18 +108,22 @@
 	border-radius: 5px;
 }
 .dashboard_analysis table tbody tr td {
-	font-size: 16px;
-	padding-top: 20px;
-	padding-right: 10px;
-	padding-bottom: 10px;	
-	padding-left: 60px;
+	font-size: 15px;
+	width: 50%;
+	text-align: center;	
+	vertical-align: middle;
+	height: 55px;
 }
 .dashboard_analysis_1 {
-	width: 470px;
+    
 }
 .dashboard_analysis_2 {
 	text-align: center;
+	vertical-align: middle !important;
 } 
+.table {
+	margin-bottom: 0px !important;
+}
 .table th, .table td { 
      border-top: none !important; 
  }
@@ -94,32 +136,21 @@
 	border-radius: 5px;
 }
 .income table tr td {
-	font-size: 16px;
-	padding-top: 20px;
-	padding-right: 10px;
-	padding-bottom: 10px;	
-	padding-left: 60px;
+	font-size: 15px;
+	width: 50%;
+	text-align: center;
+	vertical-align: middle;
+	height: 55px;
 }
 .income_1 {
-	width: 470px;
 	cursor: pointer;
 }
 .income_2 {
-	text-align: center;
 	cursor: pointer;
 }
 .income_3 {
-	width: 470px;
 }
 .income_4 {
-	text-align: center;
-}
-.bills table tr td {
-	font-size: 16px;
-	padding-top: 20px;
-	padding-right: 10px;
-	padding-bottom: 10px;	
-	padding-left: 60px;
 }
 .bills {
 	background-color: #FFFFFF;
@@ -129,26 +160,22 @@
 	margin-left: 10px;
 	border-radius: 5px;
 }
+.bills table tr td {
+	font-size: 15px;
+	width: 50%;
+	text-align: center;
+	vertical-align: middle;
+	height: 55px;
+}
 .bills_1 {
-	width: 470px;
 	cursor: pointer;
 }
 .bills_2 {
-	text-align: center;
 	cursor: pointer;
 }
 .bills_3 {
-	width: 470px;
 }
 .bills_4 {
-	text-align: center;
-}
-.expenses table tr td {
-	font-size: 16px;
-	padding-top: 20px;
-	padding-right: 10px;
-	padding-bottom: 10px;	
-	padding-left: 60px;
 }
 .expenses {
 	background-color: #FFFFFF;
@@ -158,25 +185,32 @@
 	margin-left: 10px;
 	border-radius: 5px;
 }
+.expenses table tr td {
+	font-size: 15px;
+	width: 50%;
+	text-align: center;
+	vertical-align: middle;
+	height: 55px;
+}
 .expenses_1 {
-	width: 470px;
 	cursor: pointer;
 }
 .expenses_2 {
-	text-align: center;	
 	cursor: pointer;
 }
 .expenses_3 {
-	width: 470px;
 }
 .expenses_4 {
-	text-align: center;	
 }
-@media screen and (max-width: 590px) {
-	.dashboard_overview_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
+@media screen and (max-width: 767px) {
+	.table-responsive {
+	    width: 100%;
+	    margin-bottom: 0px;
+	    overflow-y: hidden;
+	    -ms-overflow-style: -ms-autohiding-scrollbar;
+	    border: 0px solid #ddd;
+}
+@media screen and (max-width: 550px) {
 	.dashboard_nav_first {
 		margin-left: 3px !important;
 		margin-right: 3px !important;
@@ -197,131 +231,7 @@
 		margin-right: 3px !important;
 		font-size: 15px !important;
 	}
-	.dashboard_analysis_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
+	.table {
+		border: 0px;
 	}
-}
-@media screen and (max-width: 630px) {
-	.dashboard_overview_2 {
-		padding-right: 30px !important;
-		font-size: 15px !important;
-	}
-	.dashboard_analysis_2 {
-		padding-right: 30px !important;
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.dashboard_overview_1 {
-		padding-left: 30px !important;
-	}
-	.dashboard_analysis_1 {
-		padding-left: 30px !important;
-	}
-}
-@media screen and (max-width: 590px) {
-	.income_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
-	.income_2 {
-		font-size: 15px !important;
-	}
-	.income_3 {
-		width: 470px;
-		padding-left: 30px !important;
-		font-size: 15px !important;
-	}
-	.income_4 {
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.income_1 {
-		padding-left: 30px !important;
-	}
-	.income_2 {
-		text-align: center;
-	}
-	.income_3 {
-		width: 470px;
-		padding-left: 30px !important;
-	}
-	.income_4 {
-		text-align: center;
-	}
-}
-@media screen and (max-width: 590px) {
-	.bills_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
-	.bills_2 {
-		font-size: 15px !important;
-	}
-	.bills_3 {
-		width: 470px;
-		padding-left: 30px !important;
-		font-size: 15px !important;
-	}
-	.bills_4 {
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.bills_1 {
-		padding-left: 30px !important;
-	}
-	.bills_2 {
-		text-align: center;
-	}
-	.bills_3 {
-		width: 470px;
-		padding-left: 30px !important;
-	}
-	.bills_4 {
-		text-align: center;
-	}
-}
-@media screen and (max-width: 590px) {
-	.expenses_1 {
-		padding-left: 20px !important;
-		font-size: 15px !important;
-	}
-	.expenses_2 {
-		font-size: 15px !important;
-	}
-	.expenses_3 {
-		width: 470px;
-		padding-left: 30px !important;
-		font-size: 15px !important;
-	}
-	.expenses_4 {
-		font-size: 15px !important;
-	}
-}
-@media screen and (max-width: 700px) {
-	.expenses_1 {
-		padding-left: 30px !important;
-	}
-	.expenses_2 {
-		text-align: center;
-	}
-	.expenses_3 {
-		width: 470px;
-		padding-left: 30px !important;
-	}
-	.expenses_4 {
-		text-align: center;
-	}
-}
-.validation_class {
-  background-color: #D0D0D0;
-  border: 1px solid red;
-  padding: .2em;
-}
-.validation_1 {
-	color:red; 
-	margin-bottom: 9px;
 }

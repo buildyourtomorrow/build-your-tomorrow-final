@@ -193,6 +193,7 @@ router.put('/edit-monthly-bill-amount', auth, function(req, res){
 			user.calcToday();
 			user.calcDaysLeft();	
 			user.calcTotalSpent(user.monthlyExpenses);
+			user.calcTotalBills(user.monthlyBills);
 			user.calcLeftOver();
 			user.calcDailyBudget(); 
 			user.calcUpBy();							
