@@ -44,16 +44,16 @@ router.post('/login', function(req, res, next){
 		}
 	})(req, res, next);
 });
-router.post('/add-income', auth, function(req, res){	
+router.post('/add-income', auth, function(req, res){
 	User.findOne({'username': req.payload.username}, function(error, user){
 		if (user.income.length > 0 ) {
 			user.income.push({'id': user.income.length, 
-							  'description': req.body.description, 
+							  'category': req.body.category, 
 							  'amount': req.body.amount})
 		};
 		if (user.income.length === 0) {
 			user.income.push({'id': 0, 
-							  'description': req.body.description, 
+							  'category': req.body.category,
 							  'amount': req.body.amount})
 		}
 		user.save(function(error){
@@ -62,21 +62,25 @@ router.post('/add-income', auth, function(req, res){
 			User.findOne({'username': req.payload.username}, {'_id': 0, 'income': 1}, function(error, data){
 				console.log(error);
 				user.calcTotalIncome(data.income);
+				user.calcIncomeCategoryTotals();
 			});
 		});
 		return res.json(user);
 	});
 });
+// the add-bills function looks pretty clean. The add-monthly-expenses function needs to be cleaned up.
 router.post('/add-bill', auth, function(req, res){	
 	User.findOne({'username': req.payload.username}, function(error, user){
 		if (user.monthlyBills.length > 0 ) {
 			user.monthlyBills.push({'id': user.monthlyBills.length, 
-								   	'description': req.body.description, 
+								   	'category': req.body.category, 
+								   	'subCategory': req.body.subCategory,
 								    'amount': req.body.amount});
 		};
 		if (user.monthlyBills.length === 0) {
 			user.monthlyBills.push({'id': 0, 
-								   	'description': req.body.description, 
+								   	'category': req.body.category, 
+								   	'subCategory': req.body.subCategory,
 								    'amount': req.body.amount});
 		};
 		user.save(function(error){
@@ -85,34 +89,24 @@ router.post('/add-bill', auth, function(req, res){
 			User.findOne({'username': req.payload.username}, {'_id': 0, 'monthlyBills': 1}, function(error, data){
 				console.log(error);
 				user.calcTotalBills(data.monthlyBills);
+				user.calcBillCategoryTotals();
 			});
 		});
 		return res.json(user);
 	});
 });
-router.get('/get-user', auth, function(req, res){	
-	User.findOne({'username': req.payload.username}, function(error, user){
-		user.calcPeriodStart();
-		user.calcPeriodEnd();
-		user.calcToday();
-		user.calcDaysLeft();	
-		//user.calcTotalSpent(data[0].monthlyExpenses);
-		user.calcLeftOver();
-		user.calcDailyBudget();	
-		user.calcUpBy();			
-		return res.json(user);
-	});
-});
 router.post('/add-monthly-expense', auth, function(req, res){
-	User.findOne({'username': req.payload.username}, function(error, user){
+	User.findOne({'username': req.payload.username}, function(error, user){		
 		if (user.monthlyExpenses.length > 0 ) {
 			user.monthlyExpenses.push({'id': user.monthlyExpenses.length, 
-								   	   'description': req.body.description, 
+								   	   'category': req.body.category, 
+								   	   'subCategory': req.body.subCategory,
 								       'amount': req.body.amount});
 		};
 		if (user.monthlyExpenses.length === 0) {
 			user.monthlyExpenses.push({'id': 0, 
-								   	   'description': req.body.description, 
+								   	   'category': req.body.category, 
+								   	   'subCategory': req.body.subCategory,
 								       'amount': req.body.amount});
 		}		
 		user.save(function(error){
@@ -120,6 +114,7 @@ router.post('/add-monthly-expense', auth, function(req, res){
 			
 			User.find({'username': req.payload.username}, {'_id': 0, 'monthlyExpenses': 1}, function(error, data){
 				console.log(error);
+				user.calcExpCategoryTotals();
 				user.calcPeriodStart();
 				user.calcPeriodEnd();
 				user.calcToday();
@@ -127,10 +122,27 @@ router.post('/add-monthly-expense', auth, function(req, res){
 				user.calcTotalSpent(data[0].monthlyExpenses);
 				user.calcLeftOver();
 				user.calcDailyBudget();
-				user.calcUpBy();				
+				user.calcUpBy();	
+				user.calcExpCategoryTotals();			
 			});				
 		});
 		return res.json(user);
+	});
+});
+router.get('/get-user', auth, function(req, res){	
+	User.findOne({'username': req.payload.username}, function(error, user){
+		if(user){
+			user.calcPeriodStart();
+			user.calcPeriodEnd();
+			user.calcToday();
+			user.calcDaysLeft();	
+			//user.calcTotalSpent(data[0].monthlyExpenses);
+			user.calcLeftOver();
+			user.calcDailyBudget();	
+			user.calcUpBy();			
+			return res.json(user);
+		}
+		console.log('user is ' + null);
 	});
 });
 router.post('/add-spending-limit', auth, function(req, res){

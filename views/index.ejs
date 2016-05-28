@@ -4,14 +4,24 @@
 			<meta name="viewport" content="width=device-width">
 			<meta name="viewport" content="initial-scale=1.0">
 			<title>Dashboard - BYT</title>
-			<!--boostrap-->
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 			<!--my css -->
 			<link rel="stylesheet" href="/css/styles.css">	
 			<!--angular -->
-			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+		    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.js"></script>
+		    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular-messages.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+			<!-- Bootstrap and Jquery needed for accordion-->
+			<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+			<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>	
+
+
+
+
+
+
+
 			<!--my javascript -->
 			<script src="/javascripts/angularApp.js"></script>
 			<script src="/javascripts/controllers/AuthCtrl.js"></script>
@@ -27,8 +37,8 @@
 			<script src="/javascripts/directives/directives.js"></script>				
 		</head>
 		<body ng-app="Dashboard">
-			<div class="container">
-				<div class="row" ng-controller="NavCtrl">
+			<section class="container">
+				<section class="row" ng-controller="NavCtrl">
 					<nav class="navbar navbar-default">
 						<ul class="nav navbar-nav">
 							<li ng-show="isLoggedIn()"><a>Wassup {{ currentUser() }}</a></li>
@@ -37,52 +47,52 @@
 							<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
 						</ul>
 					</nav>				
-				</div>				
-				<div class="row col-md-6 col-md-offset-3 main_content">					
+				</section>				
+				<section class="row col-md-6 col-md-offset-3 main_content">					
 					<ui-view></ui-view>
-				</div>
-			</div>
+				</section>
+			</section>
 			<!--Home-->
 			<script type="text/ng-template" id="/home.html">
-				<div class="page-header">
+				<section class="page-header">
 					<h3>Build Your Tomorrow (BYT) is an app that allows you to track your income and expenses. By doing so, you'll become more aware of your financial picture and spending habits. You can then use that knowledge to make necessary changes or adjustments.</h3>
-				</div>
+				</section>
 			</script>
 			<!--Register-->
 			<script type="text/ng-template" id="/register.html">
-				<div class="page-header">
+				<section class="page-header">
 					<h1>Let's budget</h1>
-				</div>
-				<div ng-show="error" class="alert alert-danger row">
+				</section>
+				<section ng-show="error" class="alert alert-danger row">
 					<span>{{ error.message }}</span>
-				</div>
+				</section>
 				<form ng-submit="register()" style="margin-top:30px;">
 					<h3>Register</h3>
-					<div class="form-group">
+					<section class="form-group">
 						<input type="text" class="form-control" placeholder="Username" ng-model="user.username" required>
-					</div>
-					<div class="form-group">
+					</section>
+					<section class="form-group">
 						<input type="password" class="form-control" placeholder="Password" ng-model="user.password" required>
-					</div>
+					</section>
 					<button type="submit" class="btn btn-primary">Register</button>
 				</form>
 			</script>
 			<!--Login-->
 			<script type="text/ng-template" id="/login.html">
-				<div class="page-header">
+				<section class="page-header">
 					<h1>Let's budget</h1>
-				</div>
-				<div ng-show="error" class="alert alert-danger row">
+				</section>
+				<section ng-show="error" class="alert alert-danger row">
 					<span>{{ error.message }}</span>
-				</div>
+				</section>
 				<form ng-submit="logIn()" style="margin-top:30px;">
 					<h3>Log In</h3>
-					<div class="form-group">
+					<section class="form-group">
 					  <input type="text" class="form-control" placeholder="Username" ng-model="user.username" required>
-					</div>
-					<div class="form-group">
+					</section>
+					<section class="form-group">
 					  <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required>
-					</div>
+					</section>
 					<button type="submit" class="btn btn-primary">Log In</button>
 				</form>
 			</script>
@@ -98,13 +108,13 @@
 						</ul>	
 					</section>
 				</section>
-				<section class="row">
+				<section class="row animate-show" ng-show="byt_show_div">			
 					<section class="table-responsive">
 						<section class="dashboard_analysis">
 							<table class="table">
 								<tbody>
 									<tr>										
-										<td class="dashboard_text_analysis_1">"Financial freedom is available to those who learn about it and work for it"</td>
+										<td class="dashboard_text_analysis_1">{{quote}}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -139,7 +149,7 @@
 						</section>
 					</section>
 				</section>	
-				<section class="row">
+				<section class="row animate-show" ng-show="byt_show_div">
 					<section class="table-responsive">
 						<section class="dashboard_analysis">
 							<table class="table">
@@ -178,7 +188,7 @@
 						</section>
 					</section>								
 				</section>	
-				<section class="row">
+				<section class="row animate-show" ng-show="byt_show_div">
 					<section class="table-responsive">
 						<section class="dashboard_analysis">
 							<table class="table">
@@ -213,7 +223,7 @@
 						</section>
 					</section>								
 				</section>
-				<section class="row">
+				<section class="row animate-show" ng-show="byt_show_div"
 					<section class="table-responsive">
 						<section class="dashboard_analysis">
 							<table class="table">
@@ -229,16 +239,16 @@
 				<!--Spending limit form -->
 				<section> <!-- novalidate disables brower validation -->
 					<form novalidate name='spendingLimitForm1' ng-submit='spendingLimitForm()'>
-						<div class="form-group">
+						<section class="form-group">
 							<label>Set spending limit</label>
-							<div ng-messages="spendingLimitForm1.spendingLimit.$error">
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
+							<section ng-messages="spendingLimitForm1.spendingLimit.$error">
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
 							<input class='form-control' type='number' placeholder='1390' name="spendingLimit" ng-model='amount1' required>
-						</div>
-						<div class="form-group">
+						</section>
+						<section class="form-group">
 							<button type="submit" ng-disabled="spendingLimitForm1.$invalid" class="btn btn-default btn-block btn-lg">Add Spending Limit</button>
-						</div>									
+						</section>									
 					</form>
 				</section>	
 			</script>
@@ -255,49 +265,42 @@
 					</section>
 				</section>
 				<section class="row">
-					<section class="table-responsive">
-						<section class="income">
-							<table class="table">	
-								<thead ng-repeat='item in allIncome'>
-									<tr>
-										<td>
-											<div class="income_1" contenteditable="true" ng-model="item.description" a-reg-function="updateIncomeDesc(item)"></div>
-										</td>
-										<td>
-											<div class="income_2" contenteditable="true" ng-model="item.amount" calc-total-func="updateIncomeAmount(item)"></div>
-										</td>
-									</tr>
-								</thead>	
-								<tbody>
-									<tr>
-										<td class="income_3">Total income</td>
-										<td class="income_4">{{totalIncome | number:0}}</td>
-									</tr>							
-								</tbody>
-							</table>
+					<section class="expenses">
+						<section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  							<section class="panel" ng-repeat="category in categories | orderBy: '-total'" ng-if="category.total > 0">
+    							<section class="panel-heading" role="tab" id="headingOne">
+      								<section class="panel-title" style="font-size:14px;">      									
+        								<p data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}" style="text-decoration:none; margin:2px;">
+        								{{category.category}} - {{category.total | number:0}}</p>
+      								</section>
+    							</section>    					
+    						</section>    							
 						</section>
-					</section>
-				</section>	
+				    </section>
+				</section>
 				<section> <!-- novalidate disables brower validation -->
 					<form novalidate name='monthlyIncomeForm' ng-submit='incomeForm()'>
-						<div class="form-group">
-							<label>Description</label>
-							<div ng-messages="monthlyIncomeForm.monthlyIncomeDescription.$error">
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
-							<input class='form-control' type='text' placeholder='Job' name="monthlyIncomeDescription" ng-model='description' required>								
-						</div>
-						<div class="form-group">
+						<section class="form-group">
+							<label>Category</label>
+							<section ng-messages="monthlyIncomeForm.monthlyIncomeCategory.$error">
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
+
+							<select class="form-control" ng-options="category.id as category.value for category in monthlyIncomeCategories" name="monthlyIncomeCategory" ng-model='category' required>
+								<option value="" selected disabled>Please choose</option>								
+							</select>								
+						</section>
+						<section class="form-group">
 							<label>Amount</label>
-							<div ng-messages="monthlyIncomeForm.monthlyIncomeAmount.$error"> <!-- monthlyIncomeForm.monthlyExpAmount.$error is an angular expression -->
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
+							<section ng-messages="monthlyIncomeForm.monthlyIncomeAmount.$error"> <!-- monthlyIncomeForm.monthlyExpAmount.$error is an angular expression -->
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
 							<!-- form-control is a bootstarp class. step attribute specifies the legal number intervals for an input field -->
 							<input class='form-control' type='number' placeholder='1700' name="monthlyIncomeAmount" ng-model='amount' step="any" required>								
-						</div>			
-						<div class="form-group">
+						</section>			
+						<section class="form-group">
 							<button type="submit" ng-disabled="monthlyIncomeForm.$invalid" class="btn btn-default btn-block btn-lg">Add Income</button>
-						</div>									
+						</section>									
 					</form>
 				</section>
 			</script>	
@@ -314,49 +317,59 @@
 					</section>
 				</section>
 				<section class="row">
-					<section class="table-responsive">
-						<section class="bills">
-							<table class="table">					
-								<thead ng-repeat='bill in bills'>
-									<tr>
-										<td>
-											<div class="bills_1" contenteditable="true" ng-model="bill.description" a-reg-function="updateBillDesc(bill)"></div>
-										</td>
-										<td>
-											<div class="bills_2" contenteditable="true" ng-model="bill.amount" calc-total-func="updateBillAmount(bill)"></div>
-										</td>																				
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td class="bills_3">Total bills</td>
-										<td class="bills_4">{{totalBills | number:0}}</td>
-									</tr>							
-								</tbody>
-							</table>
+					<section class="expenses">
+						<section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  							<section class="panel panel-info" ng-repeat="category in categories | orderBy: '-total'" ng-if="category.total > 0">
+    							<section class="panel-heading" role="tab" id="headingOne">
+      								<section class="panel-title" style="font-size:14px;">      									
+        								<a role="button" data-toggle="collapse" data-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}" style="text-decoration:none" ng-click="active=!active">
+        								<i ng-class="{ 'glyphicon glyphicon-plus': !active, 'glyphicon glyphicon-minus': active}"></i>  {{category.category}} - {{category.total | number:0}}</a>
+      								</section>
+    							</section>
+    							<section id="collapse{{$parent.$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+    								<section ng-repeat="subcategory in category.subCategory | orderBy: '-total'" ng-if="subcategory.total > 0">
+										<section class="panel-body" style="padding:13px">
+											<section style="width:50%; float:left; text-align:center; display:inline">{{subcategory.name}}</section>
+											<section style="width:50%; float:right; text-align:center; display:inline">{{subcategory.total | number:0}}</section>
+										</section>
+    								</section>
+  								</section>
+    						</section>    							
 						</section>
-					</section>
+				    </section>
 				</section>
 				<section> <!-- novalidate disables brower validation -->
 					<form novalidate name='monthlyBillForm' ng-submit='billForm()'>
-						<div class="form-group">
-							<label>Description</label>
-							<div ng-messages="monthlyBillForm.monthlyBillDescription.$error">
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
-							<input class='form-control' type='text' placeholder='Rent' name="monthlyBillDescription" ng-model='description' required>								
-						</div>
-						<div class="form-group">
+						<section class="form-group">
+							<label>Category</label>
+							<section ng-messages="monthlyBillForm.monthlyBillCategory.$error">
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
+
+							<select class="form-control" ng-options="category.id as category.value for category in monthlyBillsCategories" name="monthlyBillCategory" ng-model='category' required>
+								<option value="" selected disabled>Please choose</option>								
+							</select>								
+						</section>
+						<section class="form-group">
+							<label>Type</label>
+							<section ng-messages="monthlyBillForm.monthlyBillType.$error">
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
+							<select ng-disabled="monthlyBillForm.monthlyBillCategory.$invalid" class="form-control" ng-model="subCategory" name="monthlyBillType" ng-options="subCategory.value as subCategory.value for subCategory in monthlyBillsSubCategories[category]" required>
+								<option value="">Please choose</option>					
+							</select>	
+						</section>
+						<section class="form-group">
 							<label>Amount</label>
-							<div ng-messages="monthlyBillForm.monthlyBillAmount.$error"> <!-- monthlyBillForm.monthlyExpAmount.$error is an angular expression -->
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
+							<section ng-messages="monthlyBillForm.monthlyBillAmount.$error"> <!-- monthlyExpForm.monthlyExpAmount.$error is an angular expression -->
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
 							<!-- form-control is a bootstarp class. step attribute specifies the legal number intervals for an input field -->
-							<input class='form-control' type='number' placeholder='1450' name="monthlyBillAmount" ng-model='amount' step="any" required>								
-						</div>			
-						<div class="form-group">
+							<input class='form-control' type='number' placeholder='1550' name="monthlyBillAmount" ng-model='amount' step="any" required>								
+						</section>			
+						<section class="form-group">
 							<button type="submit" ng-disabled="monthlyBillForm.$invalid" class="btn btn-default btn-block btn-lg">Add Bill</button>
-						</div>									
+						</section>	
 					</form>
 				</section>	
 			</script>	
@@ -373,49 +386,60 @@
 					</section>
 				</section>
 				<section class="row">
-					<section class="table-responsive">
-						<section class="expenses">
-							<table class="table">
-								<thead ng-repeat='expense in monthlyExpenses'>
-									<tr>								
-										<td class="expenses_1">
-											<div contenteditable="true" ng-model="expense.description" a-reg-function="updateExpDescription(expense)"></div>
-										</td>				
-										<td class="expenses_2">
-											<div contenteditable="true" ng-model="expense.amount" calc-total-func="updateExpAmount(expense)"></div>
-										</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td class="expenses_3">Total expenses</td>
-										<td class="expenses_4">{{totalSpent | number:0}}</td>
-									</tr>
-								</tbody>
-							</table>
+					<section class="expenses">
+						<section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  							<section class="panel panel-info" ng-repeat="category in categories | orderBy: '-total'" ng-if="category.total > 0">
+    							<section class="panel-heading" role="tab" id="headingOne">
+      								<section class="panel-title" style="font-size:14px;">      									
+        								<a role="button" data-toggle="collapse" data-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}" style="text-decoration:none" ng-click="active=!active">
+        								<i ng-class="{ 'glyphicon glyphicon-plus': !active, 'glyphicon glyphicon-minus': active }"></i>{{category.category}} - {{category.total | number:0}}</a>
+      								</section>
+    							</section>
+    							<section id="collapse{{$parent.$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+    								<section ng-repeat="subcategory in category.subCategory | orderBy: '-total'" ng-if="subcategory.total > 0">
+										<section class="panel-body" style="padding:13px">
+											<section style="width:50%; float:left; text-align:center; display:inline">{{subcategory.name}}</section>
+											<section style="width:50%; float:right; text-align:center; display:inline">{{subcategory.total | number:0}}</section>
+										</section>
+    								</section>
+  								</section>
+    						</section>    							
 						</section>
-					</section>
+				    </section>
 				</section>
 				<section> <!-- novalidate disables brower validation -->
-					<form novalidate name='monthlyExpForm' ng-submit='monthlyExpenseForm()'>
-						<div class="form-group">
-							<label>Description</label>
-							<div ng-messages="monthlyExpForm.monthlyExpDescription.$error">
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
-							<input class='form-control' type='text' placeholder='Starbucks' name="monthlyExpDescription" ng-model='description' required>								
-						</div>
-						<div class="form-group">
+					<form novalidate name='monthlyExpForm' ng-submit='monthlyExpenseForm()'>						
+						<section class="form-group">
+							<label>Category</label>
+							<section ng-messages="monthlyExpForm.monthlyExpCategory.$error">
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
+							<select class="form-control" ng-options="category.id as category.value for category in monthlyExpensesCategories" name="monthlyExpCategory" ng-model='category' required>
+								<option value="" selected disabled>Please choose</option>								
+							</select>
+						</section>
+						<!-- this party of the form is where the user select the subcategory. In example, if clothing is the category selected above, then the user will then have the ability to slect what type of clothing here.-->
+						<section class="form-group">
+							<label>Type</label>
+							<section ng-messages="monthlyExpForm.monthlyExpType.$error">
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
+							<!-- ng-disabled seems to work by targeting the input field that needs to first be validated before this input field can become available -->
+							<select ng-disabled="monthlyExpForm.monthlyExpCategory.$invalid" class="form-control" ng-model="subCategory" name="monthlyExpType" ng-options="subCategory.value as subCategory.value for subCategory in monthlyExpensesSubCategories[category]" required> <!-- Description in the model of the category input field --> <!--form-control is a Bootstrap class --> 
+    							<option value="">Please choose</option>
+    						</select>
+						</section>
+						<section class="form-group">
 							<label>Amount</label>
-							<div ng-messages="monthlyExpForm.monthlyExpAmount.$error"> <!-- monthlyExpForm.monthlyExpAmount.$error is an angular expression -->
-  								<div ng-message="required" class="validation_1">*Required</div>
-							</div>
+							<section ng-messages="monthlyExpForm.monthlyExpAmount.$error"> <!-- monthlyExpForm.monthlyExpAmount.$error is an angular expression -->
+  								<section ng-message="required" class="validation_1">*Required</section>
+							</section>
 							<!-- form-control is a bootstarp class. step attribute specifies the legal number intervals for an input field -->
-							<input class='form-control' type='number' placeholder='5.49' name="monthlyExpAmount" ng-model='amount' step="any" required>								
-						</div>			
-						<div class="form-group">
+							<input class='form-control' type='number' placeholder='5.49' name="monthlyExpAmount" ng-model='amount' step="any" required>
+						</section>			
+						<section class="form-group">
 							<button type="submit" ng-disabled="monthlyExpForm.$invalid" class="btn btn-default btn-block btn-lg">Add Expense</button>
-						</div>									
+						</section>									
 					</form>
 				</section>				
 			</script>	

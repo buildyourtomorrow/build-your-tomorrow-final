@@ -1,6 +1,7 @@
 app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state', function($http, incomeFactory, auth, $state){
 	var o = {
 		monthlyExpenses: [],
+		expCategoryTotals: [],
 		spendingLimit: 0,
 		totalSpent: 0,
 		leftOver: 0,
@@ -17,6 +18,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
 
 			angular.copy(response.data.monthlyExpenses, o.monthlyExpenses);
+			angular.copy(response.data.expCategoryTotals, o.expCategoryTotals);
 			o.spendingLimit = response.data.spendingLimit;
 			o.totalSpent = response.data.totalSpent;
 			o.leftOver = response.data.leftOver;
@@ -55,8 +57,8 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			$state.go('register');
 		});
 	};
-	o.postMonthlyExpense = function(description, amount){ // function that sends monthly expense to api
-		return $http.post('/add-monthly-expense', {'description': description, 'amount': amount}, {headers: {Authorization: 'Bearer ' + auth.getToken()}}) // config is the 3rd arg. header is config.
+	o.postMonthlyExpense = function(category, subCategory, amount){ // function that sends monthly expense to api
+		return $http.post('/add-monthly-expense', {'category': category, 'subCategory': subCategory, 'amount': amount}, {headers: {Authorization: 'Bearer ' + auth.getToken()}}) // config is the 3rd arg. header is config.
 	};	
 	o.postSpendingLimit = function(spendingLimit){
 		return $http.post('/add-spending-limit', {'spendingLimit': spendingLimit}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
@@ -113,5 +115,503 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 	o.calcDaysLeft = function(){
 		o.daysLeft = o.periodEnd[1] - o.today[1];
 	};
+	o.calcCategoryTotals = function(){
+		o.expCategoryTotals = [
+			{
+				category: "Clothing",
+				total: 0,
+				subCategory: [{
+					name: "Children's Clothing",
+					total: 0
+				},
+				{
+					name: "Adult's Clothing",
+					total: 0	
+				}]
+			},
+			{
+				category: "Education",
+				total: 0,
+				subCategory: [{
+					name: "Tuition",
+					total: 0
+				},
+				{
+					name: "Books",
+					total: 0	
+				},
+				{
+					name: "School Supplies",
+					total: 0		
+				},
+				{
+					name: "Field Trips",
+					total: 0	
+				},
+				{
+					name: "Student Loan Payment",
+					total: 0
+				},
+				{
+					name: "Magazines",
+					total: 0
+				}]
+			},
+			{
+				category: "Food",
+				total: 0,
+				subCategory: [{
+					name: "Groceries",
+					total: 0 
+				},
+				{
+					name: "Restaurant",
+					total: 0 
+				},
+				{
+					name: "Pet Food",
+					total: 0
+				},
+				{
+					name: "Junk Food",
+					total: 0
+				},
+				{
+					name: "Coffee",
+					total: 0	
+				}]
+			},
+			{
+				category: "Gift",
+				total: 0,
+				subCategory: [{
+					name: "Birthday",
+					total: 0 
+				},
+				{
+					name: "Valentine's Day",
+					total: 0 
+				},
+				{
+					name: "Anniversary",
+					total: 0
+				},
+				{
+					name: "Wedding",
+					total: 0
+				},
+				{
+					name: "Christmas",
+					total: 0	
+				},
+				{
+					name: "Special Occasion",
+					total: 0	
+				}]
+			},
+			{
+				category: "Giving",
+				total: 0,
+				subCategory: [{
+					name: "Tithing",
+					total: 0 
+				},
+				{
+					name: "Offerings",
+					total: 0 
+				},
+				{
+					name: "Charities",
+					total: 0
+				}]
+			},
+			{ 
+				category: "Household",
+				total: 0,
+				subCategory: [{
+					name: "Toiletries",
+					total: 0 
+				},
+				{
+					name: "Laundry Detergent",
+					total: 0 
+				},
+				{
+					name: "Dishwasher Detergent",
+					total: 0
+				},
+				{
+					name: "Cleaning Supplies",
+					total: 0
+				},
+				{
+					name: "Tools",
+					total: 0	
+				},
+				{
+					name: "Furniture",
+					total: 0	
+				},
+				{
+					name: "Decorating",
+					total: 0	
+				},
+				{
+					name: "Home Improvement",
+					total: 0	
+				},
+				{
+					name: "Home Repair",
+					total: 0	
+				}]
+			},
+			{
+				category: "Medical",
+				total: 0,
+				subCategory: [{
+					name: "Primary Care",
+					total: 0 
+				},
+				{
+					name: "Dental Care",
+					total: 0 
+				},
+				{
+					name: "Specialty Care",
+					total: 0
+				},
+				{
+					name: "Medications",
+					total: 0
+				},
+				{
+					name: "Medical Devices",
+					total: 0	
+				}]
+			},
+			{
+				category: "Personal",
+				total: 0,
+				subCategory: [{
+					name: "Hair Cuts",
+					total: 0 
+				},
+				{
+					name: "Salon Services",
+					total: 0 
+				},
+				{
+					name: "Cosmetics",
+					total: 0
+				},
+				{
+					name: "Babysitter",
+					total: 0
+				}]
+			},
+			{
+				category: "Play",
+				total: 0,
+				subCategory: [{
+					name: "Movies",
+					total: 0 
+				},
+				{
+					name: "Clubs / Bars",
+					total: 0 
+				},
+				{
+					name: "Entertainment",
+					total: 0
+				},
+				{
+					name: "Games",
+					total: 0
+				},
+				{
+					name: "Vacations",
+					total: 0
+				},
+				{
+					name: "Sporting Events",
+					total: 0
+				},
+				{
+					name: "Amusement Park",
+					total: 0
+				}]
+			},
+			{ 
+				category: "Events",
+				total: 0,
+				subCategory: [{
+					name: "Moving",
+					total: 0 
+				},
+				{
+					name: "Wedding",
+					total: 0 
+				}]
+			},
+			{ 
+				category: "Transportation",
+				total: 0,
+				subCategory: [{
+					name: "Fuel",
+					total: 0 
+				},
+				{
+					name: "Tires",
+					total: 0 
+				},
+				{
+					name: "Oil Changes",
+					total: 0
+				},
+				{
+					name: "Maintenance",
+					total: 0
+				},
+				{
+					name: "Parking Fees",
+					total: 0
+				},
+				{
+					name: "Repairs",
+					total: 0
+				},
+				{
+					name: "DMV Fees",
+					total: 0
+				},
+				{
+					name: "Vehicle Replacement",
+					total: 0
+				},
+				{
+					name: "Taxi",
+					total: 0
+				}]
+			}
+		]
+		for (i = 0; i < o.monthlyExpenses.length; i++){
+			if (o.monthlyExpenses[i].category === "Clothing") {
+				o.expCategoryTotals[0].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Children's Clothing") {
+					o.expCategoryTotals[0].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Adult's Clothing") {
+					o.expCategoryTotals[0].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Education") {
+				o.expCategoryTotals[1].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Tuition") {
+					o.expCategoryTotals[1].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Books") {
+					o.expCategoryTotals[1].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "School Supplies") {
+					o.expCategoryTotals[1].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Field Trips") {
+					o.expCategoryTotals[1].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Student Loan Payment") {
+					o.expCategoryTotals[1].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Magazines") {
+					o.expCategoryTotals[1].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Food") {
+				o.expCategoryTotals[2].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Groceries") {
+					o.expCategoryTotals[2].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Restaurant") {
+					o.expCategoryTotals[2].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Pet Food") {
+					o.expCategoryTotals[2].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Junk Food") {
+					o.expCategoryTotals[2].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Coffee") {
+					o.expCategoryTotals[2].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Gift") {
+				o.expCategoryTotals[3].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Birthday") {
+					o.expCategoryTotals[3].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Valentine's Day") {
+					o.expCategoryTotals[3].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Anniversary") {
+					o.expCategoryTotals[3].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Wedding") {
+					o.expCategoryTotals[3].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Christmas") {
+					o.expCategoryTotals[3].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Special Occasion") {
+					o.expCategoryTotals[3].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Giving") {
+				o.expCategoryTotals[4].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Tithing") {
+					o.expCategoryTotals[4].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Valentine's Day") {
+					o.expCategoryTotals[4].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Anniversary") {
+					o.expCategoryTotals[4].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Wedding") {
+					o.expCategoryTotals[4].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Christmas") {
+					o.expCategoryTotals[4].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Special Occasion") {
+					o.expCategoryTotals[4].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Household") {
+				o.expCategoryTotals[5].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Toiletries") {
+					o.expCategoryTotals[5].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Laundry Detergent") {
+					o.expCategoryTotals[5].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Dishwasher Detergent") {
+					o.expCategoryTotals[5].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Cleaning Supplies") {
+					o.expCategoryTotals[5].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Tools") {
+					o.expCategoryTotals[5].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Furniture") {
+					o.expCategoryTotals[5].subCategory[5].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Decorating") {
+					o.expCategoryTotals[5].subCategory[6].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Home Improvement") {
+					o.expCategoryTotals[5].subCategory[7].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Home Repair") {
+					o.expCategoryTotals[5].subCategory[8].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Medical") {
+				o.expCategoryTotals[6].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Primary Care") {
+					o.expCategoryTotals[6].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Dental Care") {
+					o.expCategoryTotals[6].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Specialty Care") {
+					o.expCategoryTotals[6].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Medications") {
+					o.expCategoryTotals[6].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Medical Devices") {
+					o.expCategoryTotals[6].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Personal") {
+				o.expCategoryTotals[7].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Hair Cuts") {
+					o.expCategoryTotals[7].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Salon Services") {
+					o.expCategoryTotals[7].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Cosmetics") {
+					o.expCategoryTotals[7].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Babysitter") {
+					o.expCategoryTotals[7].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Play") {
+				o.expCategoryTotals[8].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Movies") {
+					o.expCategoryTotals[8].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Clubs / Bars") {
+					o.expCategoryTotals[8].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Entertainment") {
+					o.expCategoryTotals[8].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Games") {
+					o.expCategoryTotals[8].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Vacations") {
+					o.expCategoryTotals[8].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Sporting Events") {
+					o.expCategoryTotals[8].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Amusement Park") {
+					o.expCategoryTotals[8].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Events") {
+				o.expCategoryTotals[9].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Moving") {
+					o.expCategoryTotals[9].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Wedding") {
+					o.expCategoryTotals[9].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Transportation") {
+				o.expCategoryTotals[10].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Fuel") {
+					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Tires") {
+					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Oil Changes") {
+					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Maintenance") {
+					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Parking Fees") {
+					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Repairs") {
+					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "DMV Fees") {
+					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Vehicle Replacement") {
+					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Taxi") {
+					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+			};
+		};
+	} 
 	return o
 }]);
