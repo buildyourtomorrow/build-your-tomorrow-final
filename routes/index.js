@@ -25,8 +25,8 @@ router.post('/register', function(req, res, next){
 	var user = new User();
 	user.username = req.body.username;
 	user.setPassword(req.body.password)
-	user.save(function (err){
-		if(err.code === 11000){
+	user.save(function (err){		
+		if(err && err.code === 11000){
 			return res.status(400).json({message: 'That username is already in use. Pick a new one. Ya heard'});
 		}
 		if(err){ return next(err); }
