@@ -9,7 +9,7 @@ if (process.env.USER === "eliezernunez") {
 //for production
 if (process.env.NODE_ENV === "production") {
 	require('/app/models/User')
-}; 
+};
 var User = mongoose.model('user');
 var passport = require('passport');
 var jwt = require('express-jwt');
@@ -26,6 +26,9 @@ router.post('/register', function(req, res, next){
 	user.username = req.body.username;
 	user.setPassword(req.body.password)
 	user.save(function (err){
+		if(err.code === 11000){
+			return res.status(400).json({message: 'That username is already in use. Pick a new one. Ya heard'});
+		}
 		if(err){ return next(err); }
 		return res.json({token: user.generateJWT()})
 	});
