@@ -547,7 +547,7 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 		if (this.monthlyBills[i].category === "Entertainment") {
 			this.billsCategoryTotals[7].total += this.monthlyBills[i].amount;	
 			if (this.monthlyBills[i].subCategory === "Streaming movies/music") {
-				this.billsCategoryTotals[7].subCategory[0].total += this.bills[i].amount;
+				this.billsCategoryTotals[7].subCategory[0].total += this.monthlyBills[i].amount;
 			}
 		};
 	};
