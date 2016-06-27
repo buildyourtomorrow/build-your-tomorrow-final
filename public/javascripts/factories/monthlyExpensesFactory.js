@@ -1,8 +1,10 @@
 app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state', function($http, incomeFactory, auth, $state){
 	var o = {
 		monthlyExpenses: [],
-		expCategoryTotals: [],
-		spendingLimit: 0,
+		expCategoryTotals: [],		
+		projectedIncome: 0,
+		projectedBills: 0,
+		projectedExpenses: 0,
 		totalSpent: 0,
 		leftOver: 0,
 		upBy: 0,
@@ -14,12 +16,18 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		totalIncome: 0,
 		totalBills: 0
 	};
+	o.removeExpense = function(index){
+		o.monthlyExpenses.splice(index, 1);
+		return $http.put('/remove-expense', {'index': index}, {headers: {Authorization: 'Bearer ' + auth.getToken()} })	
+	};
 	o.getUser = function(){
 		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
 
 			angular.copy(response.data.monthlyExpenses, o.monthlyExpenses);
 			angular.copy(response.data.expCategoryTotals, o.expCategoryTotals);
-			o.spendingLimit = response.data.spendingLimit;
+			o.projectedIncome = response.data.projectedIncome;
+			o.projectedBills = response.data.projectedBills;
+			o.projectedExpenses = response.data.projectedExpenses;
 			o.totalSpent = response.data.totalSpent;
 			o.leftOver = response.data.leftOver;
 			o.upBy = response.data.upBy;
@@ -57,17 +65,13 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			$state.go('register');
 		});
 	};
-	o.postMonthlyExpense = function(category, subCategory, amount){ // function that sends monthly expense to api
-		return $http.post('/add-monthly-expense', {'category': category, 'subCategory': subCategory, 'amount': amount}, {headers: {Authorization: 'Bearer ' + auth.getToken()}}) // config is the 3rd arg. header is config.
+	o.postMonthlyExpense = function(category, subCategory, amount, date){ // function that sends monthly expense to api
+		return $http.post('/add-monthly-expense', {'category': category, 'subCategory': subCategory, 'amount': amount, 'date': date}, {headers: {Authorization: 'Bearer ' + auth.getToken()}}) // config is the 3rd arg. header is config.
 	};	
-	o.postSpendingLimit = function(spendingLimit){
-		return $http.post('/add-spending-limit', {'spendingLimit': spendingLimit}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
-	};
-	o.editMonthlyExpAmount = function(expense){
-		return $http.put('/edit-monthly-expense-amount', {'expense': expense}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
-	};
-	o.editMonthlyExpDescription = function(expense){
-		return $http.put('/edit-monthly-expense-description', {'expense': expense}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
+	o.postProjections = function(projectedIncome, projectedBills, projectedExpenses){
+		return $http.post('/add-projections', {'projectedIncome': projectedIncome, 
+											   'projectedBills': projectedBills, 
+											   'projectedExpenses': projectedExpenses}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
 	};
 	o.calcTotalSpent = function(expenses){
 		var x = 0;
@@ -109,7 +113,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		o.upBy = x1;
 	};
 	o.calcDailyBudget = function(){
-		var x1 = o.spendingLimit / o.periodEnd[1];
+		var x1 = o.projectedExpenses / o.periodEnd[1];
 		o.dailyBudget = x1;
 	};
 	o.calcDaysLeft = function(){
@@ -293,7 +297,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 				category: "Personal",
 				total: 0,
 				subCategory: [{
-					name: "Hair Cuts",
+					name: "Hair & Hair Cuts",
 					total: 0 
 				},
 				{
@@ -306,6 +310,14 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 				},
 				{
 					name: "Babysitter",
+					total: 0
+				},
+				{
+					name: "Laundry",
+					total: 0
+				},
+				{
+					name: "Spa & Massage",
 					total: 0
 				}]
 			},
@@ -391,10 +403,90 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 				{
 					name: "Taxi",
 					total: 0
+				},
+				{
+					name: "Public Transportation",
+					total: 0
+				},
+				{
+					name: "Tolls",
+					total: 0
+				},
+				{
+					name: "Auto Payment",
+					total: 0
+				},
+				{
+					name: "Auto Insurance",
+					total: 0
+				}]
+			},
+			{ 
+				category: "Travel",
+				total: 0,
+				subCategory: [{
+					name: "Air Travel",
+					total: 0 
+				},
+				{
+					name: "Hotel",
+					total: 0 
+				},
+				{
+					name: "Rental Car & Taxi",
+					total: 0
+				},
+				{
+					name: "Vacations",
+					total: 0
+				}]
+			},
+			{ 
+				category: "Pets",
+				total: 0,
+				subCategory: [{
+					name: "Pet Food & Supplies",
+					total: 0 
+				},
+				{
+					name: "Pet Grooming",
+					total: 0 
+				},
+				{
+					name: "Veterinary",
+					total: 0
+				}]
+			},
+			{ 
+				category: "Kids",
+				total: 0,
+				subCategory: [{
+					name: "Allowance",
+					total: 0 
+				},
+				{
+					name: "Baby Supplies",
+					total: 0 
+				},
+				{
+					name: "Babysitter & Daycare",
+					total: 0
+				},
+				{
+					name: "Child Support",
+					total: 0
+				},
+				{
+					name: "Kids Activities",
+					total: 0
+				},
+				{
+					name: "Toys",
+					total: 0
 				}]
 			}
 		]
-		for (i = 0; i < o.monthlyExpenses.length; i++){
+		for (i = 0; i < o.monthlyExpenses.length; i++){			
 			if (o.monthlyExpenses[i].category === "Clothing") {
 				o.expCategoryTotals[0].total += o.monthlyExpenses[i].amount;	
 				if (o.monthlyExpenses[i].subCategory === "Children's Clothing") {
@@ -422,7 +514,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 					o.expCategoryTotals[1].subCategory[4].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Magazines") {
-					o.expCategoryTotals[1].subCategory[2].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[1].subCategory[5].total += o.monthlyExpenses[i].amount;
 				}
 			};
 			if (o.monthlyExpenses[i].category === "Food") {
@@ -461,7 +553,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 					o.expCategoryTotals[3].subCategory[4].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Special Occasion") {
-					o.expCategoryTotals[3].subCategory[4].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[3].subCategory[5].total += o.monthlyExpenses[i].amount;
 				}
 			};
 			if (o.monthlyExpenses[i].category === "Giving") {
@@ -482,7 +574,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 					o.expCategoryTotals[4].subCategory[4].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Special Occasion") {
-					o.expCategoryTotals[4].subCategory[4].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[4].subCategory[5].total += o.monthlyExpenses[i].amount;
 				}
 			};
 			if (o.monthlyExpenses[i].category === "Household") {
@@ -535,7 +627,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			};
 			if (o.monthlyExpenses[i].category === "Personal") {
 				o.expCategoryTotals[7].total += o.monthlyExpenses[i].amount;	
-				if (o.monthlyExpenses[i].subCategory === "Hair Cuts") {
+				if (o.monthlyExpenses[i].subCategory === "Hair & Hair Cuts") {
 					o.expCategoryTotals[7].subCategory[0].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Salon Services") {
@@ -545,6 +637,12 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 					o.expCategoryTotals[7].subCategory[2].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Babysitter") {
+					o.expCategoryTotals[7].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Laundry") {
+					o.expCategoryTotals[7].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Spa & Massage") {
 					o.expCategoryTotals[7].subCategory[3].total += o.monthlyExpenses[i].amount;
 				}
 			};
@@ -563,13 +661,13 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 					o.expCategoryTotals[8].subCategory[3].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Vacations") {
-					o.expCategoryTotals[8].subCategory[0].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[8].subCategory[4].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Sporting Events") {
-					o.expCategoryTotals[8].subCategory[1].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[8].subCategory[5].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Amusement Park") {
-					o.expCategoryTotals[8].subCategory[2].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[8].subCategory[6].total += o.monthlyExpenses[i].amount;
 				}
 			};
 			if (o.monthlyExpenses[i].category === "Events") {
@@ -590,28 +688,88 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Oil Changes") {
-					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[2].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Maintenance") {
-					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[3].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Parking Fees") {
-					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[4].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Repairs") {
-					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[5].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "DMV Fees") {
-					o.expCategoryTotals[10].subCategory[0].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[6].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Vehicle Replacement") {
-					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[7].total += o.monthlyExpenses[i].amount;
 				}
 				if (o.monthlyExpenses[i].subCategory === "Taxi") {
-					o.expCategoryTotals[10].subCategory[1].total += o.monthlyExpenses[i].amount;
+					o.expCategoryTotals[10].subCategory[8].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Public Transportation") {
+					o.expCategoryTotals[10].subCategory[9].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Tolls") {
+					o.expCategoryTotals[10].subCategory[10].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Auto Payment") {
+					o.expCategoryTotals[10].subCategory[11].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Auto Insurance") {
+					o.expCategoryTotals[10].subCategory[12].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Travel") {
+				o.expCategoryTotals[11].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Air Travel") {
+					o.expCategoryTotals[11].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Hotel") {
+					o.expCategoryTotals[11].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Rental Car & Taxi") {
+					o.expCategoryTotals[11].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Vacations") {
+					o.expCategoryTotals[11].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Pets") {
+				o.expCategoryTotals[12].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Pet Food & Supplies") {
+					o.expCategoryTotals[12].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Pet Grooming") {
+					o.expCategoryTotals[12].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Veterinary") {
+					o.expCategoryTotals[12].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+			};
+			if (o.monthlyExpenses[i].category === "Kids") {
+				o.expCategoryTotals[13].total += o.monthlyExpenses[i].amount;	
+				if (o.monthlyExpenses[i].subCategory === "Allowance") {
+					o.expCategoryTotals[13].subCategory[0].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Baby Supplies") {
+					o.expCategoryTotals[13].subCategory[1].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Babysitter & Daycare") {
+					o.expCategoryTotals[13].subCategory[2].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Child Support") {
+					o.expCategoryTotals[13].subCategory[3].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Kids Activities") {
+					o.expCategoryTotals[13].subCategory[4].total += o.monthlyExpenses[i].amount;
+				}
+				if (o.monthlyExpenses[i].subCategory === "Toys") {
+					o.expCategoryTotals[13].subCategory[5].total += o.monthlyExpenses[i].amount;
 				}
 			};
 		};
-	} 
+	}
 	return o
 }]);

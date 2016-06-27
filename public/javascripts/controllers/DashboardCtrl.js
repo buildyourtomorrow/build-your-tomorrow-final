@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory', 'auth', function($scope, $interval, monthlyExpensesFactory, auth){
+app.controller('DashboardCtrl', ['$scope', '$interval', '$location', '$anchorScroll', 'monthlyExpensesFactory', 'auth', function($scope, $interval, $location, $anchorScroll, monthlyExpensesFactory, auth){
 	var randomQuotes = function(){
 		var byt_quotes = [
 			"\"Beware of little expenses. A small leak will sink a great ship\"",
@@ -43,13 +43,18 @@ app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory'
 			"\"Wealth is the slave of a wise man. The master of a fool\"",
 			"\"Wealth is the product of a man or woman's capacity to think\"",
 		];
-		$scope.byt_show_div = true;
+		$scope.byt_show_section = true;
 		$scope.quote = byt_quotes[Math.floor(Math.random() * byt_quotes.length)], 2000;
 	};
 	$interval(randomQuotes, 8000);
 
+	$scope.projectedIncome = monthlyExpensesFactory.projectedIncome;
+	$scope.projectedBills = monthlyExpensesFactory.projectedBills;
+	$scope.projectedExpenses = monthlyExpensesFactory.projectedExpenses;
+	$scope.projectedSavings = monthlyExpensesFactory.projectedSavings;
 	$scope.isLoggedIn = auth.isLoggedIn;
-	$scope.upBy = monthlyExpensesFactory.upBy;
+	$scope.upBy = monthlyExpensesFactory.upBy;	
+	
 	$scope.totalIncome = monthlyExpensesFactory.totalIncome;
 	if ($scope.totalIncome > 0) {
 		$scope.totalIncomeColor = '#32CD32';
@@ -58,7 +63,6 @@ app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory'
 	if ($scope.totalBills > 0) {
 		$scope.totalBillsColor = '#FF0000';
 	}
-	$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 	if ($scope.totalSpent > 0) {
 		$scope.totalSpentColor = '#FF0000';
@@ -71,6 +75,30 @@ app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory'
 	}
 	if ($scope.totalIncome - $scope.totalBills - $scope.totalSpent == 0) {
 		$scope.totalSavingsColor = '#666666';
+	}
+	if( (($scope.projectedIncome - $scope.totalIncome) * -1) < 0){
+		$scope.plusMinusIncome = '#FF0000';
+	}
+	if( (($scope.projectedIncome - $scope.totalIncome) * -1) > 0){
+		$scope.plusMinusIncome = '#32CD32';
+	}
+	if( (($scope.projectedBills - $scope.totalBills) * -1) < 0){
+		$scope.plusMinusBills = '#32CD32';
+	}
+	if( (($scope.projectedBills - $scope.totalBills) * -1) > 0){
+		$scope.plusMinusBills = '#FF0000';
+	}
+	if( (($scope.projectedExpenses - $scope.totalSpent) * -1) < 0){
+		$scope.plusMinusExpenses = '#32CD32';
+	}
+	if( (($scope.projectedExpenses - $scope.totalSpent) * -1) > 0){
+		$scope.plusMinusExpenses = '#FF0000';
+	}
+	if( ( (($scope.projectedIncome - $scope.projectedBills - $scope.projectedExpenses) - ($scope.totalIncome - $scope.totalBills - $scope.totalSpent)) * -1) < 0){
+		$scope.plusMinusSavings = '#FF0000';
+	}
+	if( ( (($scope.projectedIncome - $scope.projectedBills - $scope.projectedExpenses) - ($scope.totalIncome - $scope.totalBills - $scope.totalSpent)) * -1) > 0){
+		$scope.plusMinusSavings = '#32CD32';
 	}
 	$scope.leftOver = monthlyExpensesFactory.leftOver;
 	if ($scope.totalIncome - $scope.totalBills - $scope.totalSpent > 0) {
@@ -95,15 +123,21 @@ app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory'
 		$scope.specialVarUpByWord = 'Down by';
 		$scope.upByComment = "OMG, we're behind budget by " + Math.floor($scope.upBy) + " Let's get it together people";
 	}
+
 	$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 	$scope.daysLeft = monthlyExpensesFactory.daysLeft;
 	$scope.periodStart = monthlyExpensesFactory.periodStart[0];
 	$scope.periodEnd = monthlyExpensesFactory.periodEnd[0];
 
-	$scope.spendingLimitForm = function(){
-		monthlyExpensesFactory.postSpendingLimit($scope.amount1);
-
-		monthlyExpensesFactory.spendingLimit = $scope.amount1;
+	$scope.submitProjectionForm = function(){
+		// here i'm updating the server
+		monthlyExpensesFactory.postProjections($scope.projectedIncomeModel, 
+												 	 $scope.projectedBillsModel, 
+												 	 $scope.projectedExpensesModel);
+		// here I'm updating the factory
+		monthlyExpensesFactory.projectedIncome = $scope.projectedIncomeModel;
+		monthlyExpensesFactory.projectedBills = $scope.projectedBillsModel;
+		monthlyExpensesFactory.projectedExpenses = $scope.projectedExpensesModel;
 		monthlyExpensesFactory.calcPeriodStart();
 		monthlyExpensesFactory.calcPeriodEnd();
 		monthlyExpensesFactory.calcToday();
@@ -111,14 +145,17 @@ app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory'
 		monthlyExpensesFactory.calcUpBy();
 		monthlyExpensesFactory.calcDaysLeft();
 
-		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
-		$scope.leftOver = monthlyExpensesFactory.spendingLimit - monthlyExpensesFactory.totalSpent;
+		//updating scope
+		$scope.projectedIncome = monthlyExpensesFactory.projectedIncome;
+		$scope.projectedBills = monthlyExpensesFactory.projectedBills;
+		$scope.projectedExpenses = monthlyExpensesFactory.projectedExpenses;
+
+		$scope.leftOver = monthlyExpensesFactory.projectedExpenses - monthlyExpensesFactory.totalSpent;
 		if (monthlyExpensesFactory.upBy >= 0) {
 			$scope.specialVarUpBy = '#00FF00';
 			$scope.specialVarUpByWord = 'Up By';
 			$scope.upBy = monthlyExpensesFactory.upBy;
 		} 
-
 		if (monthlyExpensesFactory.upBy < 0) {
 			$scope.specialVarUpBy = '#FE7878';
 			$scope.specialVarUpByWord = 'Down By';
@@ -139,10 +176,38 @@ app.controller('DashboardCtrl', ['$scope', '$interval', 'monthlyExpensesFactory'
 			$scope.specialVarUpByWord = 'Down by';
 			$scope.upByComment = "OMG, we're behind budget by " + Math.floor($scope.upBy) + " Let's get it together people";
 		}
+		if( (($scope.projectedIncome - $scope.totalIncome) * -1) < 0){
+			$scope.plusMinusIncome = '#FF0000';
+		}
+		if( (($scope.projectedIncome - $scope.totalIncome) * -1) > 0){
+			$scope.plusMinusIncome = '#32CD32';
+		}
+		if( (($scope.projectedBills - $scope.totalBills) * -1) < 0){
+			$scope.plusMinusBills = '#32CD32';
+		}
+		if( (($scope.projectedBills - $scope.totalBills) * -1) > 0){
+			$scope.plusMinusBills = '#FF0000';
+		}
+		if( (($scope.projectedExpenses - $scope.totalSpent) * -1) < 0){
+			$scope.plusMinusExpenses = '#32CD32';
+		}
+		if( (($scope.projectedExpenses - $scope.totalSpent) * -1) > 0){
+			$scope.plusMinusExpenses = '#FF0000';
+		}
+		if( ( (($scope.projectedIncome - $scope.projectedBills - $scope.projectedExpenses) - ($scope.totalIncome - $scope.totalBills - $scope.totalSpent)) * -1) < 0){
+			$scope.plusMinusSavings = '#FF0000';
+		}
+		if( ( (($scope.projectedIncome - $scope.projectedBills - $scope.projectedExpenses) - ($scope.totalIncome - $scope.totalBills - $scope.totalSpent)) * -1) > 0){
+			$scope.plusMinusSavings = '#32CD32';
+		}
 		$scope.dailyBudget = monthlyExpensesFactory.dailyBudget;
 
-		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
-		$scope.spendingLimitForm1.$setPristine();
-		$scope.amount1='';
+		$scope.projectionForm.$setPristine();
+		$scope.projectedIncomeModel='';
+		$scope.projectedBillsModel='';
+		$scope.projectedExpensesModel='';
+	};
+	$scope.goToDashboard = function(){
+	    $anchorScroll('theDashboard');
 	};
 }]);

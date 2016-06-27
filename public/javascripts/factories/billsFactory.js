@@ -3,6 +3,10 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 		bills: [],
 		billsCategoryTotals: []
 	};
+	o.removeBill = function(index){
+		o.bills.splice(index, 1);
+		return $http.put('/remove-bill', {'index': index}, {headers: {Authorization: 'Bearer ' + auth.getToken()} })	
+	};
 	o.getUser = function(){ // function that gets the user from api
 		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
 			angular.copy(response.data.monthlyBills, o.bills) // ang-copy deletes everything the income array above and adds every inside of res.data
@@ -22,15 +26,9 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 		};
 		return o.totalBills = total;
 	};
-	o.postBill = function(category, subCategory, amount){ // function that sends bill information to api
-		return $http.post('/add-bill', { 'category': category,  'subCategory': subCategory, 'amount': amount }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
+	o.postBill = function(category, subCategory, amount, date){ // function that sends bill information to api
+		return $http.post('/add-bill', { 'category': category,  'subCategory': subCategory, 'amount': amount, 'date': date}, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
 	};	
-	o.updateBillDescription = function(bill){
-		return $http.put('/edit-monthly-bill-description', { 'bill': bill }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
-	};
-	o.updateBillAmount = function(bill){
-		return $http.put('/edit-monthly-bill-amount', { 'bill': bill }, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
-	};
 	o.calcCategoryTotals = function(){
 		o.billsCategoryTotals = [	
 		{
@@ -50,7 +48,7 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 			}]
 		},
 		{
-			category: "Fitness",
+			category: "Health",
 			total: 0,
 			subCategory: [{
 				name: "Gym",
@@ -70,6 +68,26 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 			},
 			{
 				name: "Martial arts",
+				total: 0
+			},
+			{
+				name: "Health Insurance",
+				total: 0
+			},
+			{
+				name: "Pharmacy",
+				total: 0
+			},
+			{
+				name: "Eyecare",
+				total: 0
+			},
+			{
+				name: "Doctor",
+				total: 0
+			},
+			{
+				name: "Dentist",
 				total: 0
 			}]
 		},
@@ -191,7 +209,7 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 					o.billsCategoryTotals[0].subCategory[2].total += o.bills[i].amount;
 				}
 			};
-			if (o.bills[i].category === "Fitness") {
+			if (o.bills[i].category === "Health") {
 				o.billsCategoryTotals[1].total += o.bills[i].amount;	
 				if (o.bills[i].subCategory === "Gym") {
 					o.billsCategoryTotals[1].subCategory[0].total += o.bills[i].amount;
@@ -207,6 +225,21 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 				}
 				if (o.bills[i].subCategory === "Martial arts") {
 					o.billsCategoryTotals[1].subCategory[4].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Health Insurance") {
+					o.billsCategoryTotals[1].subCategory[5].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Pharmacy") {
+					o.billsCategoryTotals[1].subCategory[6].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Eyecare") {
+					o.billsCategoryTotals[1].subCategory[7].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Doctor") {
+					o.billsCategoryTotals[1].subCategory[8].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Dentist") {
+					o.billsCategoryTotals[1].subCategory[9].total += o.bills[i].amount;
 				}
 			};
 			if (o.bills[i].category === "Transportation") {

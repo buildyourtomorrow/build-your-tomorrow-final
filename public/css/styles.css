@@ -3,34 +3,24 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
     border: 0;
 	margin: 0;
 }
-
-
-
-
-
-
 .animate-show {
   line-height: 20px;
   opacity: 1;
   background: #f8f8f8;
 }
-
+.panel-title {
+	font-size: 14px !important;
+}
 .animate-show.ng-hide-remove {
   transition: all linear 2s;
 }
-
+.all-expenses {
+	margin-bottom: 5px !important;
+}
 .animate-show.ng-hide {
   line-height: 0;
   opacity: 0;
 }
-
-
-
-
-
-
-
-
 .validation_class {
   background-color: #D0D0D0;
   border: 1px solid red;
@@ -64,23 +54,27 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 }
 .dashboard_nav ul li{
 	display: inline;	
-	font-size: 15px;	
+	font-size: 14px;	
 }
 .dashboard_nav_first {
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-left: 10px;
+	margin-right: 20px;
 }
 .dashboard_nav_second {
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 .dashboard_nav_third {
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 .dashboard_nav_fourth {
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.dashboard_nav_fifth {
+	margin-left: 20px;
+	margin-right: 10px;
 }
 .dashboard_nav a {
 	color: #919496;
@@ -89,6 +83,13 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 .dashboard_nav a:hover {
     text-decoration: none;
 }
+.dashboard_nav a:hover {
+	color: #919496;
+}  /* mouse over link */
+.dashboard_nav a:active {
+	color: #919496;
+}  /* selected link */
+
 /* I gave every table data its own class so if I ever want to target that peice of data, I can */
 /* there is lots of repetition but I'm trying to be explicit */
 .dashboard_overview {
@@ -100,24 +101,12 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	border-radius: 5px;
 }
 .dashboard_overview table tbody tr td {
-	font-size: 15px;
-	width: 50%;
+	font-size: 14px;
+	width: 25%;
 	text-align: center;
 	vertical-align: middle;
 	height: 55px;
-}
-/* This area targets the income, bills, expenses totals */
-.dashboard_overview_1 {
-}
-.dashboard_overview_2 {;
-}
-.dashboard_overview_3 {	
-}
-.dashboard_overview_4 {
-}
-.dashboard_overview_5 {
-}
-.dashboard_overview_6 {
+	padding: 1px !important;
 }
 .dashboard_text_analysis_1 {
 	text-align: center; 
@@ -136,7 +125,7 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	border-radius: 5px;
 }
 .dashboard_analysis table tbody tr td {
-	font-size: 15px;
+	font-size: 14px;
 	width: 50%;
 	text-align: center;	
 	vertical-align: middle;
@@ -164,7 +153,7 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	border-radius: 5px;
 }
 .income table tr td {
-	font-size: 15px;
+	font-size: 14px;
 	width: 50%;
 	text-align: center;
 	vertical-align: middle;
@@ -189,7 +178,7 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	border-radius: 5px;
 }
 .bills table tr td {
-	font-size: 15px;
+	font-size: 14px;
 	width: 50%;
 	text-align: center;
 	vertical-align: middle;
@@ -214,7 +203,7 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	border-radius: 5px;
 }
 .expenses table tr td {
-	font-size: 15px;
+	font-size: 14px;
 	width: 50%;
 	text-align: center;
 	vertical-align: middle;
@@ -237,33 +226,31 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	    overflow-y: hidden;
 	    -ms-overflow-style: -ms-autohiding-scrollbar;
 	    border: 0px solid #ddd !important;
-}
+	}
 @media screen and (max-width: 550px) {
 	.dashboard_nav_first {
 		margin-left: 3px !important;
-		margin-right: 3px !important;
-		font-size: 15px !important;
+		margin-right: 10px !important;
+		font-size: 12px !important;
 	}
 	.dashboard_nav_second {
-		margin-left: 15px !important;
-		margin-right: 15px !important;
-		font-size: 15px !important;
+		margin-left: 10px !important;
+		margin-right: 10px !important;
+		font-size: 12px !important;
 	}
 	.dashboard_nav_third {
-		margin-left: 15px !important;
-		margin-right: 15px !important;
-		font-size: 15px !important;
+		margin-left: 10px !important;
+		margin-right: 10px !important;
+		font-size: 12px !important;
 	}
 	.dashboard_nav_fourth {
-		margin-left: 3px !important;
-		margin-right: 3px !important;
-		font-size: 15px !important;
+		margin-left: 10px !important;
+		margin-right: 10px !important;
+		font-size: 12px !important;
 	}
-	.table {
+	.dashboard_nav_fifth {
+		margin-left: 10px !important;
+		margin-right: 3px !important;
+		font-size: 12px !important;
 	}
 }
-
-
-
-
-

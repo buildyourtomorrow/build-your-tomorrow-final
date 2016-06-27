@@ -1,12 +1,16 @@
-app.controller('BillsCtrl', ['$scope', 'billsFactory', 'auth', function($scope, billsFactory, auth){
+app.controller('BillsCtrl', ['$scope', '$location', '$anchorScroll', 'billsFactory', 'auth', function($scope, $location, $anchorScroll, billsFactory, auth){
 	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.bills = billsFactory.bills;
 	$scope.totalBills = billsFactory.totalBills;
 	$scope.categories = billsFactory.billsCategoryTotals;
+	$scope.lastVisit = billsFactory.bills[0];
+	$scope.goToAllBills = function(){
+	    $anchorScroll('allBillTransactions');
+	};
 
 	$scope.monthlyBillsCategories = [
 		{id: "Housing", value: "Housing" },
-		{id: "Fitness", value: "Fitness" },
+		{id: "Health", value: "Health" },
 		{id: "Transportation", value: "Transportation" },
 		{id: "Utilities", value: "Utilities" },
 		{id: "Insurance", value: "Insurance" },
@@ -14,19 +18,28 @@ app.controller('BillsCtrl', ['$scope', 'billsFactory', 'auth', function($scope, 
 		{id: "Taxes", value: "Taxes" },
 		{id: "Entertainment", value: "Entertainment" }
 	];
-
+	$scope.removeBill = function(index){
+        billsFactory.removeBill(index);
+        billsFactory.calcCategoryTotals();
+        $scope.categories = billsFactory.billsCategoryTotals;
+    };
 	$scope.monthlyBillsSubCategories={
         Housing:[
             {id: 0, value: "Rent"},
             {id: 1, value: "Mortgage"},
             {id: 2, value: "Vacation home"}
         ],
-        Fitness:[
+        Health:[
             {id: 0, value: "Gym"},
             {id: 1, value: "Yoga"},
             {id: 2, value: "Pilates"},
             {id: 3, value: "Boxing"},
-            {id: 4, value: "Martial arts"}
+            {id: 4, value: "Martial arts"},
+            {id: 5, value: "Health Insurance"},
+            {id: 6, value: "Pharmacy"},
+            {id: 7, value: "Eyecare"},
+            {id: 8, value: "Doctor"},
+            {id: 9, value: "Dentist"}
         ],
         Transportation:[
             {id: 0, value: "Metro Card"},
@@ -61,38 +74,34 @@ app.controller('BillsCtrl', ['$scope', 'billsFactory', 'auth', function($scope, 
 			{id: 0, value: "Streaming movies/music"}
 		]
 	};
-
-	$scope.updateBillDesc = function(bill){
-		billsFactory.updateBillDescription(bill);
-	};
-	$scope.updateBillAmount = function(bill){
-		billsFactory.updateBillAmount(bill);
-		$scope.totalBills = billsFactory.calculateTotal();
-	};
 	// function that processes bills form. 
 	$scope.billForm = function(){
-		billsFactory.postBill($scope.category, $scope.subCategory, $scope.amount); // send form to api
+		billsFactory.postBill($scope.category, $scope.subCategory, $scope.amount, new Date()); // send form to api
 		if (billsFactory.bills.length > 0 ) {
-			billsFactory.bills.push({'id': billsFactory.bills.length, 
+			billsFactory.bills.unshift({'id': billsFactory.bills.length, 
 								   	 'category': $scope.category, 
 								   	 'subCategory': $scope.subCategory,
-								     'amount': $scope.amount});
+								     'amount': $scope.amount,
+								     'date': new Date()});
 		};
 		if (billsFactory.bills.length === 0 ) {
-			billsFactory.bills.push({'id': 0, 
+			billsFactory.bills.unshift({'id': 0, 
 								   	 'category': $scope.category, 
 								   	 'subCategory': $scope.subCategory,
-								     'amount': $scope.amount});
+								     'amount': $scope.amount,
+								     'date': new Date()});
 		};
 		billsFactory.calculateTotal();
 		billsFactory.calcCategoryTotals();
 
 		$scope.totalBills = billsFactory.totalBills;
 		$scope.categories = billsFactory.billsCategoryTotals;
+		$scope.lastVisit = billsFactory.bills[0];
 
 		$scope.monthlyBillForm.$setPristine();
 		$scope.category='';
 		$scope.subCategory='';
 		$scope.amount='';
+		$scope.question='';
 	};
 }]);

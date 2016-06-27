@@ -13,6 +13,7 @@ var UserSchema = new mongoose.Schema({
 		id: Number,
 		category: String,
 		amount: Number,
+		date: Date
 	}],
 	totalIncome: {
 		id: Number,
@@ -23,7 +24,8 @@ var UserSchema = new mongoose.Schema({
 		id: Number,
 		category: String,
 		subCategory: String,
-		amount: Number	
+		amount: Number,
+		date: Date
 	}],
 	billsTotal: {
 		id: Number,
@@ -35,13 +37,9 @@ var UserSchema = new mongoose.Schema({
 		category: String,
 		subCategory: String,
 		amount: Number,
+		date: Date
 	}],
 	totalSpent: {
-		id: Number,
-		type: Number,
-		default: 0
-	},
-	spendingLimit: {
 		id: Number,
 		type: Number,
 		default: 0
@@ -52,6 +50,21 @@ var UserSchema = new mongoose.Schema({
 		default: 0
 	},	
 	upBy: {
+		id: Number,
+		type: Number,
+		default: 0
+	},
+	projectedIncome: {
+		id: Number,
+		type: Number,
+		default: 0
+	},
+	projectedBills: {
+		id: Number,
+		type: Number,
+		default: 0
+	},
+	projectedExpenses: {
 		id: Number,
 		type: Number,
 		default: 0
@@ -142,7 +155,7 @@ UserSchema.methods.calcTotalSpent = function(allMonthlyExpenses){
 };
 
 UserSchema.methods.calcLeftOver = function(){
-	this.leftOver = this.spendingLimit - this.totalSpent;
+	this.leftOver = this.projectedExpenses - this.totalSpent;
 	this.save();
 };
 
@@ -152,7 +165,7 @@ UserSchema.methods.calcUpBy = function(){
 };
 
 UserSchema.methods.calcDailyBudget = function(){
-	this.dailyBudget = this.spendingLimit / this.periodEnd.getDate()  
+	this.dailyBudget = this.projectedExpenses / this.periodEnd.getDate()  
 	this.save();
 };
 
@@ -247,150 +260,171 @@ UserSchema.methods.calcIncomeCategoryTotals = function(){
 }
 UserSchema.methods.calcBillCategoryTotals = function(){
 	this.billsCategoryTotals = [	
-	{
-		category: "Housing",
-		total: 0,
-		subCategory: [{
-			name: "Rent",
-			total: 0
+		{
+			category: "Housing",
+			total: 0,
+			subCategory: [{
+				name: "Rent",
+				total: 0
+			},
+			{
+				name: "Mortgage",
+				total: 0	
+			},
+			{
+				name: "Vacation home",
+				total: 0	
+			}]
 		},
 		{
-			name: "Mortgage",
-			total: 0	
+			category: "Health",
+			total: 0,
+			subCategory: [{
+				name: "Gym",
+				total: 0
+			},
+			{
+				name: "Yoga",
+				total: 0	
+			},
+			{
+				name: "Pilates",
+				total: 0		
+			},
+			{
+				name: "Boxing",
+				total: 0	
+			},
+			{
+				name: "Martial arts",
+				total: 0
+			},
+			{
+				name: "Health Insurance",
+				total: 0
+			},
+			{
+				name: "Pharmacy",
+				total: 0
+			},
+			{
+				name: "Eyecare",
+				total: 0
+			},
+			{
+				name: "Doctor",
+				total: 0
+			},
+			{
+				name: "Dentist",
+				total: 0
+			}]
 		},
 		{
-			name: "Vacation home",
-			total: 0	
-		}]
-	},
-	{
-		category: "Fitness",
-		total: 0,
-		subCategory: [{
-			name: "Gym",
-			total: 0
+			category: "Transportation",
+			total: 0,
+			subCategory: [{
+				name: "Metro Card",
+				total: 0 
+			},
+			{
+				name: "EZ Pass",
+				total: 0 
+			},
+			{
+				name: "Gas",
+				total: 0
+			},
+			{
+				name: "Parking",
+				total: 0
+			}]
 		},
 		{
-			name: "Yoga",
-			total: 0	
+			category: "Utilities",
+			total: 0,
+			subCategory: [{
+				name: "Electric",
+				total: 0 
+			},
+			{
+				name: "Water",
+				total: 0 
+			},
+			{
+				name: "Garbage",
+				total: 0
+			},
+			{
+				name: "Home/Cell phone",
+				total: 0
+			},
+			{
+				name: "Internet",
+				total: 0	
+			}]
 		},
 		{
-			name: "Pilates",
-			total: 0		
+			category: "Insurance",
+			total: 0,
+			subCategory: [{
+				name: "Car insurance",
+				total: 0 
+			},
+			{
+				name: "Homeowner's insurance",
+				total: 0 
+			},
+			{
+				name: "Renter's insurance",
+				total: 0
+			}]
+		},
+		{ 
+			category: "Debt",
+			total: 0,
+			subCategory: [{
+				name: "Credit card",
+				total: 0 
+			},
+			{
+				name: "Student loan",
+				total: 0 
+			},
+			{
+				name: "Personal loan",
+				total: 0
+			},
+			{
+				name: "Car loan",
+				total: 0
+			}]
 		},
 		{
-			name: "Boxing",
-			total: 0	
+			category: "Taxes",
+			total: 0,
+			subCategory: [{
+				name: "Personal",
+				total: 0 
+			},
+			{
+				name: "Business",
+				total: 0 
+			},
+			{
+				name: "House",
+				total: 0
+			}]
 		},
 		{
-			name: "Martial arts",
-			total: 0
-		}]
-	},
-	{
-		category: "Transportation",
-		total: 0,
-		subCategory: [{
-			name: "Metro Card",
-			total: 0 
-		},
-		{
-			name: "EZ Pass",
-			total: 0 
-		},
-		{
-			name: "Gas",
-			total: 0
-		},
-		{
-			name: "Parking",
-			total: 0
-		}]
-	},
-	{
-		category: "Utilities",
-		total: 0,
-		subCategory: [{
-			name: "Electric",
-			total: 0 
-		},
-		{
-			name: "Water",
-			total: 0 
-		},
-		{
-			name: "Garbage",
-			total: 0
-		},
-		{
-			name: "Home/Cell phone",
-			total: 0
-		},
-		{
-			name: "Internet",
-			total: 0	
-		}]
-	},
-	{
-		category: "Insurance",
-		total: 0,
-		subCategory: [{
-			name: "Car insurance",
-			total: 0 
-		},
-		{
-			name: "Homeowner's insurance",
-			total: 0 
-		},
-		{
-			name: "Renter's insurance",
-			total: 0
-		}]
-	},
-	{ 
-		category: "Debt",
-		total: 0,
-		subCategory: [{
-			name: "Credit card",
-			total: 0 
-		},
-		{
-			name: "Student loan",
-			total: 0 
-		},
-		{
-			name: "Personal loan",
-			total: 0
-		},
-		{
-			name: "Car loan",
-			total: 0
-		}]
-	},
-	{
-		category: "Taxes",
-		total: 0,
-		subCategory: [{
-			name: "Personal",
-			total: 0 
-		},
-		{
-			name: "Business",
-			total: 0 
-		},
-		{
-			name: "House",
-			total: 0
-		}]
-	},
-	{
-		category: "Entertainment",
-		total: 0,
-		subCategory: [{
-			name: "Streaming movies/music",
-			total: 0 
-		}]
-	}];
+			category: "Entertainment",
+			total: 0,
+			subCategory: [{
+				name: "Streaming movies/music",
+				total: 0 
+			}]
+		}
+	];
 
 	for (i = 0; i < this.monthlyBills.length; i++){
 		if (this.monthlyBills[i].category === "Housing") {
@@ -405,7 +439,7 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 				this.billsCategoryTotals[0].subCategory[2].total += this.monthlyBills[i].amount;
 			}
 		};
-		if (this.monthlyBills[i].category === "Fitness") {
+		if (this.monthlyBills[i].category === "Health") {
 			this.billsCategoryTotals[1].total += this.monthlyBills[i].amount;	
 			if (this.monthlyBills[i].subCategory === "Gym") {
 				this.billsCategoryTotals[1].subCategory[0].total += this.monthlyBills[i].amount;
@@ -421,6 +455,21 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 			}
 			if (this.monthlyBills[i].subCategory === "Martial arts") {
 				this.billsCategoryTotals[1].subCategory[4].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Health Insurance") {
+				this.billsCategoryTotals[1].subCategory[5].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Pharmacy") {
+				this.billsCategoryTotals[1].subCategory[6].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Eyecare") {
+				this.billsCategoryTotals[1].subCategory[7].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Doctor") {
+				this.billsCategoryTotals[1].subCategory[8].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Dentist") {
+				this.billsCategoryTotals[1].subCategory[9].total += this.monthlyBills[i].amount;
 			}
 		};
 		if (this.monthlyBills[i].category === "Transportation") {
@@ -498,7 +547,7 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 		if (this.monthlyBills[i].category === "Entertainment") {
 			this.billsCategoryTotals[7].total += this.monthlyBills[i].amount;	
 			if (this.monthlyBills[i].subCategory === "Streaming movies/music") {
-				this.billsCategoryTotals[7].subCategory[0].total += this.monthlyBills[i].amount;
+				this.billsCategoryTotals[7].subCategory[0].total += this.bills[i].amount;
 			}
 		};
 	};
@@ -506,285 +555,373 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 };
 
 UserSchema.methods.calcExpCategoryTotals = function(){
-	this.expCategoryTotals = [	
-	{
-		category: "Clothing",
-		total: 0,
-		subCategory: [{
-			name: "Children's Clothing",
-			total: 0
+	this.expCategoryTotals = [
+		{
+			category: "Clothing",
+			total: 0,
+			subCategory: [{
+				name: "Children's Clothing",
+				total: 0
+			},
+			{
+				name: "Adult's Clothing",
+				total: 0	
+			}]
 		},
 		{
-			name: "Adult's Clothing",
-			total: 0	
-		}]
-	},
-	{
-		category: "Education",
-		total: 0,
-		subCategory: [{
-			name: "Tuition",
-			total: 0
+			category: "Education",
+			total: 0,
+			subCategory: [{
+				name: "Tuition",
+				total: 0
+			},
+			{
+				name: "Books",
+				total: 0	
+			},
+			{
+				name: "School Supplies",
+				total: 0		
+			},
+			{
+				name: "Field Trips",
+				total: 0	
+			},
+			{
+				name: "Student Loan Payment",
+				total: 0
+			},
+			{
+				name: "Magazines",
+				total: 0
+			}]
 		},
 		{
-			name: "Books",
-			total: 0	
+			category: "Food",
+			total: 0,
+			subCategory: [{
+				name: "Groceries",
+				total: 0 
+			},
+			{
+				name: "Restaurant",
+				total: 0 
+			},
+			{
+				name: "Pet Food",
+				total: 0
+			},
+			{
+				name: "Junk Food",
+				total: 0
+			},
+			{
+				name: "Coffee",
+				total: 0	
+			}]
 		},
 		{
-			name: "School Supplies",
-			total: 0		
+			category: "Gift",
+			total: 0,
+			subCategory: [{
+				name: "Birthday",
+				total: 0 
+			},
+			{
+				name: "Valentine's Day",
+				total: 0 
+			},
+			{
+				name: "Anniversary",
+				total: 0
+			},
+			{
+				name: "Wedding",
+				total: 0
+			},
+			{
+				name: "Christmas",
+				total: 0	
+			},
+			{
+				name: "Special Occasion",
+				total: 0	
+			}]
 		},
 		{
-			name: "Field Trips",
-			total: 0	
+			category: "Giving",
+			total: 0,
+			subCategory: [{
+				name: "Tithing",
+				total: 0 
+			},
+			{
+				name: "Offerings",
+				total: 0 
+			},
+			{
+				name: "Charities",
+				total: 0
+			}]
+		},
+		{ 
+			category: "Household",
+			total: 0,
+			subCategory: [{
+				name: "Toiletries",
+				total: 0 
+			},
+			{
+				name: "Laundry Detergent",
+				total: 0 
+			},
+			{
+				name: "Dishwasher Detergent",
+				total: 0
+			},
+			{
+				name: "Cleaning Supplies",
+				total: 0
+			},
+			{
+				name: "Tools",
+				total: 0	
+			},
+			{
+				name: "Furniture",
+				total: 0	
+			},
+			{
+				name: "Decorating",
+				total: 0	
+			},
+			{
+				name: "Home Improvement",
+				total: 0	
+			},
+			{
+				name: "Home Repair",
+				total: 0	
+			}]
 		},
 		{
-			name: "Student Loan Payment",
-			total: 0
+			category: "Medical",
+			total: 0,
+			subCategory: [{
+				name: "Primary Care",
+				total: 0 
+			},
+			{
+				name: "Dental Care",
+				total: 0 
+			},
+			{
+				name: "Specialty Care",
+				total: 0
+			},
+			{
+				name: "Medications",
+				total: 0
+			},
+			{
+				name: "Medical Devices",
+				total: 0	
+			}]
 		},
 		{
-			name: "Magazines",
-			total: 0
-		}]
-	},
-	{
-		category: "Food",
-		total: 0,
-		subCategory: [{
-			name: "Groceries",
-			total: 0 
+			category: "Personal",
+			total: 0,
+			subCategory: [{
+				name: "Hair & Hair Cuts",
+				total: 0 
+			},
+			{
+				name: "Salon Services",
+				total: 0 
+			},
+			{
+				name: "Cosmetics",
+				total: 0
+			},
+			{
+				name: "Babysitter",
+				total: 0
+			},
+			{
+				name: "Laundry",
+				total: 0
+			},
+			{
+				name: "Spa & Massage",
+				total: 0
+			}]
 		},
 		{
-			name: "Restaurant",
-			total: 0 
+			category: "Play",
+			total: 0,
+			subCategory: [{
+				name: "Movies",
+				total: 0 
+			},
+			{
+				name: "Clubs / Bars",
+				total: 0 
+			},
+			{
+				name: "Entertainment",
+				total: 0
+			},
+			{
+				name: "Games",
+				total: 0
+			},
+			{
+				name: "Vacations",
+				total: 0
+			},
+			{
+				name: "Sporting Events",
+				total: 0
+			},
+			{
+				name: "Amusement Park",
+				total: 0
+			}]
 		},
-		{
-			name: "Pet Food",
-			total: 0
+		{ 
+			category: "Events",
+			total: 0,
+			subCategory: [{
+				name: "Moving",
+				total: 0 
+			},
+			{
+				name: "Wedding",
+				total: 0 
+			}]
 		},
-		{
-			name: "Junk Food",
-			total: 0
+		{ 
+			category: "Transportation",
+			total: 0,
+			subCategory: [{
+				name: "Fuel",
+				total: 0 
+			},
+			{
+				name: "Tires",
+				total: 0 
+			},
+			{
+				name: "Oil Changes",
+				total: 0
+			},
+			{
+				name: "Maintenance",
+				total: 0
+			},
+			{
+				name: "Parking Fees",
+				total: 0
+			},
+			{
+				name: "Repairs",
+				total: 0
+			},
+			{
+				name: "DMV Fees",
+				total: 0
+			},
+			{
+				name: "Vehicle Replacement",
+				total: 0
+			},
+			{
+				name: "Taxi",
+				total: 0
+			},
+			{
+				name: "Public Transportation",
+				total: 0
+			},
+			{
+				name: "Tolls",
+				total: 0
+			},
+			{
+				name: "Auto Payment",
+				total: 0
+			},
+			{
+				name: "Auto Insurance",
+				total: 0
+			}]
 		},
-		{
-			name: "Coffee",
-			total: 0	
-		}]
-	},
-	{
-		category: "Gift",
-		total: 0,
-		subCategory: [{
-			name: "Birthday",
-			total: 0 
+		{ 
+			category: "Travel",
+			total: 0,
+			subCategory: [{
+				name: "Air Travel",
+				total: 0 
+			},
+			{
+				name: "Hotel",
+				total: 0 
+			},
+			{
+				name: "Rental Car & Taxi",
+				total: 0
+			},
+			{
+				name: "Vacations",
+				total: 0
+			}]
 		},
-		{
-			name: "Valentine's Day",
-			total: 0 
+		{ 
+			category: "Pets",
+			total: 0,
+			subCategory: [{
+				name: "Pet Food & Supplies",
+				total: 0 
+			},
+			{
+				name: "Pet Grooming",
+				total: 0 
+			},
+			{
+				name: "Veterinary",
+				total: 0
+			}]
 		},
-		{
-			name: "Anniversary",
-			total: 0
-		},
-		{
-			name: "Wedding",
-			total: 0
-		},
-		{
-			name: "Christmas",
-			total: 0	
-		},
-		{
-			name: "Special Occasion",
-			total: 0	
-		}]
-	},
-	{
-		category: "Giving",
-		total: 0,
-		subCategory: [{
-			name: "Tithing",
-			total: 0 
-		},
-		{
-			name: "Offerings",
-			total: 0 
-		},
-		{
-			name: "Charities",
-			total: 0
-		}]
-	},
-	{ 
-		category: "Household",
-		total: 0,
-		subCategory: [{
-			name: "Toiletries",
-			total: 0 
-		},
-		{
-			name: "Laundry Detergent",
-			total: 0 
-		},
-		{
-			name: "Dishwasher Detergent",
-			total: 0
-		},
-		{
-			name: "Cleaning Supplies",
-			total: 0
-		},
-		{
-			name: "Tools",
-			total: 0	
-		},
-		{
-			name: "Furniture",
-			total: 0	
-		},
-		{
-			name: "Decorating",
-			total: 0	
-		},
-		{
-			name: "Home Improvement",
-			total: 0	
-		},
-		{
-			name: "Home Repair",
-			total: 0	
-		}]
-	},
-	{
-		category: "Medical",
-		total: 0,
-		subCategory: [{
-			name: "Primary Care",
-			total: 0 
-		},
-		{
-			name: "Dental Care",
-			total: 0 
-		},
-		{
-			name: "Specialty Care",
-			total: 0
-		},
-		{
-			name: "Medications",
-			total: 0
-		},
-		{
-			name: "Medical Devices",
-			total: 0	
-		}]
-	},
-	{
-		category: "Personal",
-		total: 0,
-		subCategory: [{
-			name: "Hair Cuts",
-			total: 0 
-		},
-		{
-			name: "Salon Services",
-			total: 0 
-		},
-		{
-			name: "Cosmetics",
-			total: 0
-		},
-		{
-			name: "Babysitter",
-			total: 0
-		}]
-	},
-	{
-		category: "Play",
-		total: 0,
-		subCategory: [{
-			name: "Movies",
-			total: 0 
-		},
-		{
-			name: "Clubs / Bars",
-			total: 0 
-		},
-		{
-			name: "Entertainment",
-			total: 0
-		},
-		{
-			name: "Games",
-			total: 0
-		},
-		{
-			name: "Vacations",
-			total: 0
-		},
-		{
-			name: "Sporting Events",
-			total: 0
-		},
-		{
-			name: "Amusement Park",
-			total: 0
-		}]
-	},
-	{ 
-		category: "Events",
-		total: 0,
-		subCategory: [{
-			name: "Moving",
-			total: 0 
-		},
-		{
-			name: "Wedding",
-			total: 0 
-		}]
-	},
-	{ 
-		category: "Transportation",
-		total: 0,
-		subCategory: [{
-			name: "Fuel",
-			total: 0 
-		},
-		{
-			name: "Tires",
-			total: 0 
-		},
-		{
-			name: "Oil Changes",
-			total: 0
-		},
-		{
-			name: "Maintenance",
-			total: 0
-		},
-		{
-			name: "Parking Fees",
-			total: 0
-		},
-		{
-			name: "Repairs",
-			total: 0
-		},
-		{
-			name: "DMV Fees",
-			total: 0
-		},
-		{
-			name: "Vehicle Replacement",
-			total: 0
-		},
-		{
-			name: "Taxi",
-			total: 0
-		}]
-	}];
-
-	for (i = 0; i < this.monthlyExpenses.length; i++){
+		{ 
+			category: "Kids",
+			total: 0,
+			subCategory: [{
+				name: "Allowance",
+				total: 0 
+			},
+			{
+				name: "Baby Supplies",
+				total: 0 
+			},
+			{
+				name: "Babysitter & Daycare",
+				total: 0
+			},
+			{
+				name: "Child Support",
+				total: 0
+			},
+			{
+				name: "Kids Activities",
+				total: 0
+			},
+			{
+				name: "Toys",
+				total: 0
+			}]
+		}
+	]
+	for (i = 0; i < this.monthlyExpenses.length; i++){			
 		if (this.monthlyExpenses[i].category === "Clothing") {
 			this.expCategoryTotals[0].total += this.monthlyExpenses[i].amount;	
 			if (this.monthlyExpenses[i].subCategory === "Children's Clothing") {
@@ -812,7 +949,7 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 				this.expCategoryTotals[1].subCategory[4].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Magazines") {
-				this.expCategoryTotals[1].subCategory[2].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[1].subCategory[5].total += this.monthlyExpenses[i].amount;
 			}
 		};
 		if (this.monthlyExpenses[i].category === "Food") {
@@ -851,7 +988,7 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 				this.expCategoryTotals[3].subCategory[4].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Special Occasion") {
-				this.expCategoryTotals[3].subCategory[4].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[3].subCategory[5].total += this.monthlyExpenses[i].amount;
 			}
 		};
 		if (this.monthlyExpenses[i].category === "Giving") {
@@ -872,7 +1009,7 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 				this.expCategoryTotals[4].subCategory[4].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Special Occasion") {
-				this.expCategoryTotals[4].subCategory[4].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[4].subCategory[5].total += this.monthlyExpenses[i].amount;
 			}
 		};
 		if (this.monthlyExpenses[i].category === "Household") {
@@ -925,7 +1062,7 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 		};
 		if (this.monthlyExpenses[i].category === "Personal") {
 			this.expCategoryTotals[7].total += this.monthlyExpenses[i].amount;	
-			if (this.monthlyExpenses[i].subCategory === "Hair Cuts") {
+			if (this.monthlyExpenses[i].subCategory === "Hair & Hair Cuts") {
 				this.expCategoryTotals[7].subCategory[0].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Salon Services") {
@@ -935,6 +1072,12 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 				this.expCategoryTotals[7].subCategory[2].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Babysitter") {
+				this.expCategoryTotals[7].subCategory[3].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Laundry") {
+				this.expCategoryTotals[7].subCategory[2].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Spa & Massage") {
 				this.expCategoryTotals[7].subCategory[3].total += this.monthlyExpenses[i].amount;
 			}
 		};
@@ -953,13 +1096,13 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 				this.expCategoryTotals[8].subCategory[3].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Vacations") {
-				this.expCategoryTotals[8].subCategory[0].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[8].subCategory[4].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Sporting Events") {
-				this.expCategoryTotals[8].subCategory[1].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[8].subCategory[5].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Amusement Park") {
-				this.expCategoryTotals[8].subCategory[2].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[8].subCategory[6].total += this.monthlyExpenses[i].amount;
 			}
 		};
 		if (this.monthlyExpenses[i].category === "Events") {
@@ -980,25 +1123,85 @@ UserSchema.methods.calcExpCategoryTotals = function(){
 				this.expCategoryTotals[10].subCategory[1].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Oil Changes") {
-				this.expCategoryTotals[10].subCategory[0].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[2].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Maintenance") {
-				this.expCategoryTotals[10].subCategory[1].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[3].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Parking Fees") {
-				this.expCategoryTotals[10].subCategory[0].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[4].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Repairs") {
-				this.expCategoryTotals[10].subCategory[1].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[5].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "DMV Fees") {
-				this.expCategoryTotals[10].subCategory[0].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[6].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Vehicle Replacement") {
-				this.expCategoryTotals[10].subCategory[1].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[7].total += this.monthlyExpenses[i].amount;
 			}
 			if (this.monthlyExpenses[i].subCategory === "Taxi") {
-				this.expCategoryTotals[10].subCategory[1].total += this.monthlyExpenses[i].amount;
+				this.expCategoryTotals[10].subCategory[8].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Public Transportation") {
+				this.expCategoryTotals[10].subCategory[9].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Tolls") {
+				this.expCategoryTotals[10].subCategory[10].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Auto Payment") {
+				this.expCategoryTotals[10].subCategory[11].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Auto Insurance") {
+				this.expCategoryTotals[10].subCategory[12].total += this.monthlyExpenses[i].amount;
+			}
+		};
+		if (this.monthlyExpenses[i].category === "Travel") {
+			this.expCategoryTotals[11].total += this.monthlyExpenses[i].amount;	
+			if (this.monthlyExpenses[i].subCategory === "Air Travel") {
+				this.expCategoryTotals[11].subCategory[0].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Hotel") {
+				this.expCategoryTotals[11].subCategory[1].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Rental Car & Taxi") {
+				this.expCategoryTotals[11].subCategory[2].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Vacations") {
+				this.expCategoryTotals[11].subCategory[3].total += this.monthlyExpenses[i].amount;
+			}
+		};
+		if (this.monthlyExpenses[i].category === "Pets") {
+			this.expCategoryTotals[12].total += this.monthlyExpenses[i].amount;	
+			if (this.monthlyExpenses[i].subCategory === "Pet Food & Supplies") {
+				this.expCategoryTotals[12].subCategory[0].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Pet Grooming") {
+				this.expCategoryTotals[12].subCategory[1].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Veterinary") {
+				this.expCategoryTotals[12].subCategory[2].total += this.monthlyExpenses[i].amount;
+			}
+		};
+		if (this.monthlyExpenses[i].category === "Kids") {
+			this.expCategoryTotals[13].total += this.monthlyExpenses[i].amount;	
+			if (this.monthlyExpenses[i].subCategory === "Allowance") {
+				this.expCategoryTotals[13].subCategory[0].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Baby Supplies") {
+				this.expCategoryTotals[13].subCategory[1].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Babysitter & Daycare") {
+				this.expCategoryTotals[13].subCategory[2].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Child Support") {
+				this.expCategoryTotals[13].subCategory[3].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Kids Activities") {
+				this.expCategoryTotals[13].subCategory[4].total += this.monthlyExpenses[i].amount;
+			}
+			if (this.monthlyExpenses[i].subCategory === "Toys") {
+				this.expCategoryTotals[13].subCategory[5].total += this.monthlyExpenses[i].amount;
 			}
 		};
 	};

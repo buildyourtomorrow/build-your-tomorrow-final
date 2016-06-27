@@ -1,8 +1,12 @@
-app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', 'auth', function($scope, monthlyExpensesFactory, auth){
+app.controller('MonthlyExpensesCtrl', ['$scope', '$location', '$anchorScroll', 'monthlyExpensesFactory', 'auth', function($scope, $location, $anchorScroll, monthlyExpensesFactory, auth){
 	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.monthlyExpenses = monthlyExpensesFactory.monthlyExpenses;
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 	$scope.categories = monthlyExpensesFactory.expCategoryTotals;
+    $scope.lastVisit = monthlyExpensesFactory.monthlyExpenses[0];
+    $scope.goToAllExpenses = function(){
+        $anchorScroll('allExpenseTransactions');
+    };
 
 	$scope.monthlyExpensesCategories=[
 		{id: "Clothing", value: "Clothing" },
@@ -16,6 +20,9 @@ app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', 'auth
 		{id: "Play", value: "Play", },
 		{id: "Events", value: "Events" },
 		{id: "Transportation", value: "Transportation" },
+        {id: "Travel", value: "Travel" },
+        {id: "Pets", value: "Pets" },
+        {id: "Kids", value: "Kids" }
 	];
 	$scope.monthlyExpensesSubCategories={
         Clothing:[
@@ -69,10 +76,12 @@ app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', 'auth
             {id: 4, value: "Medical Devices"}
 		],
 		Personal: [
-			{id: 0, value: "Hair Cuts"},
+			{id: 0, value: "Hair & Hair Cuts"},
 			{id: 1, value: "Salon Services"},
 			{id: 2, value: "Cosmetics"},
-			{id: 3, value: "Babysitter"}
+			{id: 3, value: "Babysitter"},
+            {id: 4, value: "Laundry"},
+            {id: 5, value: "Spa & Massage"}
 		],
 		Play :[
             {id: 0, value: "Movies"},
@@ -97,52 +106,62 @@ app.controller('MonthlyExpensesCtrl', ['$scope', 'monthlyExpensesFactory', 'auth
             {id: 6, value: "DMV Fees"},
             {id: 7, value: "Vehicle Replacement"},
             {id: 8, value: "Taxi"},
-		]
+            {id: 9, value: "Public Transportation"},
+            {id: 10, value: "Tolls"},
+            {id: 11, value: "Auto Payment"},
+            {id: 12, value: "Auto Insurance"}
+		],
+        Travel :[
+            {id: 0, value: "Air Travel"},
+            {id: 1, value: "Hotel"},
+            {id: 2, value: "Rental Car & Taxi"},
+            {id: 3, value: "Vacations"}
+        ],
+        Pets :[
+            {id: 0, value: "Pet food & Supplies"},
+            {id: 1, value: "Pet Grooming"},
+            {id: 2, value: "Veterinary"}
+        ],
+        Kids :[
+            {id: 0, value: "Allowance"},
+            {id: 1, value: "Baby Supplies"},
+            {id: 2, value: "Babysitter & Daycare"},
+            {id: 3, value: "Child Support"},
+            {id: 4, value: "Kids Activities"},
+            {id: 5, value: "Toys"}
+        ]
     };
-
-	$scope.updateExpAmount = function(expense){
-		monthlyExpensesFactory.editMonthlyExpAmount(expense);
-		monthlyExpensesFactory.calcTotalSpent(monthlyExpensesFactory.monthlyExpenses);
-		$scope.totalSpent = monthlyExpensesFactory.totalSpent; // research $watch.
-	};
-
-	$scope.updateExpDescription = function(expense){
-		monthlyExpensesFactory.editMonthlyExpDescription(expense);
-	};
-
+    $scope.removeExpense = function(index){
+        monthlyExpensesFactory.removeExpense(index);
+        monthlyExpensesFactory.calcCategoryTotals();
+        $scope.categories = monthlyExpensesFactory.expCategoryTotals;
+    };
 	$scope.monthlyExpenseForm = function(){
-		monthlyExpensesFactory.postMonthlyExpense($scope.category, $scope.subCategory, $scope.amount);
+		monthlyExpensesFactory.postMonthlyExpense($scope.category, $scope.subCategory, $scope.amount, new Date());
 		if (monthlyExpensesFactory.monthlyExpenses.length > 0) {
-			monthlyExpensesFactory.monthlyExpenses.push({'id': monthlyExpensesFactory.monthlyExpenses.length, 
-								   						 'category': $scope.category, 
-								   						 'subCategory': $scope.subCategory,
-								    					 'amount': $scope.amount});
+			monthlyExpensesFactory.monthlyExpenses.unshift({'id': monthlyExpensesFactory.monthlyExpenses.length, 
+								   						    'category': $scope.category, 
+								   						    'subCategory': $scope.subCategory,
+								    					    'amount': $scope.amount, 
+                                                            'date': new Date()});
 		};
+
 		if (monthlyExpensesFactory.monthlyExpenses.length === 0) {
-			monthlyExpensesFactory.monthlyExpenses.push({'id': 0,
-								   						 'category': $scope.category, 
-								   						 'subCategory': $scope.subCategory,
-								    					 'amount': $scope.amount});
+			monthlyExpensesFactory.monthlyExpenses.unshift({'id': 0,
+								   						    'category': $scope.category, 
+								   						    'subCategory': $scope.subCategory,
+								    					    'amount': $scope.amount,
+                                                            'date': new Date()});
 		};
-		/* The functions below updata a bunch of stuff throughout the app. Alot of it is not needed but I included them here just in case I missed something somewhere else */
-		monthlyExpensesFactory.calcTotalSpent(monthlyExpensesFactory.monthlyExpenses);
-		monthlyExpensesFactory.calcPeriodStart();
-		monthlyExpensesFactory.calcPeriodEnd();
-		monthlyExpensesFactory.calcToday();
-		monthlyExpensesFactory.calcDailyBudget();
-		monthlyExpensesFactory.calcUpBy();
-		monthlyExpensesFactory.calcDaysLeft();
 		monthlyExpensesFactory.calcCategoryTotals();
 		/* Update the scope */
-		$scope.spendingLimit = monthlyExpensesFactory.spendingLimit;
-		$scope.totalSpent = monthlyExpensesFactory.totalSpent;
-		$scope.leftOver = monthlyExpensesFactory.spendingLimit[0] - monthlyExpensesFactory.totalSpent;
-		$scope.upBy = monthlyExpensesFactory.upBy;
 		$scope.categories = monthlyExpensesFactory.expCategoryTotals;
+        $scope.lastVisit = monthlyExpensesFactory.monthlyExpenses[0];        
 
 		$scope.monthlyExpForm.$setPristine();
 		$scope.category='';
 		$scope.subCategory='';
 		$scope.amount='';
+        $scope.question='';
 	};
 }]);
