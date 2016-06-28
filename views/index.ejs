@@ -433,7 +433,7 @@
 										<section class="panel-body" style="padding:13px">
 											<section style="width:20%; float:left; text-align:center; display:inline">{{income.date | date:'MM/dd'}}</section>
 											<section style="width:40%; float:left; text-align:center; display:inline">{{income.category}}</section>
-											<section style="width:30%; float:left; text-align:center; display:inline">{{income.amount | number:0}}
+											<section style="width:30%; float:left; text-align:center; display:inline">{{income.amount | number:2}}
 											</section>
 											<section role="button" style="width:10%; float:right; text-align:center; display:inline" ng-click="removeIncome($index)"><i class="glyphicon glyphicon-remove"></i></section>
 										</section>
@@ -493,10 +493,7 @@
 									</section>
 								</section>
 							</section>
-							<section ng-messages="monthlyIncomeForm.monthlyIncomeQuestion.$error">
-  								<section ng-message="required" class="validation_1">*Required</section>
-							</section>
-							<select class="form-control" name="monthlyIncomeQuestion" ng-model='question' required>
+							<select class="form-control" name="monthlyIncomeQuestion" ng-model='question'>
 								<option value="" selected disabled>Please choose</option>
 								<option value="Yes">Yes - I have already received the income described above</option>						
 							</select>								
@@ -579,7 +576,7 @@
 										<section class="panel-body" style="padding:13px">
 											<section style="width:20%; float:left; text-align:center; display:inline">{{bill.date | date:'MM/dd'}}</section>
 											<section style="width:40%; float:left; text-align:center; display:inline">{{bill.category}}</section>
-											<section style="width:30%; float:left; text-align:center; display:inline">{{bill.amount | number:0}}
+											<section style="width:30%; float:left; text-align:center; display:inline">{{bill.amount | number:2}}
 											</section>
 											<section role="button" style="width:10%; float:right; text-align:center; display:inline" ng-click="removeBill($index)"><i class="glyphicon glyphicon-remove"></i></section>
 										</section>
@@ -656,10 +653,7 @@
 									</section>
 								</section>
 							</section>
-							<section ng-messages="monthlyBillForm.monthlyBillQuestion.$error">
-  								<section ng-message="required" class="validation_1">*Required</section>
-							</section>
-							<select class="form-control" name="monthlyBillQuestion" ng-model='question' required>
+							<select class="form-control" name="monthlyBillQuestion" ng-model='question'>
 								<option value="" selected disabled>Please choose</option>
 								<option value="Yes">Yes - I have already paid the bill described above</option>						
 							</select>								
@@ -742,7 +736,7 @@
 										<section class="panel-body" style="padding:13px">
 											<section style="width:20%; float:left; text-align:center; display:inline">{{expense.date | date:'MM/dd'}}</section>
 											<section style="width:40%; float:left; text-align:center; display:inline">{{expense.category}}</section>
-											<section style="width:30%; float:left; text-align:center; display:inline">{{expense.amount | number:0}}
+											<section style="width:30%; float:left; text-align:center; display:inline">{{expense.amount | number:2}}
 											</section>
 											<section role="button" style="width:10%; float:right; text-align:left; display:inline" ng-click="removeExpense($index)"><i class="glyphicon glyphicon-remove"></i></section>				
 										</section>
@@ -820,10 +814,7 @@
 									</section>
 								</section>
 							</section>
-							<section ng-messages="monthlyExpForm.monthlyExpQuestion.$error">
-  								<section ng-message="required" class="validation_1">*Required</section>
-							</section>
-							<select class="form-control" name="monthlyExpQuestion" ng-model='question' required>
+							<select class="form-control" name="monthlyExpQuestion" ng-model='question'>
 								<option value="" selected disabled>Please choose</option>
 								<option value="Yes">Yes - I have already paid the expense described above</option>						
 							</select>								
