@@ -347,35 +347,6 @@
 						</section>						
 					</section>
 				</section>
-				<!--Projections form -->
-				<section> <!-- novalidate disables brower validation -->
-					<form novalidate name='projectionForm' ng-submit='submitProjectionForm()'>
-						<section class="form-group">
-							<label>Income</label>
-							<section ng-messages="projectionForm.projectedIncome.$error">
-  								<section ng-message="required" class="validation_1">*Required</section>
-							</section>
-							<input class='form-control' type='number' placeholder='4200' name="projectedIncome" ng-model='projectedIncomeModel' required>
-						</section>
-						<section class="form-group">
-							<label>Bills</label>
-							<section ng-messages="projectionForm.projectedBills.$error">
-  								<section ng-message="required" class="validation_1">*Required</section>
-							</section>
-							<input class='form-control' type='number' placeholder='2300' name="projectedBills" ng-model='projectedBillsModel' required>
-						</section>
-						<section class="form-group">
-							<label>Expenses</label>
-							<section ng-messages="projectionForm.projectedExpenses.$error">
-  								<section ng-message="required" class="validation_1">*Required</section>
-							</section>
-							<input class='form-control' type='number' placeholder='1000' name="projectedExpenses" ng-model='projectedExpensesModel' required>
-						</section>
-						<section class="form-group">
-							<button ng-click="goToDashboard()" type="submit" ng-disabled="projectionForm.$invalid" class="btn btn-default btn-block btn-lg">Add Projections</button>
-						</section>									
-					</form>
-				</section>	
 			</script>
 			<!--Income stuff -->
 			<script type="text/ng-template" id="/income.html">
