@@ -75,5 +75,10 @@ app.config([
 					}]
 				}
 			})
+			.state('education', {
+				url: '/education', 
+				templateUrl: '/education.html',
+				controller: 'EducationCtrl'
+			})
 		}
 	])
