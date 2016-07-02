@@ -212,7 +212,9 @@
 									<tr>
 										<td>Savings</td>
 										<td>{{projectedIncome - projectedBills - projectedExpenses | number:0}}</td>
-										<td style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}}</td>
+										<td ng-show="totalIncome - totalBills - totalSpent > 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1F601;</td>
+										<td ng-show="totalIncome - totalBills - totalSpent === 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}}</td>
+										<td ng-show="totalIncome - totalBills - totalSpent < 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1f621;</td>
 										<td style="color: {{plusMinusSavings}}">{{(   (projectedIncome - projectedBills - projectedExpenses) - (totalIncome - totalBills - totalSpent)    ) | number:0}}</td>
 									</tr>
 								</tbody>
@@ -259,7 +261,7 @@
 							<table class="table">	
 								<tbody>
 									<tr>
-										<td class="dashboard_analysis_1">Expenses</td>
+										<td class="dashboard_analysis_1">Expenses</td>										
 										<td class="dashboard_analysis_2">{{projectedExpenses|number:0}}</td>
 									</tr>	
 									<tr>
@@ -272,7 +274,9 @@
 									</tr>
 									<tr>
 										<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
-										<td class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}}</td>
+										<td ng-show="upBy < 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f622;</td>
+										<td ng-show="upBy > 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f60e;</td>
+										<td ng-show="upBy === 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}}</td>
 									</tr>			
 								</tbody>
 							</table>
