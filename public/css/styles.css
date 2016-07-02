@@ -231,26 +231,26 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	.dashboard_nav_first {
 		margin-left: 3px !important;
 		margin-right: 10px !important;
-		font-size: 14px !important;
+		font-size: 13px !important;
 	}
 	.dashboard_nav_second {
 		margin-left: 10px !important;
 		margin-right: 10px !important;
-		font-size: 14px !important;
+		font-size: 13px !important;
 	}
 	.dashboard_nav_third {
 		margin-left: 10px !important;
 		margin-right: 10px !important;
-		font-size: 14px !important;
+		font-size: 13px !important;
 	}
 	.dashboard_nav_fourth {
 		margin-left: 10px !important;
 		margin-right: 10px !important;
-		font-size: 14px !important;
+		font-size: 13px !important;
 	}
 	.dashboard_nav_fifth {
 		margin-left: 10px !important;
 		margin-right: 3px !important;
-		font-size: 14px !important;
+		font-size: 13px !important;
 	}
 }
