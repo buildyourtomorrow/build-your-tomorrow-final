@@ -1,19 +1,19 @@
 {
-<<<<<<< HEAD
+
   "name": "build",
   "version": "1.0.0",
   "description": "Personal Finance Application",
-=======
+
   "name": "byt",
   "version": "1.0.0",
   "description": "initial prototype",
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
+
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eliezer Nunez",
-<<<<<<< HEAD
+
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -26,7 +26,7 @@
     "morgan": "^1.7.0"
   },
   "devDependencies": {}
-=======
+
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
@@ -39,5 +39,5 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"
   }
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
+
 }
