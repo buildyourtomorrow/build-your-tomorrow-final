@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 app.factory('billsFactory', ['$http', '$state', function($http, $state){
 	var o = {
 		bills: [],
@@ -21,24 +20,6 @@ app.factory('billsFactory', ['$http', '$state', function($http, $state){
 			o.nickName.push(response.data.nickName)
 		}, function(){
 			$state.go('login');
-=======
-app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $state){
-	var o = {
-		bills: [],
-		billsCategoryTotals: []
-	};
-	o.removeBill = function(index){
-		o.bills.splice(index, 1);
-		return $http.put('/remove-bill', {'index': index}, {headers: {Authorization: 'Bearer ' + auth.getToken()} })	
-	};
-	o.getUser = function(){ // function that gets the user from api
-		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
-			angular.copy(response.data.monthlyBills, o.bills) // ang-copy deletes everything the income array above and adds every inside of res.data
-			angular.copy(response.data.billsCategoryTotals, o.billsCategoryTotals);
-			o.calculateTotal();
-		}, function(){
-			$state.go('register');
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 		});
 	};
 
@@ -52,11 +33,7 @@ app.factory('billsFactory', ['$http', 'auth', '$state', function($http, auth, $s
 		return o.totalBills = total;
 	};
 	o.postBill = function(category, subCategory, amount, date){ // function that sends bill information to api
-<<<<<<< HEAD
 		return $http.post('/add-bill', { 'category': category,  'subCategory': subCategory, 'amount': amount, 'date': date} );
-=======
-		return $http.post('/add-bill', { 'category': category,  'subCategory': subCategory, 'amount': amount, 'date': date}, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	};	
 	o.calcCategoryTotals = function(){
 		o.billsCategoryTotals = [	

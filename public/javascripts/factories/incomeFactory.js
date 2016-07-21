@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 app.factory('incomeFactory', ['$http', '$state', function($http, $state){
 	var o = {
 		income: [],
@@ -8,16 +7,6 @@ app.factory('incomeFactory', ['$http', '$state', function($http, $state){
 	o.removeIncome = function(index){
 		o.income.splice(index, 1);
 		return $http.put('/remove-income', {'index': index})	
-=======
-app.factory('incomeFactory', ['$http', 'auth', '$state', function($http, auth, $state){
-	var o = {
-		income: [],
-		incomeCategoryTotals: []
-	};
-	o.removeIncome = function(index){
-		o.income.splice(index, 1);
-		return $http.put('/remove-income', {'index': index}, {headers: {Authorization: 'Bearer ' + auth.getToken()} })	
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	};
 	o.incomeTotal = 0;
 	o.calculateTotal = function(){
@@ -28,7 +17,6 @@ app.factory('incomeFactory', ['$http', 'auth', '$state', function($http, auth, $
 		return o.incomeTotal = total;
 	};
 	o.postIncome = function(category, amount, date){ // function that sends income to api
-<<<<<<< HEAD
 		return $http.post('/add-income', { 'category': category,  'amount': amount, 'date': date });
 	};	
 	o.getUser = function(){ // function that gets the user from api
@@ -43,17 +31,6 @@ app.factory('incomeFactory', ['$http', 'auth', '$state', function($http, auth, $
 			o.nickName.push(response.data.nickName);
 		}, function(){			
 			$state.go('login');
-=======
-		return $http.post('/add-income', { 'category': category,  'amount': amount, 'date': date}, {headers: {Authorization: 'Bearer ' + auth.getToken()}});
-	};	
-	o.getUser = function(){ // function that gets the user from api
-		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
-			angular.copy(response.data.income, o.income) // ang-copy deletes everything the income array above and adds every inside of res.data[0].income
-			angular.copy(response.data.incomeCategoryTotals, o.incomeCategoryTotals);
-			o.calculateTotal();
-		}, function(){			
-			$state.go('register');
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 		});
 	};
 	o.calcIncomeCategoryTotals = function(){

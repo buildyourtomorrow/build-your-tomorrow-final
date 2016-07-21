@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 app.controller('IncomeCtrl', ['$scope',
 							  'store',
 							  'auth', 
@@ -9,10 +8,6 @@ app.controller('IncomeCtrl', ['$scope',
 							  							$anchorScroll, 
 							  							incomeFactory){
 
-=======
-app.controller('IncomeCtrl', ['$scope', '$location', '$anchorScroll', 'incomeFactory', 'auth', function($scope, $location, $anchorScroll, incomeFactory, auth){
-	$scope.isLoggedIn = auth.isLoggedIn;
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	$scope.allIncome = incomeFactory.income;
 	$scope.totalIncome = incomeFactory.incomeTotal;
 	$scope.categories = incomeFactory.incomeCategoryTotals;

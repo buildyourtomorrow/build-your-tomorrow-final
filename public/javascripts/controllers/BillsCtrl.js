@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 app.controller('BillsCtrl', ['$scope',
 							 'store',
 							 'auth',
@@ -10,10 +9,6 @@ app.controller('BillsCtrl', ['$scope',
 	 						 		  $anchorScroll, 
 	 						 		  billsFactory){
 
-=======
-app.controller('BillsCtrl', ['$scope', '$location', '$anchorScroll', 'billsFactory', 'auth', function($scope, $location, $anchorScroll, billsFactory, auth){
-	$scope.isLoggedIn = auth.isLoggedIn;
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	$scope.bills = billsFactory.bills;
 	$scope.totalBills = billsFactory.totalBills;
 	$scope.categories = billsFactory.billsCategoryTotals;

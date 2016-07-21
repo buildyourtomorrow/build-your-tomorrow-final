@@ -3,7 +3,6 @@ var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
 var UserSchema = new mongoose.Schema({
-<<<<<<< HEAD
 	email: {
 		type: String,
 		lowercase: true
@@ -11,14 +10,12 @@ var UserSchema = new mongoose.Schema({
 	nickName: {
 		type: String
 	}, // nickname of user in auth0
-=======
 	username: {
 		type: String,
 		unique: true,
 	},
 	hash: String, // this is where the password goes. It will be saved as a hash.
 	salt: String,
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	income: [{
 		id: Number,
 		category: String,

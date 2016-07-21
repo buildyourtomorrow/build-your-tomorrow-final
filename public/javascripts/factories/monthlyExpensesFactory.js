@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', '$state', function($http, incomeFactory, $state){
-=======
-app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state', function($http, incomeFactory, auth, $state){
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	var o = {
 		monthlyExpenses: [],
 		expCategoryTotals: [],		
@@ -18,7 +14,6 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 		periodEnd: [],
 		today: [],
 		totalIncome: 0,
-<<<<<<< HEAD
 		totalBills: 0,
 		nickName: []
 	};
@@ -31,17 +26,6 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			url: '/get-user',
 			method: 'GET'
 		}).then(function(response){
-=======
-		totalBills: 0
-	};
-	o.removeExpense = function(index){
-		o.monthlyExpenses.splice(index, 1);
-		return $http.put('/remove-expense', {'index': index}, {headers: {Authorization: 'Bearer ' + auth.getToken()} })	
-	};
-	o.getUser = function(){
-		return $http.get('/get-user', {headers: {Authorization: 'Bearer ' + auth.getToken()}} ).then(function(response){
-
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 			angular.copy(response.data.monthlyExpenses, o.monthlyExpenses);
 			angular.copy(response.data.expCategoryTotals, o.expCategoryTotals);
 			o.projectedIncome = response.data.projectedIncome;
@@ -51,14 +35,10 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.leftOver = response.data.leftOver;
 			o.upBy = response.data.upBy;
 			o.dailyBudget = response.data.dailyBudget;
-<<<<<<< HEAD
 			o.daysLeft = response.data.daysLeft;
 
 			o.nickName = [];
 			o.nickName.push(response.data.nickName);	
-=======
-			o.daysLeft = response.data.daysLeft;			
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 
 			var today = new Date();
 			var year = today.getFullYear();
@@ -88,7 +68,6 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 			o.totalIncome = response.data.totalIncome;
 			o.totalBills = response.data.billsTotal;
 		}, function(){
-<<<<<<< HEAD
 			$state.go('login');
 		});
 	};
@@ -104,18 +83,6 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', 'auth', '$state
 											   'projectedBills': projectedBills, 
 											   'projectedExpenses': projectedExpenses,
 											   'email': email})
-=======
-			$state.go('register');
-		});
-	};
-	o.postMonthlyExpense = function(category, subCategory, amount, date){ // function that sends monthly expense to api
-		return $http.post('/add-monthly-expense', {'category': category, 'subCategory': subCategory, 'amount': amount, 'date': date}, {headers: {Authorization: 'Bearer ' + auth.getToken()}}) // config is the 3rd arg. header is config.
-	};	
-	o.postProjections = function(projectedIncome, projectedBills, projectedExpenses){
-		return $http.post('/add-projections', {'projectedIncome': projectedIncome, 
-											   'projectedBills': projectedBills, 
-											   'projectedExpenses': projectedExpenses}, {headers: {Authorization: 'Bearer ' + auth.getToken()}})
->>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	};
 	o.calcTotalSpent = function(expenses){
 		var x = 0;
