@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 app.controller('DashboardCtrl', ['$scope',
 								 'auth',
 								 'store',
@@ -13,6 +14,9 @@ app.controller('DashboardCtrl', ['$scope',
 
 	$scope.nickName = monthlyExpensesFactory.nickName[0];
 
+=======
+app.controller('DashboardCtrl', ['$scope', '$interval', '$location', '$anchorScroll', 'monthlyExpensesFactory', 'auth', function($scope, $interval, $location, $anchorScroll, monthlyExpensesFactory, auth){
+>>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	var randomQuotes = function(){
 		var byt_quotes = [
 			"\"Beware of little expenses. A small leak will sink a great ship\"",
@@ -66,8 +70,15 @@ app.controller('DashboardCtrl', ['$scope',
 	$scope.projectedBills = monthlyExpensesFactory.projectedBills;
 	$scope.projectedExpenses = monthlyExpensesFactory.projectedExpenses;
 	$scope.projectedSavings = monthlyExpensesFactory.projectedSavings;
+<<<<<<< HEAD
 	$scope.upBy = monthlyExpensesFactory.upBy;	
 	
+=======
+	$scope.isLoggedIn = auth.isLoggedIn;
+	$scope.upBy = monthlyExpensesFactory.upBy;	
+	
+
+>>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	// Actual column
 	// Actual column
 	// Actual column

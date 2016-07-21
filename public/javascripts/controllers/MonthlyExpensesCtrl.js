@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 app.controller('MonthlyExpensesCtrl', ['$scope', 
                                        'store',
                                        'auth',
@@ -8,6 +9,10 @@ app.controller('MonthlyExpensesCtrl', ['$scope',
                                                                           $anchorScroll, 
                                                                           monthlyExpensesFactory){
                           
+=======
+app.controller('MonthlyExpensesCtrl', ['$scope', '$location', '$anchorScroll', 'monthlyExpensesFactory', 'auth', function($scope, $location, $anchorScroll, monthlyExpensesFactory, auth){
+	$scope.isLoggedIn = auth.isLoggedIn;
+>>>>>>> 28c6f978a4ba08bdae3bd531dac6bebf07cd4f5d
 	$scope.monthlyExpenses = monthlyExpensesFactory.monthlyExpenses;
 	$scope.totalSpent = monthlyExpensesFactory.totalSpent;
 	$scope.categories = monthlyExpensesFactory.expCategoryTotals;
