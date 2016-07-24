@@ -1,30 +1,128 @@
 <!--Income stuff -->			
 <byt-navbar></byt-navbar>
-<section class="row col-lg-6 col-lg-offset-3 main_content">						
-	<section class="row">					
-		<a href="https://youtu.be/EbCn4uEfbtM">Tutorial</a>				
-		<section class="dashboard_nav">
-			<ul>							
-				<li role="presentation" class="dashboard_nav_second" ng-click="dashboard_spinner=!dashboard_spinner">
-					<a class="" href="/#/dashboard">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': dashboard_spinner, '': !dashboard_spinner}"></i></span> Dashboard
-					</a>									
-				</li>
-				<li role="presentation" class="dashboard_nav_second">
-					<a href="/#/income">Income</a>
-					<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#incomeModal"></i>
-					<section id="incomeModal" class="modal fade" role="dialog">
+<section class="container">
+	<section class="col-md-6 col-md-offset-3 main_content">						
+		<section class="row">
+			<home-arrow></home-arrow>
+			<section class="dashboard_nav">
+				<ul>							
+					<li role="presentation" class="dashboard_nav_second" ng-click="dashboard_spinner=!dashboard_spinner">
+						<a class="" href="/#/dashboard">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': dashboard_spinner, '': !dashboard_spinner}"></i></span> Dashboard
+						</a>									
+					</li>
+					<li role="presentation" class="dashboard_nav_second">
+						<a href="/#/income">Income</a>
+						<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#incomeModal"></i>
+						<section id="incomeModal" class="modal fade" role="dialog">
+							<section class="modal-dialog">
+								<!-- Modal content-->
+								<section class="modal-content">
+									<section class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">Income</h4>
+									</section>
+									<section class="modal-body">
+										<iframe width="200" height="180" src="https://www.youtube.com/embed/Q2n3XcrwsFs" frameborder="0" allowfullscreen></iframe>
+										<p>-----</p>
+										<p>Record any kind of money that enters your economy or bank accounts here. Make sure to only record your income after you have received it - not before. Doing so will ensure that the data that is entered is accurate.</p>
+									</section>
+									<section class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</section>
+								</section>
+							</section>
+						</section>
+					</li>
+					<li role="presentation" class="dashboard_nav_third" ng-click="bills_spinner=!bills_spinner">
+						<a class="" href="/#/bills">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': bills_spinner, '': !bills_spinner}"></i></span> Bills
+						</a>									
+					</li>
+					<li role="presentation" class="dashboard_nav_fourth" ng-click="expenses_spinner=!expenses_spinner">
+						<a class="" href="/#/expenses">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
+						</a>									
+					</li>
+					<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
+						<a class="" href="/#/education">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Education
+						</a>									
+					</li>
+				</ul>	
+			</section>
+		</section>
+		<section ng-show="allIncome.length > 0" style="font-size: 12px; text-align:center;">
+			Last income was entered on {{lastVisit.date | date:'MM/dd'}}
+		</section>
+		<section class="row" id="allIncomeTransactions">
+			<section class="expenses">
+				<section ng-show="allIncome.length > 0" class="panel-group all-expenses" id="accordion" role="tablist" aria-multiselectable="true">
+					<section class="panel panel-title" >
+						<section class="panel-heading" role="tab" id="headingOne">
+							<section class="panel-title" style="font-size:14px;">      									
+								<a role="button" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse" style="text-decoration:none" ng-click="byt_active=!byt_active">
+								<i ng-class="{ 'glyphicon glyphicon-plus': !byt_active, 'glyphicon glyphicon-minus': byt_active }"></i>  All income</a>
+							</section>
+						</section>
+						<section id="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+							<section ng-repeat="income in allIncome">
+								<section class="panel-body" style="padding:13px">
+									<section style="width:20%; float:left; text-align:center; display:inline">{{income.date | date:'MM/dd'}}</section>
+									<section style="width:40%; float:left; text-align:center; display:inline">{{income.category}}</section>
+									<section style="width:30%; float:left; text-align:center; display:inline">{{income.amount | number:2}}
+									</section>
+									<section role="button" style="width:10%; float:right; text-align:center; display:inline" ng-click="removeIncome($index)"><i class="glyphicon glyphicon-remove"></i></section>
+								</section>
+							</section>
+						</section>
+					</section>    							
+				</section>
+				<section class="panel-group">
+						<section class="panel" ng-repeat="category in categories | orderBy: '-total'" ng-if="category.total > 0">
+						<section class="panel-heading">
+								<section class="panel-title" style="font-size:14px;">      									
+								<p style="text-decoration:none; margin:2px;">
+								{{category.category}} - {{category.total | number:0}}</p>
+								</section>
+						</section>    					
+					</section>    							
+				</section>
+		    </section>
+		</section>
+		<section> <!-- novalidate disables brower validation -->
+			<form novalidate name='monthlyIncomeForm' ng-submit='incomeForm()'>
+				<section class="form-group">
+					<label>Category</label>
+					<section ng-messages="monthlyIncomeForm.monthlyIncomeCategory.$error">
+							<section ng-message="required" class="validation_1">*Required</section>
+					</section>
+
+					<select class="form-control" ng-options="category.id as category.value for category in monthlyIncomeCategories" name="monthlyIncomeCategory" ng-model='category' required>
+						<option value="" selected disabled>Please choose</option>								
+					</select>								
+				</section>
+				<section class="form-group">
+					<label>Amount</label>
+					<section ng-messages="monthlyIncomeForm.monthlyIncomeAmount.$error"> <!-- monthlyIncomeForm.monthlyExpAmount.$error is an angular expression -->
+							<section ng-message="required" class="validation_1">*Required</section>
+					</section>
+					<!-- form-control is a bootstarp class. step attribute specifies the legal number intervals for an input field -->
+					<input class='form-control' type='number' placeholder='1700' name="monthlyIncomeAmount" ng-model='amount' step="any" required>								
+				</section>
+				<!-- Income question modal -->
+				<section class="form-group">
+					<label>Money received</label> <i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#myModal"></i>
+					<section id="myModal" class="modal fade" role="dialog">
 						<section class="modal-dialog">
 							<!-- Modal content-->
 							<section class="modal-content">
 								<section class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">Income</h4>
+									<h4 class="modal-title">Money received?</h4>
 								</section>
 								<section class="modal-body">
-									<iframe width="200" height="180" src="https://www.youtube.com/embed/Q2n3XcrwsFs" frameborder="0" allowfullscreen></iframe>
-									<p>-----</p>
-									<p>Record any kind of money that enters your economy or bank accounts here. Make sure to only record your income after you have received it - not before. Doing so will ensure that the data that is entered is accurate.</p>
+									<p>Only record income after you have received payment - not before. Doing so will ensure that the data that you are adding is accurate.</p>
 								</section>
 								<section class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -32,112 +130,15 @@
 							</section>
 						</section>
 					</section>
-				</li>
-				<li role="presentation" class="dashboard_nav_third" ng-click="bills_spinner=!bills_spinner">
-					<a class="" href="/#/bills">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': bills_spinner, '': !bills_spinner}"></i></span> Bills
-					</a>									
-				</li>
-				<li role="presentation" class="dashboard_nav_fourth" ng-click="expenses_spinner=!expenses_spinner">
-					<a class="" href="/#/expenses">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
-					</a>									
-				</li>
-				<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
-					<a class="" href="/#/education">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Education
-					</a>									
-				</li>
-			</ul>	
+					<select class="form-control" name="monthlyIncomeQuestion" ng-model='question'>
+						<option value="" selected disabled>Please choose</option>
+						<option value="Yes">Yes - I have already received the income described above</option>						
+					</select>								
+				</section>
+				<section class="form-group">
+					<button ng-click="goToAllIncome()" type="submit" ng-disabled="monthlyIncomeForm.$invalid" class="btn btn-default btn-block btn-lg">Add Income</button>
+				</section>									
+			</form>
 		</section>
 	</section>
-	<section ng-show="allIncome.length > 0" style="font-size: 12px; text-align:center;">
-		Last income was entered on {{lastVisit.date | date:'MM/dd'}}
-	</section>
-	<section class="row" id="allIncomeTransactions">
-		<section class="expenses">
-			<section ng-show="allIncome.length > 0" class="panel-group all-expenses" id="accordion" role="tablist" aria-multiselectable="true">
-				<section class="panel panel-title" >
-					<section class="panel-heading" role="tab" id="headingOne">
-						<section class="panel-title" style="font-size:14px;">      									
-							<a role="button" data-toggle="collapse" data-target="#collapse" aria-expanded="true" aria-controls="collapse" style="text-decoration:none" ng-click="byt_active=!byt_active">
-							<i ng-class="{ 'glyphicon glyphicon-plus': !byt_active, 'glyphicon glyphicon-minus': byt_active }"></i>  All income</a>
-						</section>
-					</section>
-					<section id="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-						<section ng-repeat="income in allIncome">
-							<section class="panel-body" style="padding:13px">
-								<section style="width:20%; float:left; text-align:center; display:inline">{{income.date | date:'MM/dd'}}</section>
-								<section style="width:40%; float:left; text-align:center; display:inline">{{income.category}}</section>
-								<section style="width:30%; float:left; text-align:center; display:inline">{{income.amount | number:2}}
-								</section>
-								<section role="button" style="width:10%; float:right; text-align:center; display:inline" ng-click="removeIncome($index)"><i class="glyphicon glyphicon-remove"></i></section>
-							</section>
-						</section>
-					</section>
-				</section>    							
-			</section>
-			<section class="panel-group">
-					<section class="panel" ng-repeat="category in categories | orderBy: '-total'" ng-if="category.total > 0">
-					<section class="panel-heading">
-							<section class="panel-title" style="font-size:14px;">      									
-							<p style="text-decoration:none; margin:2px;">
-							{{category.category}} - {{category.total | number:0}}</p>
-							</section>
-					</section>    					
-				</section>    							
-			</section>
-	    </section>
-	</section>
-	<section> <!-- novalidate disables brower validation -->
-		<form novalidate name='monthlyIncomeForm' ng-submit='incomeForm()'>
-			<section class="form-group">
-				<label>Category</label>
-				<section ng-messages="monthlyIncomeForm.monthlyIncomeCategory.$error">
-						<section ng-message="required" class="validation_1">*Required</section>
-				</section>
-
-				<select class="form-control" ng-options="category.id as category.value for category in monthlyIncomeCategories" name="monthlyIncomeCategory" ng-model='category' required>
-					<option value="" selected disabled>Please choose</option>								
-				</select>								
-			</section>
-			<section class="form-group">
-				<label>Amount</label>
-				<section ng-messages="monthlyIncomeForm.monthlyIncomeAmount.$error"> <!-- monthlyIncomeForm.monthlyExpAmount.$error is an angular expression -->
-						<section ng-message="required" class="validation_1">*Required</section>
-				</section>
-				<!-- form-control is a bootstarp class. step attribute specifies the legal number intervals for an input field -->
-				<input class='form-control' type='number' placeholder='1700' name="monthlyIncomeAmount" ng-model='amount' step="any" required>								
-			</section>
-			<!-- Income question modal -->
-			<section class="form-group">
-				<label>Money received</label> <i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#myModal"></i>
-				<section id="myModal" class="modal fade" role="dialog">
-					<section class="modal-dialog">
-						<!-- Modal content-->
-						<section class="modal-content">
-							<section class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Money received?</h4>
-							</section>
-							<section class="modal-body">
-								<p>Only record income after you have received payment - not before. Doing so will ensure that the data that you are adding is accurate.</p>
-							</section>
-							<section class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							</section>
-						</section>
-					</section>
-				</section>
-				<select class="form-control" name="monthlyIncomeQuestion" ng-model='question'>
-					<option value="" selected disabled>Please choose</option>
-					<option value="Yes">Yes - I have already received the income described above</option>						
-				</select>								
-			</section>
-			<section class="form-group">
-				<button ng-click="goToAllIncome()" type="submit" ng-disabled="monthlyIncomeForm.$invalid" class="btn btn-default btn-block btn-lg">Add Income</button>
-			</section>									
-		</form>
-	</section>
 </section>
-			

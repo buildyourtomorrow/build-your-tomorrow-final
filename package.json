@@ -1,19 +1,12 @@
 {
-
   "name": "build",
   "version": "1.0.0",
   "description": "Personal Finance Application",
-
-  "name": "byt",
-  "version": "1.0.0",
-  "description": "initial prototype",
-
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eliezer Nunez",
-
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -24,5 +17,6 @@
     "jsonwebtoken": "^7.0.1",
     "mongoose": "^4.5.3",
     "morgan": "^1.7.0"
-  }
+  },
+  "devDependencies": {}
 }

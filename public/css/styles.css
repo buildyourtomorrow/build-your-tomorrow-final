@@ -1,3 +1,26 @@
+.navbar-default {
+	background-color: #ffffff !important;
+	border: none !important;
+	margin-bottom: 0px !important;
+}
+
+.byt_watch_headline {
+	color: #919496;
+	font-size: 40px;
+	font-weight:bold;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+.byt_watch_videos {
+	color: #919496;
+	font-size: 20px;
+	font-weight:bold;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 0px !important;
+}
+
 html, body, h1, h2, h3, h4, ul, ol, li, p, a {
     padding: 0;
     border: 0;

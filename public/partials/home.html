@@ -1,15 +1,70 @@
 <!-- Home stuff -->
 <byt-navbar></byt-navbar>
-<section class="col-lg-8 col-lg-offset-2">
-	<section class="col-lg-10 col-lg-offset-1">
-		<a ui-sref="dashboard" class="thumbnail" style="border:0px;">
-			<img src="/images/AngularPicBudget.jpg" alt="Budget">					
-		</a>
-		<a ui-sref="dashboard" class="thumbnail" style="border:0px;">
-			<img src="/images/AngularPicRealEstate.jpg" alt="Budget">					
-		</a>
-		<a ui-sref="dashboard" class="thumbnail" style="border:0px;">
-			<img src="/images/AngularPicInvestment.jpg" alt="Budget">					
-		</a>									
+<section id="myCarousel" class="carousel slide">
+	<ol class="carousel-indicators">
+		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		<li data-target="#myCarousel" data-slide-to="1"></li>
+		<li data-target="#myCarousel" data-slide-to="2"></li>
+	</ol>
+	<section class="carousel-inner">
+		<section class="item active">
+			<img src="/images/CarouselReady4.jpg" alt="Save today, relax tomorrow" class="img-responsive">
+		</section>
+		<section class="item">
+			<img src="/images/CarouselReady5.jpg" alt="Budget today, enjoy tomorrow" class="img-responsive">
+		</section>			
+		<section class="item">
+			<img src="/images/CarouselReady2.jpg" alt="Journey towards financial freedom" class="img-responsive">
+		</section>
+	</section>
+	<a class="carousel-control left" href="#myCarousel" data-slide="prev">
+		<span class="icon-prev"></span>
+	</a>
+	<a class="carousel-control right" href="#myCarousel" data-slide="next">
+		<span class="icon-next"></span>
+	</a>
+</section>
+
+<section class="container">
+	<section class="col-md-12">
+		<section class="row">
+			<section class="byt_watch_headline">Watch these videos before <a ui-sref="dashboard">budgeting.</a> Click <a ui-sref="dashboard">here</a> when ready. Text me with questions - 7189542291</section>
+		</section>
+
+		<section class="row">
+		
+			<section>
+				<section class="row byt_watch_videos">1. Overview</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/EbCn4uEfbtM" frameborder="0" allowfullscreen></iframe>
+				</section>
+				<section class="row byt_watch_videos">2. Projections</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/AEtH7E6g8fc" frameborder="0" allowfullscreen></iframe>
+				</section>
+				<section class="row byt_watch_videos">3. Expenses</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/P-tuNdhD5_k" frameborder="0" allowfullscreen></iframe>
+				</section>
+				<section class="row byt_watch_videos">4. Daily budget</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/MIl0uldy5a8" frameborder="0" allowfullscreen></iframe>
+				</section>
+				<section class="row byt_watch_videos">6. Income</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/Q2n3XcrwsFs" frameborder="0" allowfullscreen></iframe>
+				</section>
+				<section class="row byt_watch_videos">7. Bills</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/Je6PxS-6Ljs" frameborder="0" allowfullscreen></iframe>
+				</section>
+				<section class="row byt_watch_videos">8. Expenses</section>
+				<section class="row byt_watch_videos">
+					<iframe width="240" height="135" src="https://www.youtube.com/embed/nc4VkN4duk0" frameborder="0" allowfullscreen></iframe>
+				</section>
+
+			</section>
+
+		</section>
 	</section>
 </section>

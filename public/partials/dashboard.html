@@ -1,67 +1,161 @@
 <!--Dashboard stuff -->
 <byt-navbar></byt-navbar>
-<section class="row col-lg-6 col-lg-offset-3 main_content">
-	<section class="row">				
-		<a href="https://youtu.be/EbCn4uEfbtM">Tutorial</a>				
-		<section class="dashboard_nav">
-			<ul>
-				<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
-				<li role="presentation" class="dashboard_nav_second" ng-click="income_spinner=!income_spinner">
-					<a class="" href="/#/income">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': income_spinner, '': !income_spinner}"></i></span> Income
-					</a>									
-				</li>
-				<li role="presentation" class="dashboard_nav_third" ng-click="bills_spinner=!bills_spinner">
-					<a class="" href="/#/bills">
-						<span><i ng-class="{'fa fa-refresh fa-spin': bills_spinner, '': !bills_spinner}"></i></span> Bills
-					</a>									
-				</li>
-				<li role="presentation" class="dashboard_nav_fourth" ng-click="expenses_spinner=!expenses_spinner">
-					<a class="" href="/#/expenses">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
-					</a>									
-				</li>
-				
-				<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
-					<a class="" href="/#/education">
-						<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Education
-					</a>									
-				</li>
-				
-			</ul>	
+<section class="container">
+	<section class="col-md-6 col-md-offset-3 main_content">
+		<section class="row">
+			<home-arrow></home-arrow>		
+			<section class="dashboard_nav">
+				<ul>
+					<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
+					<li role="presentation" class="dashboard_nav_second" ng-click="income_spinner=!income_spinner">
+						<a class="" href="/#/income">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': income_spinner, '': !income_spinner}"></i></span> Income
+						</a>									
+					</li>
+					<li role="presentation" class="dashboard_nav_third" ng-click="bills_spinner=!bills_spinner">
+						<a class="" href="/#/bills">
+							<span><i ng-class="{'fa fa-refresh fa-spin': bills_spinner, '': !bills_spinner}"></i></span> Bills
+						</a>									
+					</li>
+					<li role="presentation" class="dashboard_nav_fourth" ng-click="expenses_spinner=!expenses_spinner">
+						<a class="" href="/#/expenses">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
+						</a>									
+					</li>
+					
+					<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
+						<a class="" href="/#/education">
+							<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Education
+						</a>									
+					</li>
+					
+				</ul>	
+			</section>
 		</section>
-	</section>
-	<section class="row animate-show" ng-show="byt_show_section">			
-		<section class="table-responsive">
-			<section class="dashboard_analysis">
-				<table class="table">
-					<tbody>
-						<tr>										
-							<td class="dashboard_text_analysis_1">{{quote}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>						
+		<section class="row animate-show" ng-show="byt_show_section">			
+			<section class="table-responsive">
+				<section class="dashboard_analysis">
+					<table class="table">
+						<tbody>
+							<tr>										
+								<td class="dashboard_text_analysis_1">{{quote}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>						
+			</section>
 		</section>
-	</section>
-	<section class="row" id="theDashboard">
-		<section class="table-responsive">
-			<section class="dashboard_overview">
-				<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#dashboardModal"></i>
-				<section id="dashboardModal" class="modal fade" role="dialog">
+		<section class="row" id="theDashboard">
+			<section class="table-responsive">
+				<section class="dashboard_overview">
+					<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#dashboardModal"></i>
+					<section id="dashboardModal" class="modal fade" role="dialog">
+						<section class="modal-dialog">
+							<!-- Modal content-->
+							<section class="modal-content">
+								<section class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Projections</h4>
+								</section>
+								<section class="modal-body">
+									<iframe width="200" height="180" src="https://www.youtube.com/embed/AEtH7E6g8fc" frameborder="0" allowfullscreen></iframe>
+									<p>-----</p>
+									<p>At the beginning of the month, take some time and estimate how much income you'll receive, how much in bills you'll pay, and how much in expenses you'll incur for that specific month. Try and under estimate your income and over estimate your bills and expenses so that at the end of the month, you may be pleasantly surprised.</p>
+									<p>Then as you progress through the month and record every transaction, compare how much income you've actually received, how much in bills you've actually paid, and how much in expenses you've actually incurred against your projections. A green and positive number in the +/- column in the Income and Savings rows means that you've earned and saved more money than expected which is great.A red and negative number in the +/- column in the Bills and Expenses rows means that you've exceeded your projections for those two buckets which is not ideal.</p>
+									<p>Add your projections at the bottom of this page.</p>
+								</section>
+								<section class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</section>
+							</section>
+						</section>
+					</section>
+					<table class="table">
+						<tbody>
+							<tr>
+								<td></td>
+								<td>Projected</td>
+								<td>Actual</td>
+								<td>+/-</td>
+							</tr>
+							<tr>
+								<td>Income</td>
+								<td>
+									<span ng-show="!bytIncomeProjection">{{projectedIncome | number:0}}</span>
+									<span ng-show="bytIncomeProjection">												
+										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedIncome" ng-model='projectedIncome' required>
+									</span>
+									<span style="display:inline;" ng-click="bytIncomeProjection = !bytIncomeProjection; editIncomeProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytIncomeProjection, 'glyphicon glyphicon-ok': bytIncomeProjection}"></i></span>
+								</td>
+								<td style="color: {{totalIncomeColor}}">{{totalIncome | number:0}}</td>
+								<td style="color: {{plusMinusIncome}}">{{ (projectedIncome - totalIncome) | number:0}}</td>
+							</tr>
+							<tr>
+								<td>Bills <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></td>
+								<td>
+									<span ng-show="!bytBillProjection">{{projectedBills | number:0}}</span>
+									<span ng-show="bytBillProjection">												
+										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedBill" ng-model='projectedBills' required>
+									</span>
+									<span style="display:inline;" ng-click="bytBillProjection = !bytBillProjection; editBillProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytBillProjection, 'glyphicon glyphicon-ok': bytBillProjection}"></i></span>
+								</td>
+								<td style="color: {{totalBillsColor}}">{{totalBills | number:0}}</td>
+								<td style="color: {{plusMinusBills}}">{{projectedBills - totalBills | number:0}}</td>
+							</tr>
+							<tr>
+								<td>Expenses</td>
+								<td>
+									<span ng-show="!bytExpProjection">{{projectedExpenses | number:0}}</span>
+									<span ng-show="bytExpProjection">												
+										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="bytExpProjection" ng-model='projectedExpenses' required>
+									</span>
+									<span style="display:inline;" ng-click="bytExpProjection = !bytExpProjection; editExpProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytExpProjection, 'glyphicon glyphicon-ok': bytExpProjection}"></i></span>
+								</td>
+								<td style="color: {{totalSpentColor}}">{{totalSpent | number:0}}</td>
+								<td style="color: {{plusMinusExpenses}}">{{projectedExpenses - totalSpent | number:0}}</td>
+							</tr>
+							<tr>
+								<td>Savings</td>
+								<td>{{projectedIncome - projectedBills - projectedExpenses | number:0}}</td>
+								<td ng-show="totalIncome - totalBills - totalSpent > 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1F601;</td>
+								<td ng-show="totalIncome - totalBills - totalSpent === 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}}</td>
+								<td ng-show="totalIncome - totalBills - totalSpent < 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1f621;</td>
+								<td style="color: {{plusMinusSavings}}">{{(   (projectedIncome - projectedBills - projectedExpenses) - (totalIncome - totalBills - totalSpent)    ) | number:0}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+			</section>
+		</section>	
+		<section class="row animate-show" ng-show="byt_show_section">
+			<section class="table-responsive">
+				<section class="dashboard_analysis">
+					<table class="table">
+						<tbody>
+							<tr>										
+								<td class="dashboard_text_analysis_1">{{savingMoneyBaby}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>						
+			</section>
+		</section>				
+		<section class="row">
+			<section class="table-responsive">
+				<section class="dashboard_analysis">
+				<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#expAnalysisModal"></i>
+				<section id="expAnalysisModal" class="modal fade" role="dialog">
 					<section class="modal-dialog">
 						<!-- Modal content-->
 						<section class="modal-content">
 							<section class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Projections</h4>
+								<h4 class="modal-title">Up by / Down by</h4>
 							</section>
 							<section class="modal-body">
-								<iframe width="200" height="180" src="https://www.youtube.com/embed/AEtH7E6g8fc" frameborder="0" allowfullscreen></iframe>
+								<iframe width="200" height="180" src="https://www.youtube.com/embed/P-tuNdhD5_k" frameborder="0" allowfullscreen></iframe>
 								<p>-----</p>
-								<p>At the beginning of the month, take some time and estimate how much income you'll receive, how much in bills you'll pay, and how much in expenses you'll incur for that specific month. Try and under estimate your income and over estimate your bills and expenses so that at the end of the month, you may be pleasantly surprised.</p>
-								<p>Then as you progress through the month and record every transaction, compare how much income you've actually received, how much in bills you've actually paid, and how much in expenses you've actually incurred against your projections. A green and positive number in the +/- column in the Income and Savings rows means that you've earned and saved more money than expected which is great.A red and negative number in the +/- column in the Bills and Expenses rows means that you've exceeded your projections for those two buckets which is not ideal.</p>
-								<p>Add your projections at the bottom of this page.</p>
+								<p>If the Up by number is greater than zero than you are doing well :) and expected to spend less than the Expense projection you established at the beginning of the month. If the Down by number is red then you are spending more than your daily budget on average and may exceed the Expense projection you established at the beginning of the month. Therefore, build your tomorrow one day at a time and spend less than your daily budget or less than your Up by number.</p>
 							</section>
 							<section class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -69,190 +163,98 @@
 						</section>
 					</section>
 				</section>
-				<table class="table">
-					<tbody>
-						<tr>
-							<td></td>
-							<td>Projected</td>
-							<td>Actual</td>
-							<td>+/-</td>
-						</tr>
-						<tr>
-							<td>Income</td>
-							<td>
-								<span ng-show="!bytIncomeProjection">{{projectedIncome | number:0}}</span>
-								<span ng-show="bytIncomeProjection">												
-									<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedIncome" ng-model='projectedIncome' required>
-								</span>
-								<span style="display:inline;" ng-click="bytIncomeProjection = !bytIncomeProjection; editIncomeProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytIncomeProjection, 'glyphicon glyphicon-ok': bytIncomeProjection}"></i></span>
-							</td>
-							<td style="color: {{totalIncomeColor}}">{{totalIncome | number:0}}</td>
-							<td style="color: {{plusMinusIncome}}">{{ (projectedIncome - totalIncome) | number:0}}</td>
-						</tr>
-						<tr>
-							<td>Bills <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></td>
-							<td>
-								<span ng-show="!bytBillProjection">{{projectedBills | number:0}}</span>
-								<span ng-show="bytBillProjection">												
-									<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedBill" ng-model='projectedBills' required>
-								</span>
-								<span style="display:inline;" ng-click="bytBillProjection = !bytBillProjection; editBillProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytBillProjection, 'glyphicon glyphicon-ok': bytBillProjection}"></i></span>
-							</td>
-							<td style="color: {{totalBillsColor}}">{{totalBills | number:0}}</td>
-							<td style="color: {{plusMinusBills}}">{{projectedBills - totalBills | number:0}}</td>
-						</tr>
-						<tr>
-							<td>Expenses</td>
-							<td>
-								<span ng-show="!bytExpProjection">{{projectedExpenses | number:0}}</span>
-								<span ng-show="bytExpProjection">												
-									<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="bytExpProjection" ng-model='projectedExpenses' required>
-								</span>
-								<span style="display:inline;" ng-click="bytExpProjection = !bytExpProjection; editExpProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytExpProjection, 'glyphicon glyphicon-ok': bytExpProjection}"></i></span>
-							</td>
-							<td style="color: {{totalSpentColor}}">{{totalSpent | number:0}}</td>
-							<td style="color: {{plusMinusExpenses}}">{{projectedExpenses - totalSpent | number:0}}</td>
-						</tr>
-						<tr>
-							<td>Savings</td>
-							<td>{{projectedIncome - projectedBills - projectedExpenses | number:0}}</td>
-							<td ng-show="totalIncome - totalBills - totalSpent > 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1F601;</td>
-							<td ng-show="totalIncome - totalBills - totalSpent === 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}}</td>
-							<td ng-show="totalIncome - totalBills - totalSpent < 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1f621;</td>
-							<td style="color: {{plusMinusSavings}}">{{(   (projectedIncome - projectedBills - projectedExpenses) - (totalIncome - totalBills - totalSpent)    ) | number:0}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>
-		</section>
-	</section>	
-	<section class="row animate-show" ng-show="byt_show_section">
-		<section class="table-responsive">
-			<section class="dashboard_analysis">
-				<table class="table">
-					<tbody>
-						<tr>										
-							<td class="dashboard_text_analysis_1">{{savingMoneyBaby}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>						
-		</section>
-	</section>				
-	<section class="row">
-		<section class="table-responsive">
-			<section class="dashboard_analysis">
-			<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#expAnalysisModal"></i>
-			<section id="expAnalysisModal" class="modal fade" role="dialog">
-				<section class="modal-dialog">
-					<!-- Modal content-->
-					<section class="modal-content">
-						<section class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<h4 class="modal-title">Up by / Down by</h4>
-						</section>
-						<section class="modal-body">
-							<iframe width="200" height="180" src="https://www.youtube.com/embed/P-tuNdhD5_k" frameborder="0" allowfullscreen></iframe>
-							<p>-----</p>
-							<p>If the Up by number is greater than zero than you are doing well :) and expected to spend less than the Expense projection you established at the beginning of the month. If the Down by number is red then you are spending more than your daily budget on average and may exceed the Expense projection you established at the beginning of the month. Therefore, build your tomorrow one day at a time and spend less than your daily budget or less than your Up by number.</p>
-						</section>
-						<section class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</section>
-					</section>
+					<table class="table">	
+						<tbody>
+							<tr>
+								<td class="dashboard_analysis_1">Expenses</td>										
+								<td class="dashboard_analysis_2">{{projectedExpenses|number:0}}</td>
+							</tr>	
+							<tr>
+								<td class="dashboard_analysis_1">Total spent</td>
+								<td class="dashboard_analysis_2">{{totalSpent|number:0}}</td>
+							</tr>
+							<tr>
+								<td class="dashboard_analysis_1">Leftover</td>
+								<td class="dashboard_analysis_2">{{leftOver|number:0}}</td>
+							</tr>
+							<tr>
+								<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
+								<td ng-show="upBy < 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f622;</td>
+								<td ng-show="upBy > 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f60e;</td>
+								<td ng-show="upBy === 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}}</td>
+							</tr>			
+						</tbody>
+					</table>
 				</section>
+			</section>								
+		</section>	
+		<section class="row animate-show" ng-show="byt_show_section">
+			<section class="table-responsive">
+				<section class="dashboard_analysis">
+					<table class="table">
+						<tbody>
+							<tr>										
+								<td class="dashboard_text_analysis_1">{{upByComment}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>						
 			</section>
-				<table class="table">	
-					<tbody>
-						<tr>
-							<td class="dashboard_analysis_1">Expenses</td>										
-							<td class="dashboard_analysis_2">{{projectedExpenses|number:0}}</td>
-						</tr>	
-						<tr>
-							<td class="dashboard_analysis_1">Total spent</td>
-							<td class="dashboard_analysis_2">{{totalSpent|number:0}}</td>
-						</tr>
-						<tr>
-							<td class="dashboard_analysis_1">Leftover</td>
-							<td class="dashboard_analysis_2">{{leftOver|number:0}}</td>
-						</tr>
-						<tr>
-							<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
-							<td ng-show="upBy < 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f622;</td>
-							<td ng-show="upBy > 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f60e;</td>
-							<td ng-show="upBy === 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}}</td>
-						</tr>			
-					</tbody>
-				</table>
-			</section>
-		</section>								
-	</section>	
-	<section class="row animate-show" ng-show="byt_show_section">
-		<section class="table-responsive">
-			<section class="dashboard_analysis">
-				<table class="table">
-					<tbody>
-						<tr>										
-							<td class="dashboard_text_analysis_1">{{upByComment}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>						
 		</section>
-	</section>
-	<section class="row">
-		<section class="table-responsive">
-			<section class="dashboard_analysis">
-				<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#dailyBudgetModal"></i>
-				<section id="dailyBudgetModal" class="modal fade" role="dialog">
-					<section class="modal-dialog">
-						<!-- Modal content-->
-						<section class="modal-content">
-							<section class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">Daily budget</h4>
-							</section>
-							<section class="modal-body">
-								<iframe width="200" height="180" src="https://www.youtube.com/embed/MIl0uldy5a8" frameborder="0" allowfullscreen></iframe>
-								<p>-----</p>
-								<p>Daily budget  =  expense projection  / # of days in the current month</p>
-							</section>
-							<section class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		<section class="row">
+			<section class="table-responsive">
+				<section class="dashboard_analysis">
+					<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#dailyBudgetModal"></i>
+					<section id="dailyBudgetModal" class="modal fade" role="dialog">
+						<section class="modal-dialog">
+							<!-- Modal content-->
+							<section class="modal-content">
+								<section class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Daily budget</h4>
+								</section>
+								<section class="modal-body">
+									<iframe width="200" height="180" src="https://www.youtube.com/embed/MIl0uldy5a8" frameborder="0" allowfullscreen></iframe>
+									<p>-----</p>
+									<p>Daily budget  =  expense projection  / # of days in the current month</p>
+								</section>
+								<section class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</section>
 							</section>
 						</section>
 					</section>
+					<table class="table">	
+						<tbody>
+							<tr>
+								<td class="dashboard_analysis_1">Daily budget</td>
+								<td class="dashboard_analysis_2">{{dailyBudget|number:0}}</td>
+							</tr>	
+							<tr>
+								<td class="dashboard_analysis_1">Days left</td>
+								<td class="dashboard_analysis_2">{{daysLeft|number:0}}</td>
+							</tr>
+							<tr>
+								<td class="dashboard_analysis_1">Period</td>
+								<td class="dashboard_analysis_2">{{periodStart| date:'MM/dd/yyyy'}} - {{periodEnd}}</td>
+							</tr>	
+						</tbody>
+					</table>
 				</section>
-				<table class="table">	
-					<tbody>
-						<tr>
-							<td class="dashboard_analysis_1">Daily budget</td>
-							<td class="dashboard_analysis_2">{{dailyBudget|number:0}}</td>
-						</tr>	
-						<tr>
-							<td class="dashboard_analysis_1">Days left</td>
-							<td class="dashboard_analysis_2">{{daysLeft|number:0}}</td>
-						</tr>
-						<tr>
-							<td class="dashboard_analysis_1">Period</td>
-							<td class="dashboard_analysis_2">{{periodStart| date:'MM/dd/yyyy'}} - {{periodEnd}}</td>
-						</tr>	
-					</tbody>
-				</table>
+			</section>								
+		</section>
+		<section class="row animate-show" ng-show="byt_show_section">
+			<section class="table-responsive">
+				<section class="dashboard_analysis">
+					<table class="table">
+						<tbody>
+							<tr>										
+								<td class="dashboard_text_analysis_1">Try your best to spend less than your daily budget. Gain your freedom one dollar at a time</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>						
 			</section>
-		</section>								
-	</section>
-	<section class="row animate-show" ng-show="byt_show_section">
-		<section class="table-responsive">
-			<section class="dashboard_analysis">
-				<table class="table">
-					<tbody>
-						<tr>										
-							<td class="dashboard_text_analysis_1">Try your best to spend less than your daily budget. Gain your freedom one dollar at a time</td>
-						</tr>
-					</tbody>
-				</table>
-			</section>						
 		</section>
 	</section>
 </section>
