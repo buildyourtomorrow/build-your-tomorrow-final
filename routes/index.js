@@ -18,8 +18,9 @@ var authCheck = jwt({
 	userProperty: 'payload'
 });
 router.post('/create-user', authCheck, function(req, res){
-
+	console.log(req.payload)
 	User.findOne({'email': req.payload.email}, function(error, user){
+		console.log(user)
 		if(!user){
 			var user = new User();
 			user.email = req.payload.email;
@@ -95,7 +96,6 @@ router.get('/', function(req, res){
 });
 router.get('/get-user', authCheck, function(req, res){
 	User.findOne({'email': req.payload.email}, function(error, user){
-		console.log(user)
 		if(user){
 			user.calcPeriodStart();
 			user.calcPeriodEnd();
