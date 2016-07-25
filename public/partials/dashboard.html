@@ -3,7 +3,7 @@
 <section class="container">
 	<section class="col-md-6 col-md-offset-3 main_content">
 		<section class="row">
-			<home-arrow></home-arrow>		
+			<home-arrow></home-arrow>	
 			<section class="dashboard_nav">
 				<ul>
 					<li role="presentation" class="dashboard_nav_first"><a href="/#/dashboard">Dashboard</a></li>
@@ -117,9 +117,9 @@
 							<tr>
 								<td>Savings</td>
 								<td>{{projectedIncome - projectedBills - projectedExpenses | number:0}}</td>
-								<td ng-show="totalIncome - totalBills - totalSpent > 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1F601;</td>
+								<td class="animated bounce" ng-show="totalIncome - totalBills - totalSpent > 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1F601;</td>
 								<td ng-show="totalIncome - totalBills - totalSpent === 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}}</td>
-								<td ng-show="totalIncome - totalBills - totalSpent < 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1f621;</td>
+								<td class="animated zoomIn" ng-show="totalIncome - totalBills - totalSpent < 0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent|number:0}} &#x1f621;</td>
 								<td style="color: {{plusMinusSavings}}">{{(   (projectedIncome - projectedBills - projectedExpenses) - (totalIncome - totalBills - totalSpent)    ) | number:0}}</td>
 							</tr>
 						</tbody>
@@ -179,8 +179,8 @@
 							</tr>
 							<tr>
 								<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
-								<td ng-show="upBy < 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f622;</td>
-								<td ng-show="upBy > 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f60e;</td>
+								<td class="animated bounceInDown" ng-show="upBy < 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f622;</td>
+								<td class="animated bounce" ng-show="upBy > 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}} &#x1f60e;</td>
 								<td ng-show="upBy === 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:0}}</td>
 							</tr>			
 						</tbody>
