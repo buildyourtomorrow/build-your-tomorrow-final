@@ -22,11 +22,10 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', '$state', funct
 		return $http.put('/remove-expense', {'index': index})	
 	};
 	o.getUser = function(email){
-		console.log('marlene1')
 		return $http({
 			url: '/get-user',
 			method: 'GET'
-		}).then(function(response){
+		}).then(function(response){			
 			angular.copy(response.data.monthlyExpenses, o.monthlyExpenses);
 			angular.copy(response.data.expCategoryTotals, o.expCategoryTotals);
 			o.projectedIncome = response.data.projectedIncome;
