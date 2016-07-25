@@ -94,6 +94,7 @@ router.get('/', function(req, res){
 	res.render('index');
 });
 router.get('/get-user', authCheck, function(req, res){
+	console.log('marlene2')
 	User.findOne({'email': req.payload.email}, function(error, user){
 		if(user){
 			user.calcPeriodStart();

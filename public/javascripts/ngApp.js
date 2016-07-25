@@ -46,7 +46,8 @@ var app = angular.module('BudgetApp', ['auth0', 'angular-storage', 'angular-jwt'
 	  				templateUrl: '/partials/dashboard.html',
 	  				controller: 'DashboardCtrl',	  				
 	  				resolve: {
-						postPromise: ['monthlyExpensesFactory', 'store', function(monthlyExpensesFactory, store){						
+						postPromise: ['monthlyExpensesFactory', 'store', function(monthlyExpensesFactory, store){
+						console.log('marlene')					
 							var profile = store.get('profile');	
 							if(profile){
 								return monthlyExpensesFactory.getUser(profile.email);

@@ -22,6 +22,7 @@ app.factory('monthlyExpensesFactory', ['$http', 'incomeFactory', '$state', funct
 		return $http.put('/remove-expense', {'index': index})	
 	};
 	o.getUser = function(email){
+		console.log('marlene1')
 		return $http({
 			url: '/get-user',
 			method: 'GET'
