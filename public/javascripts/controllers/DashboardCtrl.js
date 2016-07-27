@@ -132,7 +132,7 @@ app.controller('DashboardCtrl', ['$scope',
 	} else if ($scope.totalIncome - $scope.totalBills - $scope.totalSpent === 0) {
 		$scope.savingMoneyBaby = "Baby boo, stop being lazy and add your income, bills, and expenses.";
 	} else {
-		$scope.savingMoneyBaby = "Yo, stop spending so much damn money";
+		$scope.savingMoneyBaby = "Yo, stop spending so much money";
 	}
 	if ($scope.upBy > 0) {
 		$scope.specialVarUpBy = '#00FF00';
