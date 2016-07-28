@@ -10,3 +10,17 @@ app.directive('homeArrow', function(){
         templateUrl: '/partials/byt-home-arrow.html'
     }
 })
+
+app.directive('bytEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.bytEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});

@@ -83,9 +83,9 @@
 								<td>
 									<span ng-show="!bytIncomeProjection">{{projectedIncome | number:0}}</span>
 									<span ng-show="bytIncomeProjection">												
-										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedIncome" ng-model='projectedIncome' required>
+										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedIncome" ng-model='projectedIncome' byt-enter="editIncomeProjectionFunc(); bytIncomeProjection=false" required>
 									</span>
-									<span style="display:inline;" ng-click="bytIncomeProjection = !bytIncomeProjection; editIncomeProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytIncomeProjection, 'glyphicon glyphicon-ok': bytIncomeProjection}"></i></span>
+									<span style="display:inline; cursor:pointer;" ng-click="bytIncomeProjection = !bytIncomeProjection; editIncomeProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytIncomeProjection, 'glyphicon glyphicon-ok': bytIncomeProjection}"></i></span>									
 								</td>
 								<td style="color: {{totalIncomeColor}}">{{totalIncome | number:0}}</td>
 								<td style="color: {{plusMinusIncome}}">{{ (projectedIncome - totalIncome) | number:0}}</td>
@@ -95,9 +95,9 @@
 								<td>
 									<span ng-show="!bytBillProjection">{{projectedBills | number:0}}</span>
 									<span ng-show="bytBillProjection">												
-										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedBill" ng-model='projectedBills' required>
+										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedBill" ng-model='projectedBills' byt-enter="editBillProjectionFunc(); bytBillProjection=false" required>
 									</span>
-									<span style="display:inline;" ng-click="bytBillProjection = !bytBillProjection; editBillProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytBillProjection, 'glyphicon glyphicon-ok': bytBillProjection}"></i></span>
+									<span style="display:inline; cursor:pointer;" ng-click="bytBillProjection = !bytBillProjection; editBillProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytBillProjection, 'glyphicon glyphicon-ok': bytBillProjection}"></i></span>
 								</td>
 								<td style="color: {{totalBillsColor}}">{{totalBills | number:0}}</td>
 								<td style="color: {{plusMinusBills}}">{{projectedBills - totalBills | number:0}}</td>
@@ -107,9 +107,9 @@
 								<td>
 									<span ng-show="!bytExpProjection">{{projectedExpenses | number:0}}</span>
 									<span ng-show="bytExpProjection">												
-										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="bytExpProjection" ng-model='projectedExpenses' required>
+										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="bytExpProjection" ng-model='projectedExpenses' byt-enter="editExpProjectionFunc(); bytExpProjection=false" required>
 									</span>
-									<span style="display:inline;" ng-click="bytExpProjection = !bytExpProjection; editExpProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytExpProjection, 'glyphicon glyphicon-ok': bytExpProjection}"></i></span>
+									<span style="display:inline; cursor:pointer;" ng-click="bytExpProjection = !bytExpProjection; editExpProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytExpProjection, 'glyphicon glyphicon-ok': bytExpProjection}"></i></span>
 								</td>
 								<td style="color: {{totalSpentColor}}">{{totalSpent | number:0}}</td>
 								<td style="color: {{plusMinusExpenses}}">{{projectedExpenses - totalSpent | number:0}}</td>
