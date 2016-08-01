@@ -1,9 +1,28 @@
 <section class="navbar navbar-default navbar-static-top">
 	<section class="container">
+	
 		<ul class="nav navbar-nav navbar-right">
-			<li><a ui-sref="home" >BYT</a></li>
-			<li><a>Hola {{nickName}}</a></li>
-			<li><a href="" ng-click="logout()">Sign out</a></li>
+			<li>
+				<a ui-sref="home" style="padding: 6px;">
+					<img src="/images/logo.png" alt="BYT" class="img-responsive">					
+				</a>
+			</li>
+			<li>					
+				<a style="padding: 6px !important;">
+					<section style="line-height: 40px;">
+						Hola {{nickName}}
+					</section>
+				</a>						
+			</li>
+			<li>
+				<a href="" ng-click="logout()" style="padding: 6px !important;">
+					<section style="line-height: 40px;">
+						Sign out
+					</section>
+				</a>					
+			</li>
+
 		</ul>
+		
 	</section>
 </section>
