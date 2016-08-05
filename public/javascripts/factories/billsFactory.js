@@ -202,7 +202,7 @@ app.factory('billsFactory', ['$http', '$state', function($http, $state){
 			}]
 		},
 		{
-			category: "Child Care",
+			category: "ChildCare",
 			total: 0,
 			subCategory: [{
 				name: "Babysitter",
@@ -354,7 +354,7 @@ app.factory('billsFactory', ['$http', '$state', function($http, $state){
 					o.billsCategoryTotals[7].subCategory[0].total += o.bills[i].amount;
 				}
 			};
-			if (o.bills[i].category === "Child Care") {
+			if (o.bills[i].category === "ChildCare") {
 				o.billsCategoryTotals[8].total += o.bills[i].amount;	
 				if (o.bills[i].subCategory === "Babysitter") {
 					o.billsCategoryTotals[8].subCategory[0].total += o.bills[i].amount;

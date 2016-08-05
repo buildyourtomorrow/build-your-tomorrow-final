@@ -25,7 +25,8 @@ app.controller('BillsCtrl', ['$scope',
 		{id: "Insurance", value: "Insurance" },
 		{id: "Debt", value: "Debt" },
 		{id: "Taxes", value: "Taxes" },
-		{id: "Entertainment", value: "Entertainment" }
+		{id: "Entertainment", value: "Entertainment"},
+		{id: "ChildCare", value: "ChildCare"}
 	];
 	$scope.removeBill = function(index){
         billsFactory.removeBill(index);
@@ -81,6 +82,14 @@ app.controller('BillsCtrl', ['$scope',
 		],
 		Entertainment: [
 			{id: 0, value: "Streaming movies/music"}
+		],
+		ChildCare: [
+			{id: 0, value: "Babysitter"},
+			{id: 1, value: "Daycare"},
+			{id: 2, value: "After School Programs"},
+			{id: 3, value: "Youth Leagues"},
+			{id: 4, value: "Medical"},
+			{id: 5, value: "Nutrition"}
 		]
 	};
 	// function that processes bills form. 
