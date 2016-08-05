@@ -200,6 +200,34 @@ app.factory('billsFactory', ['$http', '$state', function($http, $state){
 				name: "Streaming movies/music",
 				total: 0 
 			}]
+		},
+		{
+			category: "Child Care",
+			total: 0,
+			subCategory: [{
+				name: "Babysitter",
+				total: 0 
+			},
+			{
+				name: "Daycare",
+				total: 0 
+			},
+			{
+				name: "After School Programs",
+				total: 0 
+			},
+			{
+				name: "Youth Leagues",
+				total: 0 
+			},
+			{
+				name: "Medical",
+				total: 0 
+			},
+			{
+				name: "Nutrition",
+				total: 0 
+			}]
 		}];
 
 		for (i = 0; i < o.bills.length; i++){
@@ -324,6 +352,27 @@ app.factory('billsFactory', ['$http', '$state', function($http, $state){
 				o.billsCategoryTotals[7].total += o.bills[i].amount;	
 				if (o.bills[i].subCategory === "Streaming movies/music") {
 					o.billsCategoryTotals[7].subCategory[0].total += o.bills[i].amount;
+				}
+			};
+			if (o.bills[i].category === "Child Care") {
+				o.billsCategoryTotals[8].total += o.bills[i].amount;	
+				if (o.bills[i].subCategory === "Babysitter") {
+					o.billsCategoryTotals[8].subCategory[0].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Daycare") {
+					o.billsCategoryTotals[8].subCategory[1].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "After School Programs") {
+					o.billsCategoryTotals[8].subCategory[2].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Youth Leagues") {
+					o.billsCategoryTotals[8].subCategory[3].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Medical") {
+					o.billsCategoryTotals[8].subCategory[4].total += o.bills[i].amount;
+				}
+				if (o.bills[i].subCategory === "Nutrition") {
+					o.billsCategoryTotals[8].subCategory[5].total += o.bills[i].amount;
 				}
 			};
 		};

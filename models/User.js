@@ -401,6 +401,34 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 				name: "Streaming movies/music",
 				total: 0 
 			}]
+		},
+		{
+			category: "Child Care",
+			total: 0,
+			subCategory: [{
+				name: "Babysitter",
+				total: 0 
+			},
+			{
+				name: "Daycare",
+				total: 0 
+			},
+			{
+				name: "After School Programs",
+				total: 0 
+			},
+			{
+				name: "Youth Leagues",
+				total: 0 
+			},
+			{
+				name: "Medical",
+				total: 0 
+			},
+			{
+				name: "Nutrition",
+				total: 0 
+			}]
 		}
 	];
 
@@ -526,6 +554,27 @@ UserSchema.methods.calcBillCategoryTotals = function(){
 			this.billsCategoryTotals[7].total += this.monthlyBills[i].amount;	
 			if (this.monthlyBills[i].subCategory === "Streaming movies/music") {
 				this.billsCategoryTotals[7].subCategory[0].total += this.monthlyBills[i].amount;
+			}
+		};
+		if (this.monthlyBills[i].category === "Child Care") {
+			this.billsCategoryTotals[8].total += this.monthlyBills[i].amount;	
+			if (this.monthlyBills[i].subCategory === "Babysitter") {
+				this.billsCategoryTotals[8].subCategory[0].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Daycare") {
+				this.billsCategoryTotals[8].subCategory[1].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "After School Programs") {
+				this.billsCategoryTotals[8].subCategory[2].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Youth Leagues") {
+				this.billsCategoryTotals[8].subCategory[3].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Medical") {
+				this.billsCategoryTotals[8].subCategory[4].total += this.monthlyBills[i].amount;
+			}
+			if (this.monthlyBills[i].subCategory === "Nutrition") {
+				this.billsCategoryTotals[8].subCategory[5].total += this.monthlyBills[i].amount;
 			}
 		};
 	};
