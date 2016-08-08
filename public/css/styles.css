@@ -125,6 +125,16 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
 	margin-left: 10px;
 	border-radius: 5px;
 }
+.byt_education {
+	background-color: #FFFFFF;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius: 5px;
+	padding-bottom: 10px;
+	padding-top: 20px;
+}
 .dashboard_overview table tbody tr td {
 	font-size: 14px;
 	width: 25%;
