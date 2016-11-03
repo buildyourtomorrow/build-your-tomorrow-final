@@ -1,0 +1,43 @@
+<section class="dashboard_nav">
+
+	<ul ng-init="byt_dashboard = 'dashboard'">
+
+		<li role="presentation" class="byt_dashboard_nav_first" ng-click="byt_dashboard='dashboard'; dashboard_spinner=!dashboard_spinner">
+
+			<a class="" href="/#/dashboard" ng-class="{'byt_dashboard_nav_highlight': byt_dashboard == 'dashboard', 
+												       '': byt_dashboard != 'dashboard'}">
+				<span><i ng-class="{'fa fa-refresh fa-spin': dashboard_spinner, '': !dashboard_spinner}"></i></span> Dashboard
+			</a>
+
+		</li>
+
+		<li role="presentation" class="byt_dashboard_nav_second" ng-click="byt_dashboard='income'; income_spinner=!income_spinner">
+
+			<a class="" href="/#/income" ng-class="{'byt_dashboard_nav_highlight': byt_dashboard == 'income', 
+												    '': byt_dashboard != 'income'}">
+				<span><i ng-class="{'fa fa-refresh fa-spin': income_spinner, '': !income_spinner}"></i></span> Income
+			</a>
+			
+		</li>
+
+		<li role="presentation" class="dashboard_nav_third" ng-click="bills_spinner=!bills_spinner">
+			<a class="" href="/#/bills">
+				<span><i ng-class="{'fa fa-refresh fa-spin': bills_spinner, '': !bills_spinner}"></i></span> Bills
+			</a>									
+		</li>
+
+		<li role="presentation" class="dashboard_nav_fourth" ng-click="expenses_spinner=!expenses_spinner">
+			<a class="" href="/#/expenses">
+				<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
+			</a>									
+		</li>
+		
+		<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
+			<a class="" href="/#/education">
+				<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Edu
+			</a>									
+		</li>
+
+	</ul>
+
+</section>

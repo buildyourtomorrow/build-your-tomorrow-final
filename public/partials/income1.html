@@ -1,58 +1,4 @@
-<!--Income stuff -->			
-<byt-navbar></byt-navbar>
-<section class="container">
-	<section class="col-md-6 col-md-offset-3 main_content">						
-		<section class="row">
-			<home-arrow></home-arrow>
-			<section class="dashboard_nav">
-				<ul>							
-					<li role="presentation" class="dashboard_nav_second" ng-click="dashboard_spinner=!dashboard_spinner">
-						<a class="" href="/#/dashboard">
-							<span ><i ng-class="{'fa fa-refresh fa-spin': dashboard_spinner, '': !dashboard_spinner}"></i></span> Dashboard
-						</a>									
-					</li>
-					<li role="presentation" class="dashboard_nav_second">
-						<a href="/#/income">Income</a>
-						<i role="button" class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#incomeModal"></i>
-						<section id="incomeModal" class="modal fade" role="dialog">
-							<section class="modal-dialog">
-								<!-- Modal content-->
-								<section class="modal-content">
-									<section class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">&times;</button>
-										<h4 class="modal-title">Income</h4>
-									</section>
-									<section class="modal-body">
-										<iframe width="200" height="180" src="https://www.youtube.com/embed/Q2n3XcrwsFs" frameborder="0" allowfullscreen></iframe>
-										<p>-----</p>
-										<p>Record any kind of money that enters your economy or bank accounts here. Make sure to only record your income after you have received it - not before. Doing so will ensure that the data that is entered is accurate.</p>
-									</section>
-									<section class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</section>
-								</section>
-							</section>
-						</section>
-					</li>
-					<li role="presentation" class="dashboard_nav_third" ng-click="bills_spinner=!bills_spinner">
-						<a class="" href="/#/bills">
-							<span ><i ng-class="{'fa fa-refresh fa-spin': bills_spinner, '': !bills_spinner}"></i></span> Bills
-						</a>									
-					</li>
-					<li role="presentation" class="dashboard_nav_fourth" ng-click="expenses_spinner=!expenses_spinner">
-						<a class="" href="/#/expenses">
-							<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
-						</a>									
-					</li>
-					<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
-						<a class="" href="/#/education">
-							<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Edu
-						</a>									
-					</li>
-				</ul>	
-			</section>
-		</section>
-		<section ng-show="allIncome.length > 0" style="font-size: 12px; text-align:center;">
+<section ng-show="allIncome.length > 0" style="font-size: 12px; text-align:center;">
 			Last income was entered on {{lastVisit.date | date:'MM/dd'}}
 		</section>
 		<section class="row" id="allIncomeTransactions">
@@ -70,7 +16,7 @@
 								<section class="panel-body" style="padding:13px">
 									<section style="width:20%; float:left; text-align:center; display:inline">{{income.date | date:'MM/dd'}}</section>
 									<section style="width:40%; float:left; text-align:center; display:inline">{{income.category}}</section>
-									<section style="width:30%; float:left; text-align:center; display:inline">{{income.amount |number:'.0-0'}}
+									<section style="width:30%; float:left; text-align:center; display:inline">{{income.amount | number:2}}
 									</section>
 									<section role="button" style="width:10%; float:right; text-align:center; display:inline" ng-click="removeIncome($index)"><i class="glyphicon glyphicon-remove"></i></section>
 								</section>
@@ -140,5 +86,3 @@
 				</section>									
 			</form>
 		</section>
-	</section>
-</section>

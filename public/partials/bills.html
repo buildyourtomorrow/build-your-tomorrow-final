@@ -81,20 +81,21 @@
 				</section>
 				<section class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						<section class="panel panel-info" ng-repeat="category in categories | orderBy: '-total'" ng-if="category.total > 0">
-						<section class="panel-heading" role="tab" id="headingOne">
-								<section class="panel-title" style="font-size:14px;">      									
-								<a role="button" data-toggle="collapse" data-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}" style="text-decoration:none" ng-click="active=!active">
-								<i ng-class="{ 'glyphicon glyphicon-plus': !active, 'glyphicon glyphicon-minus': active}"></i>  {{category.category}} - {{category.total | number:0}}</a>
+							<section class="panel-heading" role="tab" id="headingOne">
+									<section class="panel-title" style="font-size:14px;">      									
+									<a role="button" data-toggle="collapse" data-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}" style="text-decoration:none" ng-click="active=!active">
+									<i ng-class="{ 'glyphicon glyphicon-plus': !active, 'glyphicon glyphicon-minus': active}"></i>  {{category.category}} - {{category.total | number:0}}</a>
+									</section>
+							</section>
+							<section id="collapse{{$parent.$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								<section ng-repeat="subcategory in category.subCategory | orderBy: '-total'" ng-if="subcategory.total > 0">
+									<section class="panel-body" style="padding:13px">
+										<section style="width:50%; float:left; text-align:center; display:inline">{{subcategory.name}}</section>
+										<section style="width:50%; float:right; text-align:center; display:inline">{{subcategory.total | number:0}}</section>
+									</section>
 								</section>
+							</section>
 						</section>
-						<section id="collapse{{$parent.$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-							<section ng-repeat="subcategory in category.subCategory | orderBy: '-total'" ng-if="subcategory.total > 0">
-								<section class="panel-body" style="padding:13px">
-									<section style="width:50%; float:left; text-align:center; display:inline">{{subcategory.name}}</section>
-									<section style="width:50%; float:right; text-align:center; display:inline">{{subcategory.total | number:0}}</section>
-								</section>
-							</section>
-							</section>
 					</section>    							
 				</section>
 		    </section>
@@ -147,11 +148,7 @@
 								</section>
 							</section>
 						</section>
-					</section>
-					<select class="form-control" name="monthlyBillQuestion" ng-model='question'>
-						<option value="" selected disabled>Please choose</option>
-						<option value="Yes">Yes - I have already paid the bill described above</option>						
-					</select>								
+					</section>										
 				</section>		
 				<section class="form-group">
 					<button ng-click="goToAllBills()" type="submit" ng-disabled="monthlyBillForm.$invalid" class="btn btn-default btn-block btn-lg">Add Bill</button>

@@ -21,14 +21,12 @@
 						<a class="" href="/#/expenses">
 							<span ><i ng-class="{'fa fa-refresh fa-spin': expenses_spinner, '': !expenses_spinner}"></i></span> Expenses
 						</a>									
-					</li>
-					
+					</li>					
 					<li role="presentation" class="dashboard_nav_fifth" ng-click="edu_spinner=!edu_spinner">
 						<a class="" href="/#/education">
 							<span ><i ng-class="{'fa fa-refresh fa-spin': edu_spinner, '': !edu_spinner}"></i></span> Edu
 						</a>									
 					</li>
-					
 				</ul>	
 			</section>
 		</section>
@@ -81,11 +79,11 @@
 							<tr>
 								<td>Income</td>
 								<td>
-									<span ng-show="!bytIncomeProjection">{{projectedIncome | number:0}}</span>
-									<span ng-show="bytIncomeProjection">												
+									<span *ngIf="!bytIncomeProjection">{{projectedIncome|number:0}}</span>
+									<span *ngIf="bytIncomeProjection">												
 										<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedIncome" ng-model='projectedIncome' byt-enter="editIncomeProjectionFunc(); bytIncomeProjection=false" required>
 									</span>
-									<span style="display:inline; cursor:pointer;" ng-click="bytIncomeProjection = !bytIncomeProjection; editIncomeProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytIncomeProjection, 'glyphicon glyphicon-ok': bytIncomeProjection}"></i></span>									
+									<span style="display:inline; cursor:pointer;" (click)="bytIncomeProjection=!bytIncomeProjection;editIncomeProjectionFunc()"> <i ng-class="{'glyphicon glyphicon-edit': !bytIncomeProjection, 'glyphicon glyphicon-ok': bytIncomeProjection}"></i></span>									
 								</td>
 								<td style="color: {{totalIncomeColor}}">{{totalIncome | number:0}}</td>
 								<td style="color: {{plusMinusIncome}}">{{ (projectedIncome - totalIncome) | number:0}}</td>

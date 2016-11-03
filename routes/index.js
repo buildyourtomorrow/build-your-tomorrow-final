@@ -20,7 +20,6 @@ var authCheck = jwt({
 router.post('/create-user', authCheck, function(req, res){
 	console.log(req.payload)
 	User.findOne({'email': req.payload.email}, function(error, user){
-		console.log(user)
 		if(!user){
 			var user = new User();
 			user.email = req.payload.email;
