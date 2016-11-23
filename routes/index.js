@@ -18,12 +18,11 @@ var authCheck = jwt({
 	userProperty: 'payload'
 });
 router.post('/create-user', authCheck, function(req, res){
-	console.log(req.payload)
-	User.findOne({'email': req.payload.email}, function(error, user){
+	User.findOne({'email': req.body.email}, function(error, user){
 		if(!user){
 			var user = new User();
-			user.email = req.payload.email;
-			user.nickName = req.payload.nickname;
+			user.email = req.body.email;
+			user.nickName = req.body.nickname;
 			user.save(function (err){						
 				console.log(err);
 			});
@@ -32,7 +31,7 @@ router.post('/create-user', authCheck, function(req, res){
 	})
 })
 router.post('/add-income', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){
+	User.findOne({'email': req.body.byt_email}, function(error, user){
 		if (user.income.length > 0 ) {
 			user.income.unshift({'id': user.income.length, 
 								 'category': req.body.category, 
@@ -50,8 +49,8 @@ router.post('/add-income', authCheck, function(req, res){
 	});
 });
 // the add-bills function looks pretty clean. The add-monthly-expenses function needs to be cleaned up.
-router.post('/add-bill', authCheck, function(req, res){	
-	User.findOne({'email': req.payload.email}, function(error, user){
+router.post('/add-bill', authCheck, function(req, res){
+	User.findOne({'email': req.body.byt_email}, function(error, user){
 		if (user.monthlyBills.length > 0 ) {
 			user.monthlyBills.unshift({'id': user.monthlyBills.length, 
 								   	   'category': req.body.category, 
@@ -71,7 +70,7 @@ router.post('/add-bill', authCheck, function(req, res){
 	});
 });
 router.post('/add-monthly-expense', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){	
+	User.findOne({'email': req.body.byt_email}, function(error, user){	
 		if (user.monthlyExpenses.length > 0 ) {
 			user.monthlyExpenses.unshift({'id': user.monthlyExpenses.length, 
 								   	      'category': req.body.category, 
@@ -90,11 +89,52 @@ router.post('/add-monthly-expense', authCheck, function(req, res){
 		return res.json(user);
 	});
 });
+router.post('/add-income-projection', authCheck, function(req, res){
+	User.findOne( {'email': req.body.byt_email }, function(error, user){
+		user.projectedIncome = req.body.bytIncomeProjection;
+		user.save();
+		return res.json(user);
+	});
+});
+router.post('/add-bills-projection', authCheck, function(req, res){
+	User.findOne( {'email': req.body.byt_email }, function(error, user){
+		user.projectedBills = req.body.bytBillProjection;
+		user.save();
+		return res.json(user);
+	});
+});
+router.post('/add-expenses-projection', authCheck, function(req, res){
+	User.findOne( {'email': req.body.byt_email }, function(error, user){
+		user.projectedExpenses = req.body.bytExpensesProjection;
+		user.save();	
+		return res.json(user);
+	});
+});
+
 router.get('/', function(req, res){
 	res.render('index');
 });
+router.get('/login', function(req, res){
+	res.render('index');
+});
+router.get('/dashboard', function(req, res){
+	res.render('index');
+});
+router.get('/income', function(req, res){
+	res.render('index');
+});
+router.get('/bills', function(req, res){
+	res.render('index');
+});
+router.get('/expenses', function(req, res){
+	res.render('index');
+});
+router.get('/education', function(req, res){
+	res.render('index');
+});
+
 router.get('/get-user', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){
+	User.findOne({'email': req.headers.byt_email}, function(error, user){
 		if(user){
 			user.calcPeriodStart();
 			user.calcPeriodEnd();
@@ -113,31 +153,22 @@ router.get('/get-user', authCheck, function(req, res){
 		}
 	});
 });
-router.post('/add-projections', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){
-		user.projectedIncome = req.body.projectedIncome;
-		user.projectedBills = req.body.projectedBills;
-		user.projectedExpenses = req.body.projectedExpenses;
-		user.save();	
-		return res.json(user);
-	});
-});
 router.put('/remove-expense', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){
+	User.findOne({'email': req.body.byt_email}, function(error, user){
 		user.monthlyExpenses.splice([req.body.index], 1);
 		user.save();
 		return res.json(user);
 	});
 });
 router.put('/remove-bill', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){
+	User.findOne({'email': req.body.byt_email}, function(error, user){
 		user.monthlyBills.splice([req.body.index], 1);
 		user.save();
 		return res.json(user);
 	});
 });
 router.put('/remove-income', authCheck, function(req, res){
-	User.findOne({'email': req.payload.email}, function(error, user){
+	User.findOne({'email': req.body.byt_email}, function(error, user){
 		user.income.splice([req.body.index], 1);
 		user.save();
 		return res.json(user);
