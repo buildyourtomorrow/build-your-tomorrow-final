@@ -1,0 +1,91 @@
+<byt-dashboard-quote></byt-dashboard-quote>
+<section class="row" id="theDashboard">
+	<section class="table-responsive">
+		<section class="dashboard_overview">
+			<byt-dashboard-overview-question></byt-dashboard-overview-question>
+			<table class="table">
+				<tbody>
+					<tr>
+						<td *ngIf="totalIncome-totalBills-totalSpent>0">
+							<iframe src="//giphy.com/embed/OFhB9mzG1hACQ" width="40" height="45" frameBorder="0"></iframe>
+						</td>
+						<td *ngIf="totalIncome-totalBills-totalSpent===0"></td>
+						<td *ngIf="totalIncome-totalBills-totalSpent<0">
+							<iframe src="//giphy.com/embed/aSOEqo3m4TgxW" width="80" height="75" frameBorder="0"></iframe>
+						</td>
+						<td>Projected</td>
+						<td>Actual</td>
+						<td>+/-</td>
+					</tr>
+					<tr>
+						<td>Income</td>
+						<td>
+							<span *ngIf="!bytIncomeProjection">{{projectedIncome}}</span>
+							<span *ngIf="bytIncomeProjection">
+								<input style="width: 50px; display:inline;" 
+									   class='form-control input-sm' type='number' 
+									   name="projectedIncome" 
+									   [(ngModel)]='projectedIncome' 
+									   (keyup.enter)="editIncomeProjection(projectedIncome)" required>
+							</span>
+							<span style="display:inline; cursor:pointer;" (click)="editIncomeProjection(projectedIncome)"> <i *ngIf="!bytIncomeProjection" class="glyphicon glyphicon-edit"></i><i *ngIf="bytIncomeProjection" class="glyphicon glyphicon-ok"></i></span>
+						</td>
+						<td style="color: {{totalIncomeColor}}">{{totalIncome |number:'.0-0'}}</td>
+						<td style="color: {{plusMinusIncome}}">{{ (projectedIncome - totalIncome) |number:'.0-0'}}</td>
+					</tr>
+					<tr>
+						<td>Bills <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></td>
+						<td>
+							<span *ngIf="!bytBillProjection">{{projectedBills |number:'.0-0'}}</span>
+							<span *ngIf="bytBillProjection">												
+								<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="projectedBill" [(ngModel)]='projectedBills' (keyup.enter)="editBillProjection(projectedBills)" required>
+							</span>
+
+							<span style="display:inline; cursor:pointer;" (click)="editBillProjection(projectedBills)"> <i *ngIf="!bytBillProjection" class="glyphicon glyphicon-edit"></i><i *ngIf="bytBillProjection" class="glyphicon glyphicon-ok"></i></span> 
+						</td>
+						<td style="color: {{totalBillsColor}}">{{totalBills |number:'.0-0'}}</td>
+						<td style="color: {{plusMinusBills}}">{{ (projectedBills - totalBills) |number:'.0-0'}}</td>
+					</tr>
+					<tr>
+						<td>Expenses</td>
+						<td>
+							<span *ngIf="!bytExpProjection">{{projectedExpenses}}</span>
+							<span *ngIf="bytExpProjection">
+								<input style="width: 50px; display:inline;" class='form-control input-sm' type='number' name="bytExpProjection" [(ngModel)]='projectedExpenses' (keyup.enter)="editExpProjection(projectedExpenses)" required>
+							</span>
+							<span style="display:inline; cursor:pointer;" (click)="editExpProjection(projectedExpenses)"> <i *ngIf="!bytExpProjection" class="glyphicon glyphicon-edit"></i><i *ngIf="bytExpProjection" class="glyphicon glyphicon-ok"></i></span> 
+						</td>
+						<td style="color: {{totalSpentColor}}">{{totalSpent |number:'.0-0'}}</td>
+						<td style="color: {{plusMinusExpenses}}">{{projectedExpenses - totalSpent |number:'.0-0'}}</td>
+					</tr>
+					<tr>
+						<td>Savings</td>
+						<td>{{projectedIncome - projectedBills - projectedExpenses}}</td>
+						<td *ngIf="totalIncome-totalBills-totalSpent > 0" style="color: {{totalSavingsColor}}">
+							{{totalIncome - totalBills - totalSpent |number:'.0-0'}}
+						</td>	
+						<td *ngIf="totalIncome-totalBills-totalSpent===0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent |number:'.0-0'}}</td>
+						<td *ngIf="totalIncome-totalBills-totalSpent<0" style="color: {{totalSavingsColor}}">{{totalIncome - totalBills - totalSpent |number:'.0-0'}} &#9785; &#9763;</td>
+						<td style="color: {{plusMinusSavings}}">{{(   (projectedIncome - projectedBills - projectedExpenses) - (totalIncome - totalBills - totalSpent)    ) |number:'.0-0'}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</section> 
+	</section>
+</section>
+<section class="row animate-show" *ngIf="byt_show_section">
+	<section class="table-responsive">
+		<section class="dashboard_analysis">
+			<table class="table">
+				<tbody>
+					<tr>										
+						<td class="dashboard_text_analysis_1">{{savingMoneyBaby}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>						
+	</section>
+</section>
+<byt-dashboard-expense-analysis [projectedExpenses]="projectedExpenses"></byt-dashboard-expense-analysis>
+<byt-dashboard-daily-budget [projectedExpenses]="projectedExpenses"></byt-dashboard-daily-budget>
+<br>

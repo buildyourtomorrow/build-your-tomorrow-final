@@ -1,0 +1,36 @@
+<section class="row">
+	<section class="table-responsive">
+		<section class="dashboard_analysis">
+			<byt-dashboard-daily-budget-question></byt-dashboard-daily-budget-question>
+			<table class="table">	
+				<tbody>
+					<tr>
+						<td class="dashboard_analysis_1">Daily budget</td>
+						<td class="dashboard_analysis_2">{{dailyBudget|number:'.0-0'}}</td>
+					</tr>	
+					<tr>
+						<td class="dashboard_analysis_1">Days left</td>
+						<td class="dashboard_analysis_2">{{daysLeft|number:'.0-0'}}</td>
+					</tr>
+					<tr>
+						<td class="dashboard_analysis_1">Period</td>
+						<td class="dashboard_analysis_2">{{periodStart| date:'MM/dd/yyyy'}} - {{periodEnd| date:'MM/dd/yyyy'}}</td>
+					</tr>	
+				</tbody>
+			</table>
+		</section>
+	</section>								
+</section>
+<section class="row animate-show" *ngIf="byt_show_section">
+	<section class="table-responsive">
+		<section class="dashboard_analysis">
+			<table class="table">
+				<tbody>
+					<tr>										
+						<td class="dashboard_text_analysis_1">Try your best to spend less than your daily budget. Gain your freedom one dollar at a time</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>						
+	</section>
+</section>

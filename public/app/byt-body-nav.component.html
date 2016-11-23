@@ -1,0 +1,41 @@
+<section class="row">
+	<section class="dashboard_nav">
+		<ul>
+			<li role="presentation" class="dashboard_nav_first" (click)="addRemoveDashboardSpinner()">
+				<a routerLink="/dashboard" routerLinkActive="btn btn-default btn-xs">
+					<span ><i *ngIf="byt_dashboard_spinner" class="fa fa-refresh fa-spin"></i></span>
+					<span ><i *ngIf="!byt_dashboard_spinner"></i></span>
+					Dashboard
+				</a>									
+			</li>
+			<li role="presentation" class="dashboard_nav_second" (click)="addRemoveIncomeSpinner()">
+				<a routerLink="/income" routerLinkActive="btn btn-default btn-xs">
+					<span ><i *ngIf="byt_income_spinner" class="fa fa-refresh fa-spin"></i></span>
+					<span ><i *ngIf="!byt_income_spinner"></i></span>
+					Income
+				</a>									
+			</li>
+			<li role="presentation" class="dashboard_nav_third" (click)="addRemoveBillsSpinner()">
+				<a routerLink="/bills" routerLinkActive="btn btn-default btn-xs">
+					<span ><i *ngIf="byt_bills_spinner" class="fa fa-refresh fa-spin"></i></span>
+					<span ><i *ngIf="!byt_bills_spinner"></i></span>
+					Bills
+				</a>									
+			</li>
+			<li role="presentation" class="dashboard_nav_fourth" (click)="addRemoveExpensesSpinner()">
+				<a routerLink="/expenses" routerLinkActive="btn btn-default btn-xs">
+					<span ><i *ngIf="byt_expenses_spinner" class="fa fa-refresh fa-spin"></i></span>
+					<span ><i *ngIf="!byt_expenses_spinner"></i></span>
+					Expenses
+				</a>									
+			</li>
+			<li role="presentation" class="dashboard_nav_fifth" (click)="addRemoveEDUSpinner()">
+				<a routerLink="/education" routerLinkActive="btn btn-default btn-xs">
+					<span ><i *ngIf="byt_edu_spinner" class="fa fa-refresh fa-spin"></i></span>
+					<span ><i *ngIf="!byt_edu_spinner"></i></span>
+					Edu
+				</a>									
+			</li>
+		</ul>	
+	</section>
+</section>

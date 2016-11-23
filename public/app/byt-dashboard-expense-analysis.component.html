@@ -1,0 +1,42 @@
+<section class="row">
+	<section class="table-responsive">
+		<section class="dashboard_analysis">
+			<byt-dashboard-expense-question></byt-dashboard-expense-question>
+			<table class="table">	
+				<tbody>
+					<tr>
+						<td class="dashboard_analysis_1">Expenses</td>
+						<td class="dashboard_analysis_2">{{projectedExpenses|number:'.0-0'}}</td>
+					</tr>	
+					<tr>
+						<td class="dashboard_analysis_1">Total spent</td>
+						<td class="dashboard_analysis_2">{{totalSpent|number:'.0-0'}}</td>
+					</tr>
+					<tr>
+						<td class="dashboard_analysis_1">Leftover</td>
+						<td class="dashboard_analysis_2">{{leftOver|number:'.0-0'}}</td>
+					</tr>
+					<tr>
+						<td class="dashboard_analysis_1">{{specialVarUpByWord}}</td>
+						<td class="animated bounceInDown" *ngIf="upBy < 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy|number:'.0-0'}} &#9785; &#9763;</td>
+						<td class="animated bounce" *ngIf="upBy > 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:'.0-0'}} &#9786; &#9734;</td>
+						<td *ngIf="upBy === 0" class="dashboard_analysis_2" style="color: {{specialVarUpBy}}">{{upBy | number:'.0-0'}}</td>
+					</tr>			
+				</tbody>
+			</table>
+		</section>
+	</section>				
+</section>
+<section class="row animate-show" *ngIf="byt_show_section">
+	<section class="table-responsive">
+		<section class="dashboard_analysis">
+			<table class="table">
+				<tbody>
+					<tr>										
+						<td class="dashboard_text_analysis_1">{{upByComment}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>						
+	</section>
+</section>
